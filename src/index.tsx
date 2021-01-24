@@ -4,6 +4,8 @@ import App from './components/App';
 import {createStore} from 'redux';
 import combineReducers from './reducers';
 import { Provider } from 'react-redux';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
 
 // Start - Enable redux dev tool extension for chrome 
 declare var compose: any;
@@ -28,3 +30,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+
+serviceWorkerRegistration.register();
