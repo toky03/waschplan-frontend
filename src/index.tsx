@@ -5,21 +5,16 @@ import {createStore} from 'redux';
 import combineReducers from './reducers';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import {composeWithDevTools} from "redux-devtools-extension";
 
+let store;
 
-// Start - Enable redux dev tool extension for chrome 
-declare var compose: any;
+if(process.env.NODE_ENV === 'development'){
+    store = createStore(combineReducers, composeWithDevTools());
+} else{
+    store = createStore(combineReducers);
+}
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-};
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// End - Enable redux dev tool extension for chrome
-
-const store = createStore(combineReducers, composeEnhancers());
 
 ReactDOM.render(
   <React.StrictMode>

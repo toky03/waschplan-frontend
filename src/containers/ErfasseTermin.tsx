@@ -66,10 +66,13 @@ const ErfasseTermin = () => {
                 <Button onClick={onSubmitFunction} color={"primary"}>Erfasse Termin</Button>
             </form>
             <div id={"externe-events"}>
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Marco"} ></Chip>
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Vanessa"}></Chip>
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Marco"} />
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Vanessa"}/>
             </div>
-            <Kalender></Kalender>
+            <div className={"calendarWrapper"}>
+                <Kalender />
+            </div>
+
 
         </div>
 
@@ -77,4 +80,4 @@ const ErfasseTermin = () => {
     );
 };
 
-export default connect()(ErfasseTermin);
+export default ErfasseTermin;
