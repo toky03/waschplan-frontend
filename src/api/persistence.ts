@@ -5,5 +5,5 @@ const API_URL = 'http://localhost:8080/api/termine';
 
 export async function loadTermine() {
     const serverResponse = await axios.get<TermineGetResponse>(API_URL);
-    return serverResponse.data.result;
+    console.log('Response', serverResponse.data.result);
   }
