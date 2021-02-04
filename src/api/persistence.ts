@@ -7,3 +7,5 @@ export async function loadTermine() {
     const serverResponse = await axios.get<TermineGetResponse>(API_URL);
     console.log('Response', serverResponse.data.result);
   }
+
+  // https://www.youtube.com/watch?v=lmyKHYmgUYc
