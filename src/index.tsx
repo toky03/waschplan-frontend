@@ -6,6 +6,7 @@ import combineReducers from './reducers';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import {composeWithDevTools} from "redux-devtools-extension";
+import {initializeFirebase} from "./push-notification";
 
 let store;
 
@@ -25,5 +26,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
+initializeFirebase();
 serviceWorkerRegistration.register();
