@@ -3,8 +3,6 @@ import {connect, useDispatch} from "react-redux";
 import {erfasseTermin} from "../actions";
 import { Chip } from '@material-ui/core';
 
-
-
 import './ErfasseTermin.css'
 import Kalender from "./Kalender";
 import {Button} from "@material-ui/core";
@@ -38,11 +36,15 @@ const ErfasseTermin = () => {
         }
     })
 
-
     const [formData, setFormData] = useReducer(formReducer, {name: '', date: ''});
 
+    const nextTerminId: string  = '5bdf9e40-50a1-46a7-b22d-83e1934a431b';
+    const parteiId: string = '0d1aa8f6-a0b5-4fac-a030-060f1ea10949';
+    const beginn: string = '1999-02-01';
+    const ende: string = '1999-02-01';
+
     const onSubmitFunction = () => {
-        dispatch(erfasseTermin(formData.name, formData.date));
+        dispatch(erfasseTermin(nextTerminId, parteiId, beginn, ende));
     };
 
     const handleChange = (event: any) => {
@@ -55,14 +57,6 @@ const ErfasseTermin = () => {
     return (
         <div className={"termin-erfassung"}>
             <form >
-                <label>
-                    {"Name"}
-                    <input name="name" onChange={handleChange}/>
-                </label>
-                <label>
-                    {"Datum"}
-                    <input name="date" onChange={handleChange}/>
-                </label>
                 <Button onClick={onSubmitFunction} color={"primary"}>Erfasse Termin</Button>
             </form>
             <div id={"externe-events"}>

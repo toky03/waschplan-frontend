@@ -1,4 +1,4 @@
-import {ERFASSE_TERMIN} from '../actions/index';
+import {ERFASSE_TERMIN, LADE_TERMINE, CLEAR_STORE} from '../actions/index';
 
 const termine = (state = [], action: any) => {
     switch (action.type) {
@@ -7,10 +7,23 @@ const termine = (state = [], action: any) => {
                 ...state,
                 {
                     id: action.id,
-                    name: action.name,
-                    date: action.date
+                    parteiId: action.parteiId,
+                    beginn: action.beginn,
+                    ende: action.ende
                 }
             ]
+        case LADE_TERMINE:
+            return [
+                ...state,
+                {
+                    id: action.id,
+                    parteiId: action.parteiId,
+                    beginn: action.beginn,
+                    ende: action.ende
+                }
+            ]
+        case CLEAR_STORE:
+            return []
         default:
             return state;
     }

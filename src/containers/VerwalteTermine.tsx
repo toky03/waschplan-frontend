@@ -1,8 +1,10 @@
-import { loadTermine } from '../api/persistence';
+import {connect, useDispatch} from "react-redux";
+import { loadTermine } from '../api/backend';
 import Termine from '../components/Termine';
 
-function VerwalteTermine() {
-    loadTermine();
+const VerwalteTermine = () => {
+    const dispatch = useDispatch();
+    dispatch(loadTermine());
     return (
         <div className={"termin-verwaltung"}>
             <div>Hier kommt die Termin-Verwaltung</div>
@@ -11,4 +13,4 @@ function VerwalteTermine() {
     );
 }
 
-export default VerwalteTermine;
+export default connect()(VerwalteTermine);

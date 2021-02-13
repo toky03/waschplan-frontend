@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware } from 'redux';
 import combineReducers from './reducers';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
+import thunk from 'redux-thunk';
 
 // Start - Enable redux dev tool extension for chrome 
 declare var compose: any;
@@ -19,7 +19,7 @@ declare global {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // End - Enable redux dev tool extension for chrome
 
-const store = createStore(combineReducers, composeEnhancers());
+const store = createStore(combineReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>
