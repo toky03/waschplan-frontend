@@ -5,21 +5,19 @@ import {createStore, applyMiddleware } from 'redux';
 import combineReducers from './reducers';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from 'redux-thunk';
+import {​​​​​ CombinedState }​​​​​ from '@reduxjs/toolkit';
 
-// Start - Enable redux dev tool extension for chrome 
-declare var compose: any;
+let store: CombinedState<any>;
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-};
+if(process.env.NODE_ENV === 'development'){
+    store = createStore(combineReducers, composeWithDevTools(applyMiddleware(thunk)));
+} else{
+    store = createStore(combineReducers);
+}
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// End - Enable redux dev tool extension for chrome
-
-const store = createStore(combineReducers, applyMiddleware(thunk));
+export default store;
 
 ReactDOM.render(
   <React.StrictMode>

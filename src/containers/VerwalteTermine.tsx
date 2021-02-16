@@ -1,10 +1,10 @@
 import {connect, useDispatch} from "react-redux";
 import { loadTermine } from '../api/backend';
 import Termine from '../components/Termine';
+import store from '../index';
 
 const VerwalteTermine = () => {
-    const dispatch = useDispatch();
-    dispatch(loadTermine());
+    store.dispatch(loadTermine);
     return (
         <div className={"termin-verwaltung"}>
             <div>Hier kommt die Termin-Verwaltung</div>

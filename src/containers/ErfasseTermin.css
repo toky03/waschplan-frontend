@@ -8,6 +8,7 @@
 }
 .termin-erfassung {
     display: flex;
+    flex-flow: wrap;
 }
 
 .fc {

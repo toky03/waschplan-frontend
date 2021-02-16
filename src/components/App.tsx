@@ -15,10 +15,8 @@ const App = () => (
       </li>
     </ul>
     <div>
-      <Route path="/" exact component={TerminInput}>
-      </Route>
-      <Route path="/verwalten" exact component={TermineVerwalten}>
-      </Route>
+      <Route path="/" exact component={TerminInput}></Route>
+      <Route path="/verwalten" exact component={TermineVerwalten}></Route>
     </div>
 </Router>
 )

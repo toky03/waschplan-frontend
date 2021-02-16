@@ -4,7 +4,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import localeDe from "@fullcalendar/core/locales/de";
 import React from "react";
-import {connect} from "react-redux";
 
 
 const initialEvents = [{title: 'event 1', start: '2020-12-15T01:30:00+01:00'},
@@ -32,5 +31,5 @@ const Kalender = () => {
     )
 }
 
-export default connect()(Kalender);
+export default Kalender;
 
