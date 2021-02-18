@@ -17,7 +17,7 @@ const handleDateClick = (arg: any) => {
 
 const Kalender = () => {
 
-    const termine = useSelector((state: any) => state.termine);
+    const termine  = useSelector((state: any) => state.termine);
 
     return (
         <FullCalendar plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
