@@ -6,12 +6,13 @@ import combineReducers from './reducers';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import {composeWithDevTools} from "redux-devtools-extension";
+import { CombinedState } from '@reduxjs/toolkit';
 
-let store;
+let store: CombinedState<any>;
 
 if(process.env.NODE_ENV === 'development'){
     store = createStore(combineReducers, composeWithDevTools());
-} else{
+} else {
     store = createStore(combineReducers);
 }
 

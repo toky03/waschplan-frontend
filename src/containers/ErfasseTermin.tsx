@@ -1,8 +1,7 @@
-import React, {useEffect, useReducer} from "react";
+import React, {useEffect, useReducer, useRef} from "react";
 import {connect, useDispatch} from "react-redux";
 import {erfasseTermin} from "../actions";
-import { Chip } from '@material-ui/core';
-
+import {Chip} from '@material-ui/core';
 
 
 import './ErfasseTermin.css'
@@ -13,6 +12,7 @@ import {Draggable} from "@fullcalendar/interaction";
 const ErfasseTermin = () => {
 
     const dispatch = useDispatch();
+    const containerElRef = useRef<HTMLDivElement>(null);
 
     const formReducer = (state: { name: string, date: string }, event: any) => {
         return {
@@ -22,16 +22,14 @@ const ErfasseTermin = () => {
     }
 
     useEffect(() => {
-        const containerEl = document.getElementById('externe-events');
-        console.log(containerEl);
-        // TODO kann dies auch anders gemacht werden?
-        if(containerEl){
-            new Draggable(containerEl, {
+        if (containerElRef.current) {
+            new Draggable(containerElRef.current, {
                 itemSelector: '.draggable',
-                eventData: function(eventEl) {
+
+                eventData: function (eventEl) {
                     return {
                         title: eventEl.innerText,
-                        duration: {days:1}
+                        duration: {days: 1}
                     };
                 }
             });
@@ -54,7 +52,7 @@ const ErfasseTermin = () => {
 
     return (
         <div className={"termin-erfassung"}>
-            <form >
+            <form>
                 <label>
                     {"Name"}
                     <input name="name" onChange={handleChange}/>
@@ -65,14 +63,15 @@ const ErfasseTermin = () => {
                 </label>
                 <Button onClick={onSubmitFunction} color={"primary"}>Erfasse Termin</Button>
             </form>
-            <div id={"externe-events"}>
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Marco"} />
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Vanessa"}/>
-            </div>
             <div className={"calendarWrapper"}>
-                <Kalender />
+                <Kalender/>
             </div>
-
+            <div className={'mieterContainer'} ref={containerElRef}>
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Beat & Lisa"}/>
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Familie Ramseier"}/>
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Hugo"}/>
+                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Brönnimann"}/>
+            </div>
 
         </div>
 
