@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "development") {
     composeWithDevTools(applyMiddleware(thunk))
   );
 } else {
-  store = createStore(combineReducers);
+  store = createStore(combineReducers, applyMiddleware(thunk));
 }
 
 export default store;
