@@ -1,15 +1,21 @@
 import { LOAD_MIETER, LoadMieterAction } from "./actions";
-import { Mieter } from "../api/types";
+import { MieterDto } from "../api/types";
 
-interface MieterState {
-  mieter: Mieter[];
+export interface MieterState {
+  mieter: MieterDto[];
 }
 
-export const mieterLoad = (state: MieterState, action: LoadMieterAction) => {
+export const mieterReducer: (
+  state: MieterState,
+  action: LoadMieterAction
+) => MieterState | null = (
+  state: MieterState = { mieter: [] },
+  action: LoadMieterAction
+) => {
   switch (action.type) {
     case LOAD_MIETER:
-      return action.mieter;
+      return { ...state, mieter: action.mieter };
     default:
-      return null;
+      return state;
   }
 };

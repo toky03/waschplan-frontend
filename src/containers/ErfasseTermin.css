@@ -6,6 +6,7 @@
 .termin {
   display: flex;
 }
+
 .termin-erfassung {
   display: flex;
   flex-flow: wrap;

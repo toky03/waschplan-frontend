@@ -3,20 +3,19 @@ import {
   clearStore,
   loadMieterBackendSucessfull,
 } from "./actions";
-import { Mieter, Termin } from "../api/types";
+import { MieterDto, TerminDto } from "../api/types";
 
 const API_URL = "https://waschplan.bubelu.ch/api/";
 
 export async function loadTermine(dispatch: any) {
-  console.log("load Termine");
   const response = await fetch(API_URL + "termine");
-  const termine: Termin[] = await response.json();
+  const termine: TerminDto[] = await response.json();
   dispatch(loadTermineBackendSucessful(termine));
 }
 
 export async function loadMieter(dispatch: any) {
   dispatch(clearStore());
   const response = await fetch(API_URL + "mieter");
-  const mieters: Mieter[] = await response.json();
+  const mieters: MieterDto[] = await response.json();
   dispatch(loadMieterBackendSucessfull(mieters));
 }

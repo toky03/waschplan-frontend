@@ -4,30 +4,36 @@ import {
   ErfasseTerminAction,
   LoadTermineAction,
 } from "./actions";
-import { Termin } from "../api/types";
+import { TerminDto } from "../api/types";
 
-export interface TermineState {
-  termine: Termin[];
-}
+export type TermineState = {
+  termine: TerminDto[];
+};
 
-export const terminReducer = (
+export const terminReducer: (
   state: TermineState,
+  action: LoadTermineAction | ErfasseTerminAction
+) => TermineState | null = (
+  state: TermineState = { termine: [] },
   action: LoadTermineAction | ErfasseTerminAction
 ) => {
   switch (action.type) {
     case ERFASSE_TERMIN:
-      return [
-        ...state.termine,
-        {
-          id: action.id,
-          parteiId: action.parteiId,
-          beginn: action.beginn,
-          ende: action.ende,
-        },
-      ];
+      return {
+        ...state,
+        termine: [
+          ...state.termine,
+          {
+            id: action.id,
+            parteiId: action.parteiId,
+            terminBeginn: action.beginn,
+            terminEnde: action.ende,
+          },
+        ],
+      };
     case "LADE_TERMINE":
-      return action.termine;
+      return { ...state, termine: action.termine };
     default:
-      return null;
+      return state;
   }
 };

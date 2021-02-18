@@ -1,4 +1,4 @@
-import { Mieter, Termin } from "../api/types";
+import { MieterDto, TerminDto } from "../api/types";
 
 export const ERFASSE_TERMIN = "ERFASSE_TERMIN";
 export const LADE_TERMINE = "LADE_TERMINE";
@@ -19,10 +19,10 @@ export interface ErfasseTerminAction extends TerminAction {
 
 export interface LoadTermineAction extends TerminAction {
   type: "LADE_TERMINE";
-  termine: Termin[];
+  termine: TerminDto[];
 }
 
-export type LoadMieterAction = { type: "LOAD_MIETER"; mieter: Mieter[] };
+export type LoadMieterAction = { type: "LOAD_MIETER"; mieter: MieterDto[] };
 
 export const erfasseTermin: (
   nextTerminId: string,
@@ -44,7 +44,7 @@ export const erfasseTermin: (
   };
 };
 
-export const loadTermineBackendSucessful = (termine: Termin[]) => {
+export const loadTermineBackendSucessful = (termine: TerminDto[]) => {
   return {
     type: LADE_TERMINE,
     termine: termine,
@@ -55,7 +55,7 @@ export const clearStore = () => ({
   type: CLEAR_STORE,
 });
 
-export const loadMieterBackendSucessfull = (mieters: Mieter[]) => {
+export const loadMieterBackendSucessfull = (mieters: MieterDto[]) => {
   return {
     type: LOAD_MIETER,
     mieter: mieters,

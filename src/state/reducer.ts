@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
-import { terminReducer } from "./termineReducer";
-import { mieterLoad } from "./mieterReducer";
+import { TermineState, terminReducer } from "./termineReducer";
+import { mieterReducer, MieterState } from "./mieterReducer";
+
+export type State = {
+  termine: TermineState | null;
+  mieter: MieterState | null;
+};
 
 export default combineReducers({
   termine: terminReducer,
-  mieter: mieterLoad,
+  mieter: mieterReducer,
 });
