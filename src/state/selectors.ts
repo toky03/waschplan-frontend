@@ -1,3 +1,2 @@
-import {createSelector} from "@reduxjs/toolkit";
-import {TermineState} from "./termineReducer";
-
+import { createSelector } from "@reduxjs/toolkit";
+import { TermineState } from "./termineReducer";

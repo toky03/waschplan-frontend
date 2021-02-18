@@ -1,7 +1,8 @@
-import {combineReducers} from 'redux';
-import {termineAdd, termineLoad} from "./termineReducer";
+import { combineReducers } from "redux";
+import { terminReducer } from "./termineReducer";
+import { mieterLoad } from "./mieterReducer";
 
 export default combineReducers({
-    termineAdd,
-    termineLoad
+  termine: terminReducer,
+  mieter: mieterLoad,
 });

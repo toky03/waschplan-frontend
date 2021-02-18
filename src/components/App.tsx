@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
-import { Route } from 'react-router';
-import TerminInput from '../containers/ErfasseTermin'
-import TermineVerwalten from '../containers/VerwalteTermine'
+import React from "react";
+import { BrowserRouter as Router, NavLink } from "react-router-dom";
+import { Route } from "react-router";
+import TerminInput from "../containers/ErfasseTermin";
+import TermineVerwalten from "../containers/VerwalteTermine";
 
 const App = () => (
   <Router>
@@ -15,10 +15,10 @@ const App = () => (
       </li>
     </ul>
     <div>
-      <Route path="/" exact component={TerminInput}/>
-      <Route path="/verwalten" exact component={TermineVerwalten}/>
+      <Route path="/" exact component={TerminInput} />
+      <Route path="/verwalten" exact component={TermineVerwalten} />
     </div>
-</Router>
-)
+  </Router>
+);
 
 export default App;
