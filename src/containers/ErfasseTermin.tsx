@@ -43,7 +43,6 @@ const ErfasseTermin = () => {
   const parteiId: string = "0d1aa8f6-a0b5-4fac-a030-060f1ea10949";
   const beginn: string = "1999-02-01";
   const ende: string = "1999-02-01";
-
   const onSubmitFunction = () => {
     dispatch(erfasseTermin(nextTerminId, parteiId, beginn, ende));
   };
