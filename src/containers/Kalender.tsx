@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import FullCalendar, {
   EventClickArg,
@@ -31,7 +31,6 @@ const Kalender = () => {
     extendedProps: { id: termin.id, marked: termin.marked },
     backgroundColor: termin.marked ? "red" : undefined,
   }));
-  console.log("new Termine", termine);
 
   const handleDateClick = (dateClickArg: DateClickArg) => {
     setDate(() => dateClickArg.date);
