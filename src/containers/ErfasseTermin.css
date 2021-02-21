@@ -3,15 +3,14 @@
   height: 0;
 }
 
-.termin {
-  height: 200px;
-  display: flex;
-  justify-content: center;
-}
-
 .termin-erfassung {
   display: flex;
   flex-flow: wrap;
+}
+
+.calendarWrapper {
+  height: 900px;
+  display: flex;
 }
 
 .mieterContainer {
