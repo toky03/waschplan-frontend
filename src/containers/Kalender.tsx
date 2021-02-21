@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import FullCalendar, { EventSourceInput } from "@fullcalendar/react";
+import FullCalendar, {
+  EventClickArg,
+  EventSourceInput,
+} from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -22,13 +25,13 @@ const Kalender = () => {
   const termine: EventSourceInput | undefined = useSelector(
     selectTermineEnriched
   )?.map((termin: Termin) => ({
-    title: termin.mieterName,
+    title: termin.mieterName + "" + !!termin.marked ? "löschen" : "",
     start: termin.terminBeginn,
     end: termin.terminEnde,
     extendedProps: { id: termin.id, marked: termin.marked },
-    backgroundColor: termin.marked ? "red" : "blue",
+    backgroundColor: termin.marked ? "red" : undefined,
   }));
-  console.log('new Termine', termine);
+  console.log("new Termine", termine);
 
   const handleDateClick = (dateClickArg: DateClickArg) => {
     setDate(() => dateClickArg.date);
@@ -48,17 +51,19 @@ const Kalender = () => {
     setDate(() => null);
   };
 
-  const handleClick = (arg: any) => {
-    if (arg.event._def.extendedProps.marked) {
-      if(confirm('soll der Termin gelöscht werden?')) {
-        store.dispatch(loescheTermin(arg.event._def.extendedProps.id));
+  const handleClick = (arg: EventClickArg) => {
+    const terminId: string = arg.event._def.extendedProps.id;
+    const marked: boolean = arg.event._def.extendedProps.marked;
+    if (marked) {
+      if (confirm("soll der Termin gelöscht werden?")) {
+        store.dispatch(loescheTermin(terminId));
+      } else {
+        store.dispatch(markiereTermin(terminId));
       }
     } else {
-        store.dispatch(markiereTermin(arg.event._def.extendedProps.id));
+      store.dispatch(markiereTermin(terminId));
     }
   };
-
-  useEffect(() => {}, [termine]);
 
   return (
     <div>

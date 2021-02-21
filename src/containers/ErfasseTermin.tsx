@@ -25,7 +25,7 @@ const ErfasseTermin = () => {
         },
       });
     }
-  });
+  }, []);
 
   return (
     <div className={"termin-erfassung"}>
@@ -34,13 +34,20 @@ const ErfasseTermin = () => {
       </div>
       <div className={"mieterContainer"} ref={containerElRef}>
         {mieter?.mieter.map((mieter: MieterDto) => (
-          <Chip
-            key={mieter.id}
-            className={"draggable"}
-            draggable={"true"}
-            label={"Waschtermin " + mieter.name}
-          />
+          <div>
+            <Chip
+              key={mieter.id}
+              className={"draggable"}
+              draggable={"true"}
+              label={"Waschtermin " + mieter.name}
+            />
+            <div className="spaceBetweenIcons" />
+          </div>
         ))}
+      </div>
+      <div>
+        Anleitung: Du kannst den Button in den Kalender schieben um einen
+        Waschtag zu buchen
       </div>
     </div>
   );

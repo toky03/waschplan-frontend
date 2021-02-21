@@ -23,7 +23,7 @@ export const selectTermineEnriched = createSelector<
       mieterName: mieterState?.mieter.find(
         (mieter: MieterDto) => mieter.id === termin.parteiId
       )?.name,
-        marked: termin.marked
+      marked: termin.marked,
     }));
   }
 );
