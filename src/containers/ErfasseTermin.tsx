@@ -57,16 +57,19 @@ const ErfasseTermin = () => {
           draggable={"true"}
           label={"Waschtermin Beat & Lisa"}
         />
+        <div className="spaceBetweenIcons"></div>
         <Chip
           className={"draggable"}
           draggable={"true"}
           label={"Waschtermin Familie Ramseier"}
         />
+        <div className="spaceBetweenIcons"></div>
         <Chip
           className={"draggable"}
           draggable={"true"}
           label={"Waschtermin Hugo"}
         />
+        <div className="spaceBetweenIcons"></div>
         <Chip
           className={"draggable"}
           draggable={"true"}

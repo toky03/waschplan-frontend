@@ -17,6 +17,10 @@
   width: 20%;
 }
 
+.spaceBetweenIcons {
+  height: 10px;
+}
+
 .fc {
   width: 80%;
   font-family: Roboto;
