@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-docker": "docker build -t toky03/waschplan-frontend:0.0.6 .",
+    "build-docker": "docker build -t toky03/waschplan-frontend:0.0.7 .",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettify": "prettier --write ."

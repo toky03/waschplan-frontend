@@ -25,7 +25,7 @@ const Kalender = () => {
   const termine: EventSourceInput | undefined = useSelector(
     selectTermineEnriched
   )?.map((termin: Termin) => ({
-    title: termin.mieterName + "" + !!termin.marked ? "löschen" : "",
+    title: termin.mieterName + (termin.marked? " löschen": ""),
     start: termin.terminBeginn,
     end: termin.terminEnde,
     extendedProps: { id: termin.id, marked: termin.marked },
