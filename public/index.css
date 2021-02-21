@@ -1,0 +1,12 @@
+.headerWrapper {
+    height: 50px;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message {
+    color: brown;
+    margin-top: 10px;
+}
