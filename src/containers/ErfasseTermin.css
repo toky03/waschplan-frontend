@@ -4,7 +4,9 @@
 }
 
 .termin {
+  height: 200px;
   display: flex;
+  justify-content: center;
 }
 
 .termin-erfassung {

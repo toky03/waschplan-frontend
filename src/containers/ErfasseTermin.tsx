@@ -1,11 +1,9 @@
 import React, { useEffect, useReducer, useRef } from "react";
-import { connect, useDispatch } from "react-redux";
-import { erfasseTermin } from "../state/actions";
+import { useDispatch } from "react-redux";
 import { Chip } from "@material-ui/core";
 
 import "./ErfasseTermin.css";
 import Kalender from "./Kalender";
-import { Button } from "@material-ui/core";
 import { Draggable } from "@fullcalendar/interaction";
 
 const ErfasseTermin = () => {
