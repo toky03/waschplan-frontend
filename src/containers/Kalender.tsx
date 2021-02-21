@@ -1,39 +1,86 @@
-import FullCalendar from "@fullcalendar/react";
+import React, { useEffect, useState } from "react";
+
+import FullCalendar, { EventSourceInput } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
+
 import localeDe from "@fullcalendar/core/locales/de";
-import React from "react";
 import { useSelector } from "react-redux";
+import { Termin } from "../model/model";
+import { selectTermineEnriched } from "../state/selectors";
 
-const initialEvents = [
-  { title: "event 1", start: "2020-12-15T01:30:00+01:00" },
-  { title: "event 2", date: "2019-04-02" },
-];
-
-const handleDateClick = (arg: any) => {
-  console.log(arg);
-  alert(arg.date);
-};
+import store from "../index";
+import { markiereTermin, erfasseTermin, loescheTermin } from "../state/actions";
+import UserChooser from "./UserChooser";
+import { formatISO, setHours, setMinutes } from "date-fns";
 
 const Kalender = () => {
-  const termine = useSelector((state: any) => state.termine);
+  const [pendingDate, setDate] = useState<Date | null>(null);
+
+  // TODO muss dies in einen Effect verschoben werden?
+  const termine: EventSourceInput | undefined = useSelector(
+    selectTermineEnriched
+  )?.map((termin: Termin) => ({
+    title: termin.mieterName,
+    start: termin.terminBeginn,
+    end: termin.terminEnde,
+    extendedProps: { id: termin.id, marked: termin.marked },
+    backgroundColor: termin.marked ? "red" : "blue",
+  }));
+  console.log('new Termine', termine);
+
+  const handleDateClick = (dateClickArg: DateClickArg) => {
+    setDate(() => dateClickArg.date);
+  };
+
+  const createTermin = (parteiId: string | null) => {
+    if (pendingDate && parteiId) {
+      store.dispatch(
+        erfasseTermin(
+          "<0>", // TODO muss weggenommen werden
+          parteiId,
+          formatISO(setMinutes(setHours(pendingDate, 7), 0)),
+          formatISO(setMinutes(setHours(pendingDate, 22), 0))
+        )
+      );
+    }
+    setDate(() => null);
+  };
+
+  const handleClick = (arg: any) => {
+    if (arg.event._def.extendedProps.marked) {
+      if(confirm('soll der Termin gelöscht werden?')) {
+        store.dispatch(loescheTermin(arg.event._def.extendedProps.id));
+      }
+    } else {
+        store.dispatch(markiereTermin(arg.event._def.extendedProps.id));
+    }
+  };
+
+  useEffect(() => {}, [termine]);
 
   return (
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-      initialView="timeGridWeek"
-      locale={localeDe}
-      themeSystem={"standart"}
-      droppable={true}
-      weekends={false}
-      slotMinTime={"07:00:00"}
-      slotMaxTime={"22:00:00"}
-      events={initialEvents}
-      dateClick={handleDateClick}
-    >
-      loading...
-    </FullCalendar>
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+        initialView="timeGridWeek"
+        locale={localeDe}
+        themeSystem={"standart"}
+        droppable={true}
+        weekends={false}
+        slotMinTime={"07:00:00"}
+        slotMaxTime={"22:00:00"}
+        events={termine}
+        eventOverlap={false}
+        editable={true}
+        dateClick={handleDateClick}
+        eventClick={handleClick}
+      >
+        loading...
+      </FullCalendar>
+      <UserChooser open={pendingDate !== null} userChanged={createTermin} />
+    </div>
   );
 };
 

@@ -1,7 +1,5 @@
 import { connect } from "react-redux";
-import { loadTermine } from "../state/backend";
 import Termine from "../components/Termine";
-import store from "../index";
 
 const VerwalteTermine = () => {
   return (

@@ -2,20 +2,19 @@ import { createSelector } from "@reduxjs/toolkit";
 import { State } from "./reducer";
 import { TermineState } from "./termineReducer";
 import { MieterState } from "./mieterReducer";
-import { MieterDto, TerminDto } from "../api/types";
-import { Termin } from "../model/model";
+import { MieterDto, Termin, TerminDto } from "../model/model";
 
-const termineRawSelector = (state: State) => state.termine;
-const mieterRawSelector = (state: State) => state.mieter;
+export const termineRawSelector = (state: State) => state.termine;
+export const mieterSelector = (state: State) => state.mieter;
 
-export const selectTermine = createSelector<
+export const selectTermineEnriched = createSelector<
   State,
   TermineState | null,
   MieterState | null,
   Termin[] | undefined
 >(
   termineRawSelector,
-  mieterRawSelector,
+  mieterSelector,
   (termineState: TermineState | null, mieterState: MieterState | null) => {
     return termineState?.termine.map((termin: TerminDto) => ({
       id: termin.id,
@@ -24,6 +23,7 @@ export const selectTermine = createSelector<
       mieterName: mieterState?.mieter.find(
         (mieter: MieterDto) => mieter.id === termin.parteiId
       )?.name,
+        marked: termin.marked
     }));
   }
 );
