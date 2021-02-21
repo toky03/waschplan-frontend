@@ -39,14 +39,6 @@ const ErfasseTermin = () => {
     date: "",
   });
 
-  const nextTerminId: string = "5bdf9e40-50a1-46a7-b22d-83e1934a431b";
-  const parteiId: string = "0d1aa8f6-a0b5-4fac-a030-060f1ea10949";
-  const beginn: string = "1999-02-01";
-  const ende: string = "1999-02-01";
-  const onSubmitFunction = () => {
-    dispatch(erfasseTermin(nextTerminId, parteiId, beginn, ende));
-  };
-
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
@@ -57,9 +49,6 @@ const ErfasseTermin = () => {
   return (
     <div className={"termin-erfassung"}>
       <form>
-        <Button onClick={onSubmitFunction} color={"primary"}>
-          Erfasse Termin
-        </Button>
       </form>
       <div className={"calendarWrapper"}>
         <Kalender />
