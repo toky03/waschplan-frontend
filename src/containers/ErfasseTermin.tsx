@@ -73,6 +73,7 @@ const ErfasseTermin = () => {
           label={"Waschtermin Brönnimann"}
         />
       </div>
+      <div>Anleitung: Du kannst den Button in den Kalender schieben um einen Waschtag zu buchen</div>
     </div>
   );
 };
