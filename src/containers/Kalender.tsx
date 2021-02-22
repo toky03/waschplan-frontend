@@ -65,7 +65,7 @@ const Kalender = () => {
   };
 
   return (
-    <div>
+    <div className={"calendarWrapper"}>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
