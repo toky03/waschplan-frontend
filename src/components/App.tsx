@@ -5,6 +5,7 @@ import TerminInput from "../containers/ErfasseTermin";
 import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
 import { loadMieter, loadTermine } from "../state/backend";
+import "./App.css";
 
 const App = () => {
   useEffect(() => {
@@ -13,7 +14,7 @@ const App = () => {
   }, []);
   return (
     <Router>
-      <ul>
+      <ul className={"navigation"}>
         <li>
           <NavLink to="/">Waschplan</NavLink>
         </li>
