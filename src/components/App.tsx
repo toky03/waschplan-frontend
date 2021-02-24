@@ -6,7 +6,7 @@ import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
 import { loadMieter, loadTermine } from "../state/backend";
 import "./App.css";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 
 const App = () => {
   useEffect(() => {
@@ -16,12 +16,12 @@ const App = () => {
   return (
     <Router>
       <div className={"navigation"}>
-        <Link>
+        <Button>
           <NavLink to="/">Waschplan</NavLink>
-        </Link>
-        <Link>
+        </Button>
+        <Button>
           <NavLink to="/verwalten">Verwalten</NavLink>
-        </Link>
+        </Button>
       </div>
       <div>
         <Route path="/" exact component={TerminInput} />

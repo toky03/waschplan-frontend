@@ -1,16 +1,12 @@
 .navigation {
     height: 50px;
-    background-color: #edd9b7;
+    background-color: #edcfb7;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
 }
 
-.navigation > li:nth-child(1) {
-    background-color:seashell;
-}
-
-.navigation > li:nth-child(2) {
-    background-color:seashell;
+.navigation > Button {
+    background-color: wheat;
 }
