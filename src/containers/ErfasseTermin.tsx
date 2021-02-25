@@ -29,12 +29,12 @@ const ErfasseTermin = () => {
 
   return (
     <div className={"termin-erfassung"}>
-      <div className={"calendarWrapper"}>
-        <Kalender />
+      <div className={"anleitungContainer"}>
+        <div className={"anleitung"}>ANLEITUNG: DU KANNST DAS BILD DES VERMIETERS IN DEN KALENDER SCHIEBEN UM EINEN WASCHTAG ZU BUCHEN!</div>
       </div>
       <div className={"mieterContainer"} ref={containerElRef}>
         {mieter?.mieter.map((mieter: MieterDto) => (
-          <div>
+          <div className={"mieter"}>
             <Chip
               key={mieter.id}
               className={"draggable"}
@@ -45,9 +45,8 @@ const ErfasseTermin = () => {
           </div>
         ))}
       </div>
-      <div>
-        Anleitung: Du kannst den Button in den Kalender schieben um einen
-        Waschtag zu buchen
+      <div className={"calendarWrapper"}>
+        <Kalender />
       </div>
     </div>
   );

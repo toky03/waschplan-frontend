@@ -6,9 +6,10 @@
 .termin-erfassung {
   display: flex;
   flex-flow: wrap;
+  background-color: #edcfb7;
 }
 
-.anleitungContainer{
+.anleitungContainer {
   width: 100%;
   height: 50px;
   background-color: burlywood;
@@ -18,7 +19,7 @@
   align-items: center;
 }
 
-.anleitung{
+.anleitung {
   color: brown;
   margin-top: 15px;
   font-family: Verdana;
@@ -26,15 +27,24 @@
 
 .calendarWrapper {
   height: 750px;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.mieterContainerLinks {
-  width: 20%;
+.mieterContainer {
+  width: 100%;
+  height: 50px;
+  background-color: #edcfb7;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.mieterContainerRechts {
-  width: 20%;
+.mieter {
+  margin-top: 10px;
 }
 
 .spaceBetweenIcons {
@@ -42,6 +52,8 @@
 }
 
 .fc {
-  width: 80%;
-  font-family: Roboto;
+  width: 90%;
+  background-color: burlywood;
+  margin-top: 15px;
+  font-family: Verdana;
 }
