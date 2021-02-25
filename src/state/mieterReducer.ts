@@ -1,5 +1,5 @@
 import { LOAD_MIETER, LoadMieterAction } from "./actions";
-import { MieterDto } from "../api/types";
+import { MieterDto } from "../model/model";
 
 export interface MieterState {
   mieter: MieterDto[];

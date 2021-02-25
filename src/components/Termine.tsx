@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { selectTermine } from "../state/selectors";
+import { selectTermineEnriched } from "../state/selectors";
 import { Termin } from "../model/model";
 
 const Termine = () => {
-  const termine: Termin[] | undefined = useSelector(selectTermine);
+  const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
   return (
     <ul>
       {termine?.map((termin: Termin) => (

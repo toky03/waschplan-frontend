@@ -3,7 +3,7 @@ import {
   clearStore,
   loadMieterBackendSucessfull,
 } from "./actions";
-import { MieterDto, TerminDto } from "../api/types";
+import { MieterDto, TerminDto } from "../model/model";
 
 const API_URL = "https://waschplan.bubelu.ch/api/";
 
