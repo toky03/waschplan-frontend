@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import { Route } from "react-router";
+import "./App.css";
+
 import TerminInput from "../containers/ErfasseTermin";
 import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
 import { loadMieter, loadTermine } from "../state/backend";
-import "./App.css";
 import Button from "@material-ui/core/Button";
+import {askForPermissioToReceiveNotifications} from "../push-notification";
+
 
 const App = () => {
   useEffect(() => {

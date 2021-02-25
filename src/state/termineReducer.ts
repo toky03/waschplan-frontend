@@ -3,8 +3,12 @@ import {
   LADE_TERMINE,
   ErfasseTerminAction,
   LoadTermineAction,
+  MARKIERE_TERMIN,
+  MarkiereTerminAction,
+  LoescheTerminAction,
+  LOESCHE_TERMIN,
 } from "./actions";
-import { TerminDto } from "../api/types";
+import { TerminDto } from "../model/model";
 
 export type TermineState = {
   termine: TerminDto[];
@@ -12,10 +16,18 @@ export type TermineState = {
 
 export const terminReducer: (
   state: TermineState,
-  action: LoadTermineAction | ErfasseTerminAction
+  action:
+    | LoadTermineAction
+    | ErfasseTerminAction
+    | MarkiereTerminAction
+    | LoescheTerminAction
 ) => TermineState | null = (
   state: TermineState = { termine: [] },
-  action: LoadTermineAction | ErfasseTerminAction
+  action:
+    | LoadTermineAction
+    | ErfasseTerminAction
+    | MarkiereTerminAction
+    | LoescheTerminAction
 ) => {
   switch (action.type) {
     case ERFASSE_TERMIN:
@@ -31,8 +43,36 @@ export const terminReducer: (
           },
         ],
       };
-    case "LADE_TERMINE":
+    case LADE_TERMINE:
       return { ...state, termine: action.termine };
+    case MARKIERE_TERMIN:
+      const terminToMarked: TerminDto | undefined = state.termine.find(
+        (termin: TerminDto) => termin.id === action.id
+      );
+      if (!terminToMarked) {
+        return state;
+      } else {
+        const filteredTermine: TerminDto[] = state.termine
+          .filter((termin: TerminDto) => termin.id !== action.id)
+          .map((termin: TerminDto) => ({ ...termin, marked: false }));
+        const editedTermin: TerminDto = {
+          ...terminToMarked,
+          marked: !terminToMarked.marked,
+        };
+        return {
+          ...state,
+          termine: [...filteredTermine, editedTermin],
+        };
+      }
+
+    case LOESCHE_TERMIN:
+      const reducedTermine = state.termine.filter(
+        (termin: TerminDto) => termin.id !== action.terminId
+      );
+      return {
+        ...state,
+        termine: [...reducedTermine],
+      };
     default:
       return state;
   }
