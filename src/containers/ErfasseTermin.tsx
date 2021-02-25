@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
-import { Chip } from "@material-ui/core";
+import { Chip, Avatar } from "@material-ui/core";
 import Kalender from "./Kalender";
 
 import { Draggable } from "@fullcalendar/interaction";
@@ -30,7 +30,7 @@ const ErfasseTermin = () => {
   return (
     <div className={"termin-erfassung"}>
       <div className={"anleitungContainer"}>
-        <div className={"anleitung"}>ANLEITUNG: DU KANNST DAS BILD DES VERMIETERS IN DEN KALENDER SCHIEBEN UM EINEN WASCHTAG ZU BUCHEN!</div>
+        <div className={"anleitung"}>ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM EINEN WASCHTAG ZU BUCHEN!</div>
       </div>
       <div className={"mieterContainer"} ref={containerElRef}>
         {mieter?.mieter.map((mieter: MieterDto) => (
@@ -39,7 +39,9 @@ const ErfasseTermin = () => {
               key={mieter.id}
               className={"draggable"}
               draggable={"true"}
-              label={"Waschtermin " + mieter.name}
+              label={mieter.name}
+              variant={"outlined"}
+              avatar={<Avatar></Avatar>}
             />
             <div className="spaceBetweenIcons" />
           </div>
