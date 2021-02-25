@@ -8,12 +8,32 @@
   flex-flow: wrap;
 }
 
+.anleitungContainer{
+  width: 100%;
+  height: 50px;
+  background-color: burlywood;
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.anleitung{
+  color: brown;
+  margin-top: 15px;
+  font-family: Verdana;
+}
+
 .calendarWrapper {
   height: 900px;
   display: flex;
 }
 
-.mieterContainer {
+.mieterContainerLinks {
+  width: 20%;
+}
+
+.mieterContainerRechts {
   width: 20%;
 }
 

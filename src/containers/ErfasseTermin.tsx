@@ -46,12 +46,10 @@ const ErfasseTermin = () => {
 
   return (
     <div className={"termin-erfassung"}>
-      <form>
-      </form>
-      <div className={"calendarWrapper"}>
-        <Kalender />
+      <div className={"anleitungContainer"}>
+        <div className={"anleitung"}>ANLEITUNG: DU KANNST DAS BILD DES VERMIETERS IN DEN KALENDER SCHIEBEN UM EINEN WASCHTAG ZU BUCHEN!</div>
       </div>
-      <div className={"mieterContainer"} ref={containerElRef}>
+      <div className={"mieterContainerLinks"} ref={containerElRef}>
         <Chip
           className={"draggable"}
           draggable={"true"}
@@ -63,7 +61,11 @@ const ErfasseTermin = () => {
           draggable={"true"}
           label={"Waschtermin Familie Ramseier"}
         />
-        <div className="spaceBetweenIcons"></div>
+      </div>
+      <div className={"calendarWrapper"}>
+        <Kalender />
+      </div>
+      <div className={"mieterContainerRechts"} ref={containerElRef}>
         <Chip
           className={"draggable"}
           draggable={"true"}
@@ -76,7 +78,6 @@ const ErfasseTermin = () => {
           label={"Waschtermin Brönnimann"}
         />
       </div>
-      <div>Anleitung: Du kannst den Button in den Kalender schieben um einen Waschtag zu buchen</div>
     </div>
   );
 };
