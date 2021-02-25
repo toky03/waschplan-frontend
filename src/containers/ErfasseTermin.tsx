@@ -1,83 +1,56 @@
-import React, {useEffect, useReducer} from "react";
-import {connect, useDispatch} from "react-redux";
-import {erfasseTermin} from "../actions";
-import { Chip } from '@material-ui/core';
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
-
-
-import './ErfasseTermin.css'
+import { Chip } from "@material-ui/core";
 import Kalender from "./Kalender";
-import {Button} from "@material-ui/core";
-import {Draggable} from "@fullcalendar/interaction";
+
+import { Draggable } from "@fullcalendar/interaction";
+import "./ErfasseTermin.css";
+import { mieterSelector } from "../state/selectors";
+import { MieterDto } from "../model/model";
 
 const ErfasseTermin = () => {
+  const containerElRef = useRef<HTMLDivElement>(null);
+  const mieter = useSelector(mieterSelector);
 
-    const dispatch = useDispatch();
-
-    const formReducer = (state: { name: string, date: string }, event: any) => {
-        return {
-            ...state,
-            [event.name]: event.value
-        }
+  useEffect(() => {
+    if (containerElRef.current) {
+      new Draggable(containerElRef.current, {
+        itemSelector: ".draggable",
+        eventData: function (eventEl: HTMLElement) {
+          return {
+            title: eventEl.innerText,
+            duration: { days: 1 },
+          };
+        },
+      });
     }
+  }, []);
 
-    useEffect(() => {
-        const containerEl = document.getElementById('externe-events');
-        console.log(containerEl);
-        // TODO kann dies auch anders gemacht werden?
-        if(containerEl){
-            new Draggable(containerEl, {
-                itemSelector: '.draggable',
-                eventData: function(eventEl) {
-                    return {
-                        title: eventEl.innerText,
-                        duration: {days:1}
-                    };
-                }
-            });
-        }
-    })
-
-
-    const [formData, setFormData] = useReducer(formReducer, {name: '', date: ''});
-
-    const onSubmitFunction = () => {
-        dispatch(erfasseTermin(formData.name, formData.date));
-    };
-
-    const handleChange = (event: any) => {
-        setFormData({
-            name: event.target.name,
-            value: event.target.value
-        })
-    }
-
-    return (
-        <div className={"termin-erfassung"}>
-            <form >
-                <label>
-                    {"Name"}
-                    <input name="name" onChange={handleChange}/>
-                </label>
-                <label>
-                    {"Datum"}
-                    <input name="date" onChange={handleChange}/>
-                </label>
-                <Button onClick={onSubmitFunction} color={"primary"}>Erfasse Termin</Button>
-            </form>
-            <div id={"externe-events"}>
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Marco"} />
-                <Chip className={"draggable"} draggable={"true"} label={"Waschtermin Vanessa"}/>
-            </div>
-            <div className={"calendarWrapper"}>
-                <Kalender />
-            </div>
-
-
-        </div>
-
-
-    );
+  return (
+    <div className={"termin-erfassung"}>
+      <div className={"calendarWrapper"}>
+        <Kalender />
+      </div>
+      <div className={"mieterContainer"} ref={containerElRef}>
+        {mieter?.mieter.map((mieter: MieterDto) => (
+          <div>
+            <Chip
+              key={mieter.id}
+              className={"draggable"}
+              draggable={"true"}
+              label={"Waschtermin " + mieter.name}
+            />
+            <div className="spaceBetweenIcons" />
+          </div>
+        ))}
+      </div>
+      <div>
+        Anleitung: Du kannst den Button in den Kalender schieben um einen
+        Waschtag zu buchen
+      </div>
+    </div>
+  );
 };
 
 export default ErfasseTermin;
