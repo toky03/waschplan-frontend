@@ -4,17 +4,41 @@
 }
 
 .termin-erfassung {
+  height: 100%;
   display: flex;
   flex-flow: wrap;
+  background-color: #edcfb7;
 }
 
-.calendarWrapper {
-  height: 750px;
+.anleitungContainer {
+  width: 100%;
+  height: 75px;
+  padding-left: 5%;
+  background-color: burlywood;
   display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+.anleitung {
+  color: brown;
+  margin-top: 15px;
+  font-family: Verdana;
 }
 
 .mieterContainer {
-  width: 20%;
+  width: 100%;
+  height: 85px;
+  background-color: #edcfb7;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.mieter {
+  margin-top: 10px;
 }
 
 .spaceBetweenIcons {
@@ -22,6 +46,8 @@
 }
 
 .fc {
-  width: 80%;
-  font-family: Roboto;
+  width: 90%;
+  background-color: burlywood;
+  margin-top: 15px;
+  font-family: Verdana;
 }
