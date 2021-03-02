@@ -1,14 +1,17 @@
 import {
-  ERFASSE_TERMIN,
-  LADE_TERMINE,
-  ErfasseTerminAction,
+  ADD_TERMIN,
+  CreateTerminAction,
   LoadTermineAction,
-  MARKIERE_TERMIN,
+  MARK_TERMIN,
   MarkiereTerminAction,
   LoescheTerminAction,
-  LOESCHE_TERMIN,
+  DELETE_TERMIN,
+  LOAD_TERMINE,
+  UPDATE_TERMIN,
+  UpdateTerminAction,
 } from "./actions";
 import { TerminDto } from "../model/model";
+import { generatePseudoTerminId } from "./id-utils";
 
 export type TermineState = {
   termine: TerminDto[];
@@ -18,34 +21,47 @@ export const terminReducer: (
   state: TermineState,
   action:
     | LoadTermineAction
-    | ErfasseTerminAction
+    | CreateTerminAction
     | MarkiereTerminAction
     | LoescheTerminAction
+    | UpdateTerminAction
 ) => TermineState | null = (
   state: TermineState = { termine: [] },
   action:
     | LoadTermineAction
-    | ErfasseTerminAction
+    | CreateTerminAction
     | MarkiereTerminAction
     | LoescheTerminAction
+    | UpdateTerminAction
 ) => {
   switch (action.type) {
-    case ERFASSE_TERMIN:
+    case ADD_TERMIN: {
       return {
         ...state,
-        termine: [
-          ...state.termine,
-          {
-            id: action.id,
-            parteiId: action.parteiId,
-            terminBeginn: action.beginn,
-            terminEnde: action.ende,
-          },
-        ],
+        termine: [...state.termine, action.termin],
       };
-    case LADE_TERMINE:
+    }
+    case UPDATE_TERMIN: {
+      const oldTermin = state.termine.find(
+          (termin: TerminDto) => termin.id === action.terminId
+      );
+      if (oldTermin) {
+        return {
+          ...state,
+          termine: [
+            ...state.termine.filter(
+                (termin: TerminDto) => termin.id !== action.terminId
+            ),
+            {...oldTermin, ...action.termin},
+          ],
+        };
+      } else {
+        return state;
+      }
+    }
+    case LOAD_TERMINE:
       return { ...state, termine: action.termine };
-    case MARKIERE_TERMIN:
+    case MARK_TERMIN: {
       const terminToMarked: TerminDto | undefined = state.termine.find(
         (termin: TerminDto) => termin.id === action.id
       );
@@ -64,8 +80,8 @@ export const terminReducer: (
           termine: [...filteredTermine, editedTermin],
         };
       }
-
-    case LOESCHE_TERMIN:
+    }
+    case DELETE_TERMIN: {
       const reducedTermine = state.termine.filter(
         (termin: TerminDto) => termin.id !== action.terminId
       );
@@ -73,6 +89,7 @@ export const terminReducer: (
         ...state,
         termine: [...reducedTermine],
       };
+    }
     default:
       return state;
   }

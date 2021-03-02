@@ -4,8 +4,10 @@ import { TermineState } from "./termineReducer";
 import { MieterState } from "./mieterReducer";
 import { MieterDto, Termin, TerminDto } from "../model/model";
 
-export const termineRawSelector = (state: State) => state.termine;
-export const mieterSelector = (state: State) => state.mieter;
+export const selectBackendSynced = (state: State) => state.metaData?.backendSync;
+
+export const selectTermineRaw = (state: State) => state.termine;
+export const selectMieter = (state: State) => state.mieter;
 
 export const selectTermineEnriched = createSelector<
   State,
@@ -13,8 +15,8 @@ export const selectTermineEnriched = createSelector<
   MieterState | null,
   Termin[] | undefined
 >(
-  termineRawSelector,
-  mieterSelector,
+  selectTermineRaw,
+  selectMieter,
   (termineState: TermineState | null, mieterState: MieterState | null) => {
     return termineState?.termine.map((termin: TerminDto) => ({
       id: termin.id,

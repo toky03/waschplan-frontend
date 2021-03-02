@@ -14,22 +14,26 @@ import { Termin } from "../model/model";
 import { selectTermineEnriched } from "../state/selectors";
 
 import store from "../index";
-import { markiereTermin, erfasseTermin, loescheTermin } from "../state/actions";
+import { markiereTermin } from "../state/actions";
 import UserChooser from "./UserChooser";
-import { formatISO, setHours, setMinutes } from "date-fns";
+import {createNewTermin, deleteTermin} from "../integration/integration";
+import {isPseudoRegex} from "../state/id-utils";
 
 const Kalender = () => {
   const [pendingDate, setDate] = useState<Date | null>(null);
 
-  // TODO muss dies in einen Effect verschoben werden?
+  const calculateBackgroundColor = (marked: boolean | undefined, id: string) => {
+    return marked? 'red' : isPseudoRegex(id)? 'lightblue': undefined;
+  }
+
   const termine: EventSourceInput | undefined = useSelector(
     selectTermineEnriched
   )?.map((termin: Termin) => ({
-    title: termin.mieterName + (termin.marked? " löschen": ""),
+    title: termin.mieterName + (termin.marked ? " löschen" : ""),
     start: termin.terminBeginn,
     end: termin.terminEnde,
     extendedProps: { id: termin.id, marked: termin.marked },
-    backgroundColor: termin.marked ? "red" : undefined,
+    backgroundColor: calculateBackgroundColor(termin.marked, termin.id),
   }));
 
   const handleDateClick = (dateClickArg: DateClickArg) => {
@@ -38,14 +42,7 @@ const Kalender = () => {
 
   const createTermin = (parteiId: string | null) => {
     if (pendingDate && parteiId) {
-      store.dispatch(
-        erfasseTermin(
-          "<0>", // TODO muss weggenommen werden
-          parteiId,
-          formatISO(setMinutes(setHours(pendingDate, 7), 0)),
-          formatISO(setMinutes(setHours(pendingDate, 22), 0))
-        )
-      );
+      store.dispatch(createNewTermin(parteiId, pendingDate));
     }
     setDate(() => null);
   };
@@ -55,7 +52,7 @@ const Kalender = () => {
     const marked: boolean = arg.event._def.extendedProps.marked;
     if (marked) {
       if (confirm("soll der Termin gelöscht werden?")) {
-        store.dispatch(loescheTermin(terminId));
+        store.dispatch(deleteTermin(terminId));
       } else {
         store.dispatch(markiereTermin(terminId));
       }

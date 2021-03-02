@@ -6,12 +6,12 @@ import Kalender from "./Kalender";
 
 import { Draggable } from "@fullcalendar/interaction";
 import "./ErfasseTermin.css";
-import { mieterSelector } from "../state/selectors";
+import { selectMieter } from "../state/selectors";
 import { MieterDto } from "../model/model";
 
 const ErfasseTermin = () => {
   const containerElRef = useRef<HTMLDivElement>(null);
-  const mieter = useSelector(mieterSelector);
+  const mieter = useSelector(selectMieter);
 
   useEffect(() => {
     if (containerElRef.current) {
@@ -34,9 +34,8 @@ const ErfasseTermin = () => {
       </div>
       <div className={"mieterContainer"} ref={containerElRef}>
         {mieter?.mieter.map((mieter: MieterDto) => (
-          <div>
+          <div key={mieter.id}>
             <Chip
-              key={mieter.id}
               className={"draggable"}
               draggable={"true"}
               label={"Waschtermin " + mieter.name}
