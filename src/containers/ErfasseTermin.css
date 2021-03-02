@@ -12,6 +12,7 @@
 .anleitungContainer {
   width: 100%;
   height: 75px;
+  padding-left: 5%;
   background-color: burlywood;
   display: flex;
   flex-flow: wrap;

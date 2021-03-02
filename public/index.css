@@ -1,5 +1,6 @@
 .headerWrapper {
     height: 50px;
+    padding-left: 5%;
     background-color: burlywood;
     display: flex;
     flex-direction: column;
