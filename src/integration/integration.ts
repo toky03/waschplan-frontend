@@ -78,7 +78,7 @@ export const deleteTermin = (terminId: string) => {
   return async (dispatch: any) => {
     removeTerminLocalStorage(terminId);
     dispatch(removeTermin(terminId));
-    removeTerminBackend(terminId);
+    await removeTerminBackend(terminId);
 
   };
 };
@@ -93,7 +93,7 @@ export async function loadTermine(dispatch: any): Promise<void> {
       terminLocalStorage,
       termineBackend
     );
-    savePendingEntities(mergedTermine, saveTerminBackend);
+    await savePendingEntities(mergedTermine, saveTerminBackend);
     saveTermineLocalStorage(mergedTermine);
     dispatch(loadTermineSucessful(mergedTermine));
     dispatch(setBackendSync(true));
@@ -113,7 +113,8 @@ async function savePendingEntities<T extends ReferenceableEntity>(
   savingEntityFunc: (entity: T) => Promise<string>
 ): Promise<T[]> {
   const updatedEntities: T[] = [];
-  for (const entity of entitiesLocalStorage) {
+  for (let index = 0; index < entitiesLocalStorage.length; index++) {
+    const entity = entitiesLocalStorage[index];
     if (isPseudoRegex(entity.id)) {
       try {
         const newId = await savingEntityFunc(entity);

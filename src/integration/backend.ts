@@ -26,9 +26,12 @@ export async function loadMieterBackend(): Promise<MieterDto[]> {
 }
 
 export async function saveTerminBackend(termin: TerminDto): Promise<string> {
+  console.log('Termin post',termin)
   const response = await fetchWithTimeout(API_URL + "termine", {
     method: "POST",
     body: JSON.stringify(termin),
+    // TODO braucht es nur fuer Calls innerhalb
+    mode: "no-cors",
     headers: {
       "content-type": "application/json",
     },
@@ -38,7 +41,7 @@ export async function saveTerminBackend(termin: TerminDto): Promise<string> {
 }
 
 export async function removeTerminBackend(terminId: string): Promise<void> {
-  fetchWithTimeout(`${API_URL}/termine/${terminId}`, {
+  fetchWithTimeout(`${API_URL}termine/${terminId}`, {
     method: "DELETE",
   });
 }
