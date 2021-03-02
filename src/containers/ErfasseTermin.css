@@ -4,6 +4,7 @@
 }
 
 .termin-erfassung {
+  height: 100%;
   display: flex;
   flex-flow: wrap;
   background-color: #edcfb7;
@@ -27,7 +28,7 @@
 }
 
 .calendarWrapper {
-  height: 750px;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
