@@ -1,18 +1,18 @@
 import { MieterDto, ReplacedIdDto, TerminDto } from "../model/model";
+import axios from "axios";
 
 const API_URL = "https://waschplan.bubelu.ch/api/";
 const TIMEOUT_MILLIS = 5000;
 
 export async function available(): Promise<boolean> {
   try {
-    const response = await fetchWithTimeout(API_URL+'health');
-    const status = await  response.json();
+    const response = await fetchWithTimeout(API_URL + "health");
+    const status = await response.json();
     return status.status === "UP";
   } catch (e) {
-    console.log('failed return false')
+    console.log("failed return false");
     return false;
   }
-
 }
 
 export async function loadTermineBackend(): Promise<TerminDto[]> {
@@ -26,17 +26,16 @@ export async function loadMieterBackend(): Promise<MieterDto[]> {
 }
 
 export async function saveTerminBackend(termin: TerminDto): Promise<string> {
-  console.log('Termin post',termin)
-  const response = await fetchWithTimeout(API_URL + "termine", {
-    method: "POST",
-    body: JSON.stringify(termin),
-    // TODO braucht es nur fuer Calls innerhalb
-    mode: "no-cors",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const replacedId: ReplacedIdDto = await response.json();
+  console.log("Termin post", termin);
+  // const response = await fetchWithTimeout(API_URL + "termine", {
+  //   method: "POST",
+  //   body: JSON.stringify(termin),
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  // });
+  const response = await axios.post(API_URL + "termine", termin);
+  const replacedId: ReplacedIdDto = await response.data;
   return replacedId.newId;
 }
 
@@ -55,12 +54,10 @@ async function fetchWithTimeout(url: string, options?: RequestInit) {
     const response = await fetch(url, {
       ...options,
       signal: controller.signal,
-    })
+    });
     clearTimeout(id);
     return response;
   } catch (error) {
-    throw new Error('failed Fetch')
+    throw new Error("failed Fetch");
   }
-
-
 }

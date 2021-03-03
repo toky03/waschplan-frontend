@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Kalender.css";
 
 import FullCalendar, {
   EventClickArg,
@@ -16,15 +17,18 @@ import { selectTermineEnriched } from "../state/selectors";
 import store from "../index";
 import { markiereTermin } from "../state/actions";
 import UserChooser from "./UserChooser";
-import {createNewTermin, deleteTermin} from "../integration/integration";
-import {isPseudoRegex} from "../state/id-utils";
+import { createNewTermin, deleteTermin } from "../integration/integration";
+import { isPseudoRegex } from "../state/id-utils";
 
 const Kalender = () => {
   const [pendingDate, setDate] = useState<Date | null>(null);
 
-  const calculateBackgroundColor = (marked: boolean | undefined, id: string) => {
-    return marked? 'red' : isPseudoRegex(id)? 'lightblue': undefined;
-  }
+  const calculateBackgroundColor = (
+    marked: boolean | undefined,
+    id: string
+  ) => {
+    return marked ? "red" : isPseudoRegex(id) ? "lightblue" : undefined;
+  };
 
   const termine: EventSourceInput | undefined = useSelector(
     selectTermineEnriched

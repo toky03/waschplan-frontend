@@ -4,7 +4,8 @@ import { TermineState } from "./termineReducer";
 import { MieterState } from "./mieterReducer";
 import { MieterDto, Termin, TerminDto } from "../model/model";
 
-export const selectBackendSynced = (state: State) => state.metaData?.backendSync;
+export const selectBackendSynced = (state: State) =>
+  state.metaData?.backendSync;
 
 export const selectTermineRaw = (state: State) => state.termine;
 export const selectMieter = (state: State) => state.mieter;

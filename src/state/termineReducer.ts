@@ -43,16 +43,16 @@ export const terminReducer: (
     }
     case UPDATE_TERMIN: {
       const oldTermin = state.termine.find(
-          (termin: TerminDto) => termin.id === action.terminId
+        (termin: TerminDto) => termin.id === action.terminId
       );
       if (oldTermin) {
         return {
           ...state,
           termine: [
             ...state.termine.filter(
-                (termin: TerminDto) => termin.id !== action.terminId
+              (termin: TerminDto) => termin.id !== action.terminId
             ),
-            {...oldTermin, ...action.termin},
+            { ...oldTermin, ...action.termin },
           ],
         };
       } else {

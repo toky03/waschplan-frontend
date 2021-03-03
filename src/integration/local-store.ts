@@ -16,13 +16,15 @@ export function saveTermineLocalStorage(termine: TerminDto[]): void {
   localStorage.setItem(TERMINE_KEY, JSON.stringify(termine));
 }
 
-export function addTerminLocalStorage(termin: TerminDto): void{
+export function addTerminLocalStorage(termin: TerminDto): void {
   const currentTermine = loadTermineLocalStorage();
-  saveTermineLocalStorage([...currentTermine, termin])
+  saveTermineLocalStorage([...currentTermine, termin]);
 }
 
 export function removeTerminLocalStorage(terminId: string): void {
-  const filteredTermine = loadTermineLocalStorage().filter((termin: TerminDto) => termin.id !== terminId);
+  const filteredTermine = loadTermineLocalStorage().filter(
+    (termin: TerminDto) => termin.id !== terminId
+  );
   saveTermineLocalStorage(filteredTermine);
 }
 
