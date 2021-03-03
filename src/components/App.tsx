@@ -11,8 +11,6 @@ import {
   loadMieter,
   loadTermine,
 } from "../integration/integration";
-import { useSelector } from "react-redux";
-import { selectBackendSynced } from "../state/selectors";
 import Button from "@material-ui/core/Button";
 
 const App = () => {
@@ -21,10 +19,8 @@ const App = () => {
     store.dispatch(loadMieter);
     store.dispatch(initConnectionCheck());
   }, []);
-  const isSynced: boolean | undefined = useSelector(selectBackendSynced);
   return (
     <div>
-      <p> Synchronisiert {isSynced ? "ja" : "nein"}</p>
       <Router>
         <div className={"navigation"}>
           <Button>
