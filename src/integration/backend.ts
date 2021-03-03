@@ -10,7 +10,6 @@ export async function available(): Promise<boolean> {
     const status = await response.json();
     return status.status === "UP";
   } catch (e) {
-    console.log("failed return false");
     return false;
   }
 }
@@ -26,23 +25,13 @@ export async function loadMieterBackend(): Promise<MieterDto[]> {
 }
 
 export async function saveTerminBackend(termin: TerminDto): Promise<string> {
-  console.log("Termin post", termin);
-  // const response = await fetchWithTimeout(API_URL + "termine", {
-  //   method: "POST",
-  //   body: JSON.stringify(termin),
-  //   headers: {
-  //     "content-type": "application/json",
-  //   },
-  // });
   const response = await axios.post(API_URL + "termine", termin);
   const replacedId: ReplacedIdDto = await response.data;
   return replacedId.newId;
 }
 
 export async function removeTerminBackend(terminId: string): Promise<void> {
-  fetchWithTimeout(`${API_URL}termine/${terminId}`, {
-    method: "DELETE",
-  });
+  await axios.delete(`${API_URL}termine/${terminId}`, {timeout: TIMEOUT_MILLIS})
 }
 
 async function fetchWithTimeout(url: string, options?: RequestInit) {

@@ -14,10 +14,11 @@ import {
   saveTerminBackend,
 } from "./backend";
 import {
-  addTerminLocalStorage,
-  loadTermineLocalStorage,
+  addPendingDeletion,
+  addTerminLocalStorage, loadPendingDeletion,
+  loadTermineLocalStorage, removeFromPendingDeletion,
   removeTerminLocalStorage,
-  saveTermineLocalStorage,
+  saveTermineLocalStorage, updateTerminLocalStorage,
 } from "./local-store";
 import { generatePseudoTerminId, isPseudoRegex } from "../state/id-utils";
 import { formatISO, setHours, setMinutes } from "date-fns";
@@ -36,10 +37,10 @@ export const initConnectionCheck = () => {
         const isBackendAvailable = await available();
         if (isBackendAvailable) {
           if (!metaState?.backendSync) {
-            console.log("backend is available");
-            await updatePendingTermine(dispatch);
-            dispatch(setBackendSync(true));
+            dispatch(updatePendingTermine);
+            dispatch(deletePending)
             dispatch(loadTermine);
+            dispatch(setBackendSync(true));
           }
         } else {
           if (metaState?.backendSync) {
@@ -66,10 +67,10 @@ export const createNewTermin = (parteiId: string, pendingDate: Date) => {
       terminEnde: ende,
     };
     dispatch(addTermin(newTermin));
+    addTerminLocalStorage(newTermin);
     try {
       // TODO FRAGE JONAS pending Termine, die einen Konflikt im Backend verursachen. Ist eine Fehlermeldung in Ordnung?
       const newId = await saveTerminBackend(newTermin);
-      addTerminLocalStorage(newTermin);
       dispatch(updateTermin(newTermin.id, { ...newTermin, id: newId }));
     } catch (e) {
       // TODO FRAGE JONAS Backend Responses in einen Wrapper Packen um Fehler zu fangen.
@@ -85,7 +86,14 @@ export const deleteTermin = (terminId: string) => {
   return async (dispatch: any) => {
     removeTerminLocalStorage(terminId);
     dispatch(removeTermin(terminId));
-    await removeTerminBackend(terminId);
+    try{
+      if(!isPseudoRegex(terminId)){
+        await removeTerminBackend(terminId);
+      }
+    } catch (e){
+      console.warn(e)
+      addPendingDeletion(terminId);
+    }
   };
 };
 
@@ -117,15 +125,27 @@ async function updatePendingTermine(dispatch: any): Promise<void> {
   const pendingTermine = loadTermineLocalStorage().filter((entity: TerminDto) =>
     isPseudoRegex(entity.id)
   );
-  console.log("pending termine", pendingTermine);
-  for (let index = 0; index < pendingTermine.length; index++) {
-    const entity = pendingTermine[index];
+  for (const termin of pendingTermine ){
     try {
-      console.log("termin to update", entity);
-      const newId = await saveTerminBackend(entity);
-      dispatch(updateTermin(entity.id, { ...entity, id: newId }));
+      const newId = await saveTerminBackend(termin);
+      updateTerminLocalStorage(termin.id, {...termin, id: newId});
+      dispatch(updateTermin(termin.id, { ...termin, id: newId }));
     } catch (e) {
-      alert("Entity konnte nicht gespeichert werden" + e);
+      alert("Entity konnte nicht gespeichert werden " + e);
+    }
+  }
+}
+
+async function deletePending(dispatch: any): Promise<void> {
+  const pendingTermine = loadPendingDeletion();
+  for (const terminId of pendingTermine){
+    try {
+      await removeTerminBackend(terminId);
+      removeFromPendingDeletion(terminId);
+      dispatch(removeTermin(terminId));
+      removeTerminLocalStorage(terminId);
+    } catch (e) {
+      alert("Entity konnte nicht gelöscht werden " + e);
     }
   }
 }
