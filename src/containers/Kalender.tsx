@@ -6,7 +6,7 @@ import FullCalendar, {
   EventSourceInput,
 } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
+import interactionPlugin, { DateClickArg, DropArg } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import localeDe from "@fullcalendar/core/locales/de";
@@ -65,8 +65,10 @@ const Kalender = () => {
     }
   };
 
-  const handleDrop = (e: any) => {
-    console.log('Hello drop');
+  const handleDrop = (dropArg: DropArg) => {
+    const today = new Date;
+    store.dispatch(createNewTermin('7a41a458-eeac-4572-a097-c134fd1ba71e', today));
+    console.log('Hello drop', today);
   }
 
   return (
