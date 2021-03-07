@@ -95,6 +95,7 @@ const Kalender = () => {
       >
         loading...
       </FullCalendar>
+      <UserChooser open={pendingDate !== null} userChanged={createTermin} />
     </div>
   );
 };
