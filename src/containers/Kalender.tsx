@@ -65,6 +65,10 @@ const Kalender = () => {
     }
   };
 
+  const drop = (e: any) => {
+    alert("dropped");
+  }
+
   return (
     <div className={"calendarWrapper"}>
       <FullCalendar
@@ -81,6 +85,7 @@ const Kalender = () => {
         editable={true}
         dateClick={handleDateClick}
         eventClick={handleClick}
+        drop={drop}
       >
         loading...
       </FullCalendar>
