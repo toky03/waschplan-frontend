@@ -65,8 +65,8 @@ const Kalender = () => {
     }
   };
 
-  const drop = (e: any) => {
-    alert("dropped");
+  const handleDrop = (e: any) => {
+    console.log('Hello drop');
   }
 
   return (
@@ -85,7 +85,7 @@ const Kalender = () => {
         editable={true}
         dateClick={handleDateClick}
         eventClick={handleClick}
-        drop={drop}
+        drop={handleDrop}
       >
         loading...
       </FullCalendar>
