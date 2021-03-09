@@ -26,10 +26,11 @@ const ErfasseTermin = () => {
     if (containerElRef.current) {
       new Draggable(containerElRef.current, {
         itemSelector: ".draggable",
-        eventData: function (eventEl: HTMLElement) {
+        eventData: function (eventEl: any) {
           return {
             title: eventEl.innerText,
             duration: { days: 1 },
+            create: false
           };
         },
       });
@@ -71,6 +72,7 @@ const ErfasseTermin = () => {
               label={mieter.name}
               variant={"outlined"}
               avatar={<Avatar src={selectAvatar(mieter.name)} />}
+              itemProp={mieter.id}  
             />
             <div className="spaceBetweenIcons" />
           </div>

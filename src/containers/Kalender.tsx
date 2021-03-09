@@ -66,13 +66,11 @@ const Kalender = () => {
   };
 
   const handleDrop = (dropArg: DropArg) => {
-    // const today = new Date;
-    // store.dispatch(createNewTermin('7a41a458-eeac-4572-a097-c134fd1ba71e', today));
-    // console.log('Hello drop', today);
-    setDate(() => dropArg.date);
-    console.log('Hello drop', dropArg.date);
-    store.dispatch(createNewTermin('7a41a458-eeac-4572-a097-c134fd1ba71e', dropArg.date));
-   
+    dropArg.jsEvent.preventDefault();
+    
+    const date = dropArg.date;
+    const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
+    store.dispatch(createNewTermin(mieterId, date));
   }
 
   return (
