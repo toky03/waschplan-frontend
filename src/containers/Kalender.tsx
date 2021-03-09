@@ -55,7 +55,7 @@ const Kalender = () => {
     const terminId: string = arg.event._def.extendedProps.id;
     const marked: boolean = arg.event._def.extendedProps.marked;
     if (marked) {
-      if (confirm("soll der Termin gelöscht werden?")) {
+      if (confirm("Soll der Termin wirklich gelöscht werden?")) {
         store.dispatch(deleteTermin(terminId));
       } else {
         store.dispatch(markiereTermin(terminId));
@@ -67,7 +67,7 @@ const Kalender = () => {
 
   const handleDrop = (dropArg: DropArg) => {
     dropArg.jsEvent.preventDefault();
-    
+
     const date = dropArg.date;
     const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
     store.dispatch(createNewTermin(mieterId, date));
