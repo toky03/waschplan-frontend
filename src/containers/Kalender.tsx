@@ -78,10 +78,11 @@ const Kalender = () => {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
+        hiddenDays={[0]}
         locale={localeDe}
         themeSystem={"standart"}
         droppable={true}
-        weekends={false}
+        weekends={true}
         slotMinTime={"07:00:00"}
         slotMaxTime={"22:00:00"}
         events={termine}
