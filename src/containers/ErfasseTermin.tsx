@@ -6,16 +6,16 @@ import Kalender from "./Kalender";
 
 import { Draggable } from "@fullcalendar/interaction";
 import "./ErfasseTermin.css";
-import {selectBackendSynced, selectMieter} from "../state/selectors";
+import { selectBackendSynced, selectMieter } from "../state/selectors";
 import { MieterDto } from "../model/model";
-import SyncIcon from '@material-ui/icons/Sync';
-import SyncDisabledIcon from '@material-ui/icons/SyncDisabled';
+import SyncIcon from "@material-ui/icons/Sync";
+import SyncDisabledIcon from "@material-ui/icons/SyncDisabled";
 
 import avatar1 from "./avatars/Hugo.jpg";
 import avatar2 from "./avatars/FamRamseier.jpg";
 import avatar3 from "./avatars/FrauBrönnimann.png";
 import avatar4 from "./avatars/BeatLisa.jpg";
-import {green, red} from "@material-ui/core/colors";
+import { green, red } from "@material-ui/core/colors";
 
 const ErfasseTermin = () => {
   const containerElRef = useRef<HTMLDivElement>(null);
@@ -58,9 +58,11 @@ const ErfasseTermin = () => {
           ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM EINEN
           WASCHTAG ZU BUCHEN!
         </div>
-        {
-          isSynced? <SyncIcon style={{ color: green[500] }} />: <SyncDisabledIcon style={{ color: red[500] }}/>
-        }
+        {isSynced ? (
+          <SyncIcon style={{ color: green[500] }} />
+        ) : (
+          <SyncDisabledIcon style={{ color: red[500] }} />
+        )}
       </div>
       <div className={"mieterContainer"} ref={containerElRef}>
         {mieter?.mieter.map((mieter: MieterDto) => (

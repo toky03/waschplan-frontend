@@ -3,19 +3,29 @@ const TERMINE_KEY = "waschplan-termine";
 const MIETER_KEY = "waschplan-mieter";
 const PENDING_DELETION = "pending-deletion";
 
-export function addPendingDeletion(terminId: string): void{
+export function addPendingDeletion(terminId: string): void {
   const pendingDeletion = loadPendingDeletion();
-  localStorage.setItem(PENDING_DELETION, JSON.stringify([...pendingDeletion, terminId]));
+  localStorage.setItem(
+    PENDING_DELETION,
+    JSON.stringify([...pendingDeletion, terminId])
+  );
 }
 
-export function removeFromPendingDeletion(terminId: string) :void {
+export function removeFromPendingDeletion(terminId: string): void {
   const pendingDeletion = loadPendingDeletion();
-  localStorage.setItem(PENDING_DELETION, JSON.stringify(pendingDeletion.filter((existingId: string) => existingId !== terminId)));
+  localStorage.setItem(
+    PENDING_DELETION,
+    JSON.stringify(
+      pendingDeletion.filter((existingId: string) => existingId !== terminId)
+    )
+  );
 }
 
 export function loadPendingDeletion(): string[] {
-  const pendingDeletionLocalStorage = localStorage.getItem(PENDING_DELETION)
-  return pendingDeletionLocalStorage? JSON.parse(pendingDeletionLocalStorage): [];
+  const pendingDeletionLocalStorage = localStorage.getItem(PENDING_DELETION);
+  return pendingDeletionLocalStorage
+    ? JSON.parse(pendingDeletionLocalStorage)
+    : [];
 }
 
 export function loadTermineLocalStorage(): TerminDto[] {
@@ -37,9 +47,15 @@ export function addTerminLocalStorage(termin: TerminDto): void {
   saveTermineLocalStorage([...currentTermine, termin]);
 }
 
-export function updateTerminLocalStorage(terminid: string, termin: TerminDto): void {
+export function updateTerminLocalStorage(
+  terminid: string,
+  termin: TerminDto
+): void {
   const currentTermine = loadTermineLocalStorage();
-  saveTermineLocalStorage([...currentTermine.filter((termin: TerminDto) => terminid !== termin.id), termin])
+  saveTermineLocalStorage([
+    ...currentTermine.filter((termin: TerminDto) => terminid !== termin.id),
+    termin,
+  ]);
 }
 
 export function removeTerminLocalStorage(terminId: string): void {

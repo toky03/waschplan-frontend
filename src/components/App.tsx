@@ -13,7 +13,6 @@ import {
 } from "../integration/integration";
 import Button from "@material-ui/core/Button";
 
-
 const App = () => {
   useEffect(() => {
     store.dispatch(loadTermine);

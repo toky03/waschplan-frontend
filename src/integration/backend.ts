@@ -31,7 +31,9 @@ export async function saveTerminBackend(termin: TerminDto): Promise<string> {
 }
 
 export async function removeTerminBackend(terminId: string): Promise<void> {
-  await axios.delete(`${API_URL}termine/${terminId}`, {timeout: TIMEOUT_MILLIS})
+  await axios.delete(`${API_URL}termine/${terminId}`, {
+    timeout: TIMEOUT_MILLIS,
+  });
 }
 
 async function fetchWithTimeout(url: string, options?: RequestInit) {
