@@ -79,6 +79,7 @@ const Kalender = () => {
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
         hiddenDays={[0]}
+        allDaySlot={false}
         locale={localeDe}
         themeSystem={"standart"}
         droppable={true}
