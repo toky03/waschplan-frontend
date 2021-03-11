@@ -32,4 +32,3 @@ ReactDOM.render(
 );
 
 serviceWorkerRegistration.register();
-serviceWorkerRegistration.registerFirebase();

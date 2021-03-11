@@ -84,10 +84,24 @@ self.addEventListener("message", (event) => {
     }
 });
 
-firebase.app();
-
+if (!firebase.apps.length) {
+    firebase.initializeApp({
+        apiKey: "AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM",
+        authDomain: "waschplan-d17fc.firebaseapp.com",
+        projectId: "waschplan-d17fc",
+        storageBucket: "waschplan-d17fc.appspot.com",
+        messagingSenderId: "837328286802",
+        appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
+        measurementId: "G-T6TJ20Q94B"
+    });
+} else {
+    firebase.app();
+}
 const messaging = firebase.messaging();
 
+messaging.getToken({vapidKey: "BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX7_PINbtyRMwcuB40NqRoRCC3JKbNgi-fV84Myc"}).then(
+    (token) => console.log('user Token ', token)
+).catch((error) => console.error('could not register ', error));
 
 messaging.onMessage((payload) => {
     console.log('Message received. ', payload);
