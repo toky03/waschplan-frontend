@@ -10,6 +10,9 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
 
+import firebase from 'firebase/app';
+import 'firebase/messaging';
+
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
@@ -133,5 +136,29 @@ export function unregister() {
       .catch((error) => {
         console.error(error.message);
       });
+  }
+}
+
+export async function registerFirebase(): Promise<void> {
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM",
+      authDomain: "waschplan-d17fc.firebaseapp.com",
+      projectId: "waschplan-d17fc",
+      storageBucket: "waschplan-d17fc.appspot.com",
+      messagingSenderId: "837328286802",
+      appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
+      measurementId: "G-T6TJ20Q94B"
+    });
+    const messaging = firebase.messaging();
+
+    try{
+      const token =  await messaging.getToken({vapidKey: "BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX7_PINbtyRMwcuB40NqRoRCC3JKbNgi-fV84Myc"});
+      console.log('user token: ', token);
+    } catch (e){
+      console.error('could not register firebase', e);
+    }
+  } else {
+    firebase.app();
   }
 }

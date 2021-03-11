@@ -8,7 +8,6 @@ import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
 import { loadMieter, loadTermine } from "../state/backend";
 import Button from "@material-ui/core/Button";
-import {askForPermissioToReceiveNotifications} from "../push-notification";
 
 
 const App = () => {

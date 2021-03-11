@@ -18,8 +18,6 @@ const ErfasseTermin = () => {
   const containerElRef = useRef<HTMLDivElement>(null);
   const mieter = useSelector(mieterSelector);
 
-  console.log('tmp', mieter);
-
   useEffect(() => {
     if (containerElRef.current) {
       new Draggable(containerElRef.current, {
