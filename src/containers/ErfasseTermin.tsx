@@ -19,8 +19,6 @@ import {green, red} from "@material-ui/core/colors";
 
 const ErfasseTermin = () => {
   const containerElRef = useRef<HTMLDivElement>(null);
-  const mieter = useSelector(mieterSelector);
-
   const mieter = useSelector(selectMieter);
   const isSynced: boolean | undefined = useSelector(selectBackendSynced);
 

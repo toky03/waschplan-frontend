@@ -15,6 +15,8 @@ import {ExpirationPlugin} from "workbox-expiration";
 import {precacheAndRoute, createHandlerBoundToURL} from "workbox-precaching";
 import {registerRoute} from "workbox-routing";
 import {StaleWhileRevalidate} from "workbox-strategies";
+import {API_URL} from "./integration/backend";
+import axios from "axios";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -100,15 +102,26 @@ if (!firebase.apps.length) {
 const messaging = firebase.messaging();
 
 messaging.getToken({vapidKey: "BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX7_PINbtyRMwcuB40NqRoRCC3JKbNgi-fV84Myc"}).then(
-    (token) => console.log('user Token ', token)
-).catch((error) => console.error('could not register ', error));
-
-messaging.onMessage((payload) => {
-    console.log('Message received. ', payload);
-    // ...
+    (token: string) => {
+        console.log('user token', token)
+        return registerToken(token)
+    }
+).then(() => console.log("registered")).catch((error) => {
+    console.error('could not register ', error)
 });
+//
+// messaging.onMessage((payload) => {
+//     console.log('Message received. ', payload);
+//     // ...
+// });
 
 messaging.onBackgroundMessage((payload) => {
-    console.log('Message received. ', payload);
-    // ...
+    console.log(payload);
+    self.registration.showNotification("title", {body: "body message"+payload.data})
 })
+
+async function registerToken(token: string): Promise<void> {
+    await fetch(`${API_URL}register/${token}`, {
+        method: "POST",
+    })
+}
