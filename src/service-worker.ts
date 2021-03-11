@@ -109,16 +109,7 @@ messaging.getToken({vapidKey: "BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX
 ).then(() => console.log("registered")).catch((error) => {
     console.error('could not register ', error)
 });
-//
-// messaging.onMessage((payload) => {
-//     console.log('Message received. ', payload);
-//     // ...
-// });
 
-messaging.onBackgroundMessage((payload) => {
-    console.log(payload);
-    self.registration.showNotification("title", {body: "body message"+payload.data})
-})
 
 async function registerToken(token: string): Promise<void> {
     await fetch(`${API_URL}register/${token}`, {

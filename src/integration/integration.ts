@@ -8,6 +8,7 @@ import {
 } from "../state/actions";
 import { MieterDto, ReferenceableEntity, TerminDto } from "../model/model";
 import {
+  API_URL,
   available,
   loadTermineBackend,
   removeTerminBackend,
@@ -26,7 +27,6 @@ import store from "../index";
 import { TermineState } from "../state/termineReducer";
 import { MetaState } from "../state/metaReducer";
 
-const API_URL = "https://waschplan.bubelu.ch/api/";
 
 export const initConnectionCheck = () => {
   return async (dispatch: any) => {
