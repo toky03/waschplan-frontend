@@ -6,7 +6,11 @@ import "./App.css";
 import TerminInput from "../containers/ErfasseTermin";
 import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
-import { loadMieter, loadTermine } from "../state/backend";
+import {
+  initConnectionCheck,
+  loadMieter,
+  loadTermine,
+} from "../integration/integration";
 import Button from "@material-ui/core/Button";
 
 
@@ -14,22 +18,25 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadTermine);
     store.dispatch(loadMieter);
+    store.dispatch(initConnectionCheck());
   }, []);
   return (
-    <Router>
-      <div className={"navigation"}>
-        <Button>
-          <NavLink to="/">Waschplan</NavLink>
-        </Button>
-        <Button>
-          <NavLink to="/verwalten">Verwalten</NavLink>
-        </Button>
-      </div>
-      <div>
-        <Route path="/" exact component={TerminInput} />
-        <Route path="/verwalten" exact component={TermineVerwalten} />
-      </div>
-  </Router>
+    <div>
+      <Router>
+        <div className={"navigation"}>
+          <Button>
+            <NavLink to="/">Waschplan</NavLink>
+          </Button>
+          <Button>
+            <NavLink to="/verwalten">Verwalten</NavLink>
+          </Button>
+        </div>
+        <div>
+          <Route path="/" exact component={TerminInput} />
+          <Route path="/verwalten" exact component={TermineVerwalten} />
+        </div>
+      </Router>
+    </div>
   );
 };
 

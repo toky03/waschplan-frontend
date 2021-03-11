@@ -10,11 +10,11 @@
 import firebase from "firebase/app";
 import 'firebase/messaging';
 
-import {clientsClaim} from 'workbox-core';
-import {ExpirationPlugin} from 'workbox-expiration';
-import {precacheAndRoute, createHandlerBoundToURL} from 'workbox-precaching';
-import {registerRoute} from 'workbox-routing';
-import {StaleWhileRevalidate} from 'workbox-strategies';
+import {clientsClaim} from "workbox-core";
+import {ExpirationPlugin} from "workbox-expiration";
+import {precacheAndRoute, createHandlerBoundToURL} from "workbox-precaching";
+import {registerRoute} from "workbox-routing";
+import {StaleWhileRevalidate} from "workbox-strategies";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -92,7 +92,7 @@ if (!firebase.apps.length) {
         storageBucket: "waschplan-d17fc.appspot.com",
         messagingSenderId: "837328286802",
         appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
-        measurementId: "G-T6TJ20Q94B"
+        measurementId: "G-T6TJ20Q94B",
     });
 } else {
     firebase.app();
@@ -112,4 +112,3 @@ messaging.onBackgroundMessage((payload) => {
     console.log('Message received. ', payload);
     // ...
 })
-

@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectTermineEnriched } from "../state/selectors";
 import { Termin } from "../model/model";

@@ -25,3 +25,12 @@ export interface MieterDto {
   id: string;
   name: string;
 }
+
+export interface ReplacedIdDto {
+  oldId: string;
+  newId: string;
+}
+
+export type ReferenceableEntity = {
+  id: string;
+};

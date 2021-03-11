@@ -1,7 +1,8 @@
+import React from "react";
 import { Button, Dialog, DialogTitle, List, ListItem } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-import { mieterSelector } from "../state/selectors";
+import { selectMieter } from "../state/selectors";
 import { MieterDto } from "../model/model";
 
 export type UserChooserProps = {
@@ -10,11 +11,11 @@ export type UserChooserProps = {
 };
 
 export default function UserChooser(props: UserChooserProps) {
-  const mieter = useSelector(mieterSelector);
+  const mieter = useSelector(selectMieter);
 
   return (
     <Dialog open={props.open}>
-      <DialogTitle>Wer sind sie?</DialogTitle>
+      <DialogTitle>Für wen soll der Termin gebucht werden?</DialogTitle>
       <List>
         {mieter?.mieter.map((mieter: MieterDto) => (
           <ListItem key={mieter.id}>

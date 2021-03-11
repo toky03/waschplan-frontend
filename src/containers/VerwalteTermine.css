@@ -1,7 +1,7 @@
 .termin-verwaltung {
-    background-color: burlywood;
-    height: 850px;
-    width: 100%;
-    display: flex;
-    flex-flow: wrap;
-  }
+  background-color: burlywood;
+  height: 850px;
+  width: 100%;
+  display: flex;
+  flex-flow: wrap;
+}
