@@ -14,7 +14,6 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import firebase from "firebase";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -83,20 +82,3 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
-
-// Any other custom service worker logic can go here.
-
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-var firebaseConfig = {
-    apiKey: "AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM",
-    authDomain: "waschplan-d17fc.firebaseapp.com",
-    projectId: "waschplan-d17fc",
-    storageBucket: "waschplan-d17fc.appspot.com",
-    messagingSenderId: "837328286802",
-    appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
-    measurementId: "G-T6TJ20Q94B"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);

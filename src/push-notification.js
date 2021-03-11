@@ -15,16 +15,12 @@ export const initializeFirebase = () => {
 
     // use other service worker
     navigator.serviceWorker
-       .register('/service-worker.js')
+       .register('/service-worker.ts')
       .then((registration) => {
           firebase.messaging.usePublicVapidKey("BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX7_PINbtyRMwcuB40NqRoRCC3JKbNgi-fV84Myc");
        });
 
 }
-
-
-
-
 
 export const askForPermissioToReceiveNotifications = async () => {
     try {

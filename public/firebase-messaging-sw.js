@@ -18,56 +18,19 @@ importScripts("https://www.gstatic.com/firebasejs/8.2.6/firebase-messaging.js");
     // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// When a notification is received, the push event is called.
-self.addEventListener('push', function (event) {
-
-    console.log("event:push")
-    let messageTitle = "MESSAGETITLE"
-    let messageBody = "MESSAGEBODY"
-    let messageTag = "MESSAGETAG"
-
-    const notificationPromise = self.registration.showNotification(
-        messageTitle,
-        {
-            body: messageBody,
-            tag: messageTag
-        });
-
-    event.waitUntil(notificationPromise);
-
-}, false)
-
-// Handle incoming messages. Called when:
-// - a message is received while the app has focus
-// - the user clicks on an app notification created by a service worker
-//   `messaging.onBackgroundMessage` handler.
+const messaging = firebase.messaging();
 
 
-// If the web application is in the background, setBackGroundMessageHandler is called.
-// messaging.setBackgroundMessageHandler(function (payload) {
-//
-//     console.log("backgroundMessage")
-//
-//     let messageTitle = "MESSAGETITLE"
-//     let messageBody = "MESSAGEBODY"
-//
-//     return self.registration.showNotification(
-//         messageTitle,
-//         {
-//             body: messageBody,
-//             tag: messageTag
-//         });
-// });
+// Wenn sich der Browser im Hintergrund befindet, dann:
+messaging.onBackgroundMessage(function(payload) {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    // Customize notification here
+    const notificationTitle = 'test: firebase service worker';
+    const notificationOptions = {
+        body: 'Background Message body.',
+        icon: '/firebase-logo.png'
+    };
 
-// messaging.onBackgroundMessage((payload) => {
-//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
-//     // Customize notification here
-//     const notificationTitle = 'Background Message Title';
-//     const notificationOptions = {
-//         body: 'Background Message body.',
-//         icon: '/firebase-logo.png'
-//     };
-//
-//     self.registration.showNotification(notificationTitle,
-//         notificationOptions);
-// });
+    self.registration.showNotification(notificationTitle,
+        notificationOptions);
+});
