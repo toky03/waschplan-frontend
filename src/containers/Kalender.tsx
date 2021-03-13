@@ -94,7 +94,7 @@ const Kalender = () => {
       console.log(termin.terminBeginn);
       const currentTerminStart = new Date(termin.terminBeginn);
       const currentTerminEnde = new Date(termin.terminEnde);
-      if(termin.terminBeginn !== undefined && newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
+      if(newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
         overlaps = true;
       }
     })    
@@ -108,6 +108,7 @@ const Kalender = () => {
         initialView="timeGridWeek"
         hiddenDays={[0]}
         allDaySlot={false}
+        displayEventEnd={false}
         locale={localeDe}
         themeSystem={"standart"}
         droppable={true}

@@ -29,7 +29,7 @@ const ErfasseTermin = () => {
         eventData: function (eventEl: any) {
           return {
             title: eventEl.innerText,
-            duration: { days: 1 },
+            duration: { hours: 9 },
             create: false
           };
         },
