@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Kalender.css";
+import { State } from "../state/reducer";
 
 import FullCalendar, {
   EventClickArg,
@@ -22,6 +23,7 @@ import { isPseudoRegex } from "../state/id-utils";
 
 const Kalender = () => {
   const [pendingDate, setDate] = useState<Date | null>(null);
+  const termineOverlapCheck: Termin[] | undefined = useSelector(selectTermineEnriched);
 
   const calculateBackgroundColor = (
     marked: boolean | undefined,
@@ -41,7 +43,14 @@ const Kalender = () => {
   }));
 
   const handleDateClick = (dateClickArg: DateClickArg) => {
-    setDate(() => dateClickArg.date);
+    const newTerminStart = new Date(dateClickArg.date);
+    const isBooked = checkIfDayIsBooked(newTerminStart);
+
+    if(isBooked) {
+      alert("Dieser Waschtag ist bereits gebucht");
+    } else {
+      setDate(() => dateClickArg.date);
+    }
   };
 
   const createTermin = (parteiId: string | null) => {
@@ -68,9 +77,28 @@ const Kalender = () => {
   const handleDrop = (dropArg: DropArg) => {
     dropArg.jsEvent.preventDefault();
 
-    const date = dropArg.date;
-    const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
-    store.dispatch(createNewTermin(mieterId, date));
+    const newTerminStart = new Date(dropArg.date);
+    const isBooked = checkIfDayIsBooked(newTerminStart);
+
+    if(isBooked) {
+      alert("Der neue Termin wurde nicht gespeichert da er sich mit einem bestehenden Waschtermin überschneidet");
+    } else {
+      const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
+      store.dispatch(createNewTermin(mieterId, dropArg.date));
+    }
+  }
+
+  function checkIfDayIsBooked(newTerminStart: Date): boolean {
+    let overlaps = false;
+    termineOverlapCheck?.forEach((termin) => {
+      console.log(termin.terminBeginn);
+      const currentTerminStart = new Date(termin.terminBeginn);
+      const currentTerminEnde = new Date(termin.terminEnde);
+      if(termin.terminBeginn !== undefined && newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
+        overlaps = true;
+      }
+    })    
+    return overlaps;
   }
 
   return (
