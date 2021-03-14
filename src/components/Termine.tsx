@@ -8,17 +8,18 @@ import { deleteTermin } from "../integration/integration";
 
 const Termine = () => {
   const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
-  
-  function removeTermin() {
-    store.dispatch(deleteTermin("ff13f2a6-1efd-4b5c-9b6b-dfaf022b1be3"));
+
+  const removeTermin = (id: string) => {
+    store.dispatch(deleteTermin(id));
   }
+
   return (
     <ul>
       {termine?.map((termin: Termin) => (
         <li key={termin.id}>
           TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
           {termin.terminBeginn} Ende: {termin.terminEnde}
-          <Button onClick={removeTermin}>Löschen</Button>
+          <Button onClick={() => removeTermin(termin.id)}>Löschen</Button>
         </li>
       ))}
     </ul>
