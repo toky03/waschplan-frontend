@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Kalender.css";
-import { State } from "../state/reducer";
 
 import FullCalendar, {
   EventClickArg,
@@ -91,7 +90,6 @@ const Kalender = () => {
   function checkIfDayIsBooked(newTerminStart: Date): boolean {
     let overlaps = false;
     termineOverlapCheck?.forEach((termin) => {
-      console.log(termin.terminBeginn);
       const currentTerminStart = new Date(termin.terminBeginn);
       const currentTerminEnde = new Date(termin.terminEnde);
       if(newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
