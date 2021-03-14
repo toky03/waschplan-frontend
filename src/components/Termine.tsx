@@ -16,7 +16,7 @@ const Termine = () => {
         <li key={termin.id}>
           TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
           {termin.terminBeginn} Ende: {termin.terminEnde}
-          <Button onClick={deleteTermin}>Löschen</Button>
+          <Button onClick={() => deleteTermin()}>Löschen</Button>
         </li>
       ))}
     </ul>
