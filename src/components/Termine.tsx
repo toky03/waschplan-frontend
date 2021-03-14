@@ -3,12 +3,14 @@ import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { selectTermineEnriched } from "../state/selectors";
 import { Termin } from "../model/model";
+import store from "../index";
+import { deleteTermin } from "../integration/integration";
 
 const Termine = () => {
   const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
   
-  function deleteTermin(terminId: string) {
-    confirm("Willst Du den Termin wirklich löschen?" + terminId);
+  function removeTermin() {
+    store.dispatch(deleteTermin("ff13f2a6-1efd-4b5c-9b6b-dfaf022b1be3"));
   }
   return (
     <ul>
@@ -16,7 +18,7 @@ const Termine = () => {
         <li key={termin.id}>
           TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
           {termin.terminBeginn} Ende: {termin.terminEnde}
-          <Button onClick={() => deleteTermin(termin.id)}>Löschen</Button>
+          <Button onClick={removeTermin}>Löschen</Button>
         </li>
       ))}
     </ul>
