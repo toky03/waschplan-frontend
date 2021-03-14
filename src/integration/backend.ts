@@ -1,7 +1,7 @@
 import { MieterDto, ReplacedIdDto, TerminDto } from "../model/model";
 import axios from "axios";
 
-const API_URL = "https://waschplan.bubelu.ch/api/";
+export const API_URL = "https://waschplan.bubelu.ch/api/";
 const TIMEOUT_MILLIS = 5000;
 
 export async function available(): Promise<boolean> {
@@ -31,7 +31,9 @@ export async function saveTerminBackend(termin: TerminDto): Promise<string> {
 }
 
 export async function removeTerminBackend(terminId: string): Promise<void> {
-  await axios.delete(`${API_URL}termine/${terminId}`, {timeout: TIMEOUT_MILLIS})
+  await axios.delete(`${API_URL}termine/${terminId}`, {
+    timeout: TIMEOUT_MILLIS,
+  });
 }
 
 async function fetchWithTimeout(url: string, options?: RequestInit) {

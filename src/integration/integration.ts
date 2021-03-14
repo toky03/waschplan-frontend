@@ -8,6 +8,7 @@ import {
 } from "../state/actions";
 import { MieterDto, ReferenceableEntity, TerminDto } from "../model/model";
 import {
+  API_URL,
   available,
   loadTermineBackend,
   removeTerminBackend,
@@ -15,18 +16,19 @@ import {
 } from "./backend";
 import {
   addPendingDeletion,
-  addTerminLocalStorage, loadPendingDeletion,
-  loadTermineLocalStorage, removeFromPendingDeletion,
+  addTerminLocalStorage,
+  loadPendingDeletion,
+  loadTermineLocalStorage,
+  removeFromPendingDeletion,
   removeTerminLocalStorage,
-  saveTermineLocalStorage, updateTerminLocalStorage,
+  saveTermineLocalStorage,
+  updateTerminLocalStorage,
 } from "./local-store";
 import { generatePseudoTerminId, isPseudoRegex } from "../state/id-utils";
 import { formatISO, setHours, setMinutes } from "date-fns";
 import store from "../index";
 import { TermineState } from "../state/termineReducer";
 import { MetaState } from "../state/metaReducer";
-
-const API_URL = "https://waschplan.bubelu.ch/api/";
 
 export const initConnectionCheck = () => {
   return async (dispatch: any) => {
@@ -38,7 +40,7 @@ export const initConnectionCheck = () => {
         if (isBackendAvailable) {
           if (!metaState?.backendSync) {
             dispatch(updatePendingTermine);
-            dispatch(deletePending)
+            dispatch(deletePending);
             dispatch(loadTermine);
             dispatch(setBackendSync(true));
           }
@@ -86,12 +88,12 @@ export const deleteTermin = (terminId: string) => {
   return async (dispatch: any) => {
     removeTerminLocalStorage(terminId);
     dispatch(removeTermin(terminId));
-    try{
-      if(!isPseudoRegex(terminId)){
+    try {
+      if (!isPseudoRegex(terminId)) {
         await removeTerminBackend(terminId);
       }
-    } catch (e){
-      console.warn(e)
+    } catch (e) {
+      console.warn(e);
       addPendingDeletion(terminId);
     }
   };
@@ -125,10 +127,10 @@ async function updatePendingTermine(dispatch: any): Promise<void> {
   const pendingTermine = loadTermineLocalStorage().filter((entity: TerminDto) =>
     isPseudoRegex(entity.id)
   );
-  for (const termin of pendingTermine ){
+  for (const termin of pendingTermine) {
     try {
       const newId = await saveTerminBackend(termin);
-      updateTerminLocalStorage(termin.id, {...termin, id: newId});
+      updateTerminLocalStorage(termin.id, { ...termin, id: newId });
       dispatch(updateTermin(termin.id, { ...termin, id: newId }));
     } catch (e) {
       alert("Entity konnte nicht gespeichert werden " + e);
@@ -138,7 +140,7 @@ async function updatePendingTermine(dispatch: any): Promise<void> {
 
 async function deletePending(dispatch: any): Promise<void> {
   const pendingTermine = loadPendingDeletion();
-  for (const terminId of pendingTermine){
+  for (const terminId of pendingTermine) {
     try {
       await removeTerminBackend(terminId);
       removeFromPendingDeletion(terminId);

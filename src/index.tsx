@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { CombinedState } from "@reduxjs/toolkit";
-import { initializeFirebase } from "./push-notification";
 import thunk from "redux-thunk";
 
 let store: CombinedState<any>;
@@ -32,5 +31,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-initializeFirebase();
 serviceWorkerRegistration.register();
