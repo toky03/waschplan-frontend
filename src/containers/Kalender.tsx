@@ -106,7 +106,7 @@ const Kalender = () => {
         initialView="timeGridWeek"
         hiddenDays={[0]}
         allDaySlot={false}
-        displayEventEnd={false}
+        displayEventTime={false}
         locale={localeDe}
         themeSystem={"standart"}
         droppable={true}
