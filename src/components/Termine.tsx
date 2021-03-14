@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { selectTermineEnriched } from "../state/selectors";
 import { Termin } from "../model/model";
@@ -15,7 +16,7 @@ const Termine = () => {
         <li key={termin.id}>
           TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
           {termin.terminBeginn} Ende: {termin.terminEnde}
-          <button onClick={deleteTermin}>Löschen</button>
+          <Button onClick={deleteTermin}>Löschen</Button>
         </li>
       ))}
     </ul>
