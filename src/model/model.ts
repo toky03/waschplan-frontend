@@ -34,3 +34,13 @@ export interface ReplacedIdDto {
 export type ReferenceableEntity = {
   id: string;
 };
+
+export type NotificationType =
+  | "CREATE_BUCHUNG"
+  | "UPDATE_BUCHUNG"
+  | "DELETE_BUCHUNG";
+
+export interface WebsocketMessage {
+  notificationType: NotificationType;
+  termin: TerminDto;
+}

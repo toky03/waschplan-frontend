@@ -8,6 +8,7 @@ import TermineVerwalten from "../containers/VerwalteTermine";
 import store from "../index";
 import {
   initConnectionCheck,
+  initWsConnection,
   loadMieter,
   loadTermine,
 } from "../integration/integration";
@@ -18,6 +19,10 @@ const App = () => {
     store.dispatch(loadTermine);
     store.dispatch(loadMieter);
     store.dispatch(initConnectionCheck());
+    store.dispatch(initWsConnection());
+    // TODO entweder muss diese Datei oder die App.tsx im Root verzeichnis umbenennt werden
+
+    // TODO aufraeumen mit callback function;
   }, []);
   return (
     <div>
