@@ -7,8 +7,8 @@ import { Termin } from "../model/model";
 const Termine = () => {
   const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
   
-  function deleteTermin() {
-    confirm("Willst Du den Termin wirklich löschen?")
+  function deleteTermin(terminId: string) {
+    confirm("Willst Du den Termin wirklich löschen?" + terminId);
   }
   return (
     <ul>
@@ -16,7 +16,7 @@ const Termine = () => {
         <li key={termin.id}>
           TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
           {termin.terminBeginn} Ende: {termin.terminEnde}
-          <Button onClick={() => deleteTermin()}>Löschen</Button>
+          <Button onClick={() => deleteTermin(termin.id)}>Löschen</Button>
         </li>
       ))}
     </ul>
