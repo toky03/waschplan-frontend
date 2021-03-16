@@ -29,7 +29,7 @@ import store from "../index";
 import { TermineState } from "../state/termineReducer";
 import { MetaState } from "../state/metaReducer";
 import { registerFunction, registerSubscription } from "./subscription";
-import {API_URL} from "../const/constants";
+import { API_URL } from "../const/constants";
 
 const HEALTH_POLLING_INTERVALL_MS = 5000;
 

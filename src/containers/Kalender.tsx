@@ -6,7 +6,10 @@ import FullCalendar, {
   EventSourceInput,
 } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin, { DateClickArg, DropArg } from "@fullcalendar/interaction";
+import interactionPlugin, {
+  DateClickArg,
+  DropArg,
+} from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import localeDe from "@fullcalendar/core/locales/de";
@@ -22,7 +25,9 @@ import { isPseudoRegex } from "../state/id-utils";
 
 const Kalender = () => {
   const [pendingDate, setDate] = useState<Date | null>(null);
-  const termineOverlapCheck: Termin[] | undefined = useSelector(selectTermineEnriched);
+  const termineOverlapCheck: Termin[] | undefined = useSelector(
+    selectTermineEnriched
+  );
 
   const calculateBackgroundColor = (
     marked: boolean | undefined,
@@ -45,7 +50,7 @@ const Kalender = () => {
     const newTerminStart = new Date(dateClickArg.date);
     const isBooked = checkIfDayIsBooked(newTerminStart);
 
-    if(isBooked) {
+    if (isBooked) {
       alert("Dieser Waschtag ist bereits gebucht");
     } else {
       setDate(() => dateClickArg.date);
@@ -79,23 +84,28 @@ const Kalender = () => {
     const newTerminStart = new Date(dropArg.date);
     const isBooked = checkIfDayIsBooked(newTerminStart);
 
-    if(isBooked) {
-      alert("Der neue Termin wurde nicht gespeichert da er sich mit einem bestehenden Waschtermin überschneidet");
+    if (isBooked) {
+      alert(
+        "Der neue Termin wurde nicht gespeichert da er sich mit einem bestehenden Waschtermin überschneidet"
+      );
     } else {
-      const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
+      const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value; // TODO: Jonas geht das?
       store.dispatch(createNewTermin(mieterId, dropArg.date));
     }
-  }
+  };
 
   function checkIfDayIsBooked(newTerminStart: Date): boolean {
     let overlaps = false;
     termineOverlapCheck?.forEach((termin) => {
       const currentTerminStart = new Date(termin.terminBeginn);
       const currentTerminEnde = new Date(termin.terminEnde);
-      if(newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
+      if (
+        newTerminStart >= currentTerminStart &&
+        newTerminStart <= currentTerminEnde
+      ) {
         overlaps = true;
       }
-    })    
+    });
     return overlaps;
   }
 

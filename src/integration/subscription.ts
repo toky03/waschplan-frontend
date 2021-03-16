@@ -1,6 +1,6 @@
 import { v4 as uuidV4 } from "uuid";
 import { NotificationType, TerminDto, WebsocketMessage } from "../model/model";
-import {WS_URL} from "../const/constants";
+import { WS_URL } from "../const/constants";
 
 // initialize Default Functions
 let terminAddFn = (notification: TerminDto) => {

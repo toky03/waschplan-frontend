@@ -11,7 +11,7 @@ const Termine = () => {
 
   const removeTermin = (id: string) => {
     store.dispatch(deleteTermin(id));
-  }
+  };
 
   return (
     <ul>

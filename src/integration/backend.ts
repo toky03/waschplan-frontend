@@ -1,6 +1,6 @@
 import { MieterDto, ReplacedIdDto, TerminDto } from "../model/model";
 import axios from "axios";
-import {API_URL} from "../const/constants";
+import { API_URL } from "../const/constants";
 
 const TIMEOUT_MILLIS = 5000;
 
