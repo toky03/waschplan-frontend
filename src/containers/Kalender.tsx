@@ -6,7 +6,7 @@ import FullCalendar, {
   EventSourceInput,
 } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
+import interactionPlugin, { DateClickArg, DropArg } from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import localeDe from "@fullcalendar/core/locales/de";
@@ -22,6 +22,7 @@ import { isPseudoRegex } from "../state/id-utils";
 
 const Kalender = () => {
   const [pendingDate, setDate] = useState<Date | null>(null);
+  const termineOverlapCheck: Termin[] | undefined = useSelector(selectTermineEnriched);
 
   const calculateBackgroundColor = (
     marked: boolean | undefined,
@@ -41,7 +42,14 @@ const Kalender = () => {
   }));
 
   const handleDateClick = (dateClickArg: DateClickArg) => {
-    setDate(() => dateClickArg.date);
+    const newTerminStart = new Date(dateClickArg.date);
+    const isBooked = checkIfDayIsBooked(newTerminStart);
+
+    if(isBooked) {
+      alert("Dieser Waschtag ist bereits gebucht");
+    } else {
+      setDate(() => dateClickArg.date);
+    }
   };
 
   const createTermin = (parteiId: string | null) => {
@@ -55,7 +63,7 @@ const Kalender = () => {
     const terminId: string = arg.event._def.extendedProps.id;
     const marked: boolean = arg.event._def.extendedProps.marked;
     if (marked) {
-      if (confirm("soll der Termin gelöscht werden?")) {
+      if (confirm("Soll der Termin wirklich gelöscht werden?")) {
         store.dispatch(deleteTermin(terminId));
       } else {
         store.dispatch(markiereTermin(terminId));
@@ -65,15 +73,44 @@ const Kalender = () => {
     }
   };
 
+  const handleDrop = (dropArg: DropArg) => {
+    dropArg.jsEvent.preventDefault();
+
+    const newTerminStart = new Date(dropArg.date);
+    const isBooked = checkIfDayIsBooked(newTerminStart);
+
+    if(isBooked) {
+      alert("Der neue Termin wurde nicht gespeichert da er sich mit einem bestehenden Waschtermin überschneidet");
+    } else {
+      const mieterId = (dropArg.draggedEl.attributes as any).itemprop.value;  // TODO: Jonas geht das?
+      store.dispatch(createNewTermin(mieterId, dropArg.date));
+    }
+  }
+
+  function checkIfDayIsBooked(newTerminStart: Date): boolean {
+    let overlaps = false;
+    termineOverlapCheck?.forEach((termin) => {
+      const currentTerminStart = new Date(termin.terminBeginn);
+      const currentTerminEnde = new Date(termin.terminEnde);
+      if(newTerminStart >= currentTerminStart && newTerminStart <= currentTerminEnde) {
+        overlaps = true;
+      }
+    })    
+    return overlaps;
+  }
+
   return (
     <div className={"calendarWrapper"}>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="timeGridWeek"
+        hiddenDays={[0]}
+        allDaySlot={false}
+        displayEventTime={false}
         locale={localeDe}
         themeSystem={"standart"}
         droppable={true}
-        weekends={false}
+        weekends={true}
         slotMinTime={"07:00:00"}
         slotMaxTime={"22:00:00"}
         events={termine}
@@ -81,6 +118,7 @@ const Kalender = () => {
         editable={true}
         dateClick={handleDateClick}
         eventClick={handleClick}
+        drop={handleDrop}
       >
         loading...
       </FullCalendar>
