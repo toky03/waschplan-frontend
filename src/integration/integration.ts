@@ -8,7 +8,6 @@ import {
 } from "../state/actions";
 import { MieterDto, ReferenceableEntity, TerminDto } from "../model/model";
 import {
-  API_URL,
   available,
   loadTermineBackend,
   removeTerminBackend,
@@ -29,6 +28,10 @@ import { formatISO, setHours, setMinutes } from "date-fns";
 import store from "../index";
 import { TermineState } from "../state/termineReducer";
 import { MetaState } from "../state/metaReducer";
+import { registerFunction, registerSubscription } from "./subscription";
+import { API_URL } from "../const/constants";
+
+const HEALTH_POLLING_INTERVALL_MS = 5000;
 
 export const initConnectionCheck = () => {
   return async (dispatch: any) => {
@@ -53,7 +56,63 @@ export const initConnectionCheck = () => {
         console.warn(e);
         dispatch(setBackendSync(false));
       }
-    }, 5000);
+    }, HEALTH_POLLING_INTERVALL_MS);
+  };
+};
+
+const onCreateTermin = (dispatch: any) => {
+  return (terminMessage: TerminDto) => {
+    const termine: TerminDto[] = store.getState().termine?.termine;
+    if (
+      terminMessage.id &&
+      !termine?.find((termin: TerminDto) => termin.id === terminMessage.id)
+    ) {
+      dispatch(addTermin(terminMessage));
+      addTerminLocalStorage(terminMessage);
+    }
+  };
+};
+
+const onUpdateTermin = (dispatch: any) => {
+  return (terminMessage: TerminDto) => {
+    const termine: TerminDto[] = store.getState().termine?.termine;
+    if (!terminMessage.id) {
+      return;
+    }
+    if (
+      termine &&
+      termine.find((termin: TerminDto) => termin.id === terminMessage.id)
+    ) {
+      dispatch(updateTermin(terminMessage.id, terminMessage));
+      updateTerminLocalStorage(terminMessage.id, terminMessage);
+    } else {
+      console.warn("update Termin which did not exist before", terminMessage);
+      dispatch(addTermin(terminMessage));
+      addTerminLocalStorage(terminMessage);
+    }
+  };
+};
+
+const onDeleteTermin = (dispatch: any) => {
+  return (terminMessage: TerminDto) => {
+    const termine: TerminDto[] = store.getState().termine?.termine;
+    if (
+      terminMessage.id &&
+      termine &&
+      termine.find((termin: TerminDto) => termin.id === terminMessage.id)
+    ) {
+      removeTerminLocalStorage(terminMessage.id);
+      dispatch(removeTermin(terminMessage.id));
+    }
+  };
+};
+
+export const initWsConnection = () => {
+  return async (dispatch: any) => {
+    registerFunction("CREATE_BUCHUNG", dispatch(onCreateTermin));
+    registerFunction("UPDATE_BUCHUNG", dispatch(onUpdateTermin));
+    registerFunction("DELETE_BUCHUNG", dispatch(onDeleteTermin));
+    const registerUuid = await registerSubscription();
   };
 };
 
@@ -86,6 +145,10 @@ export const createNewTermin = (parteiId: string, pendingDate: Date) => {
 
 export const deleteTermin = (terminId: string) => {
   return async (dispatch: any) => {
+    const termine: TermineState = store.getState().termine;
+    if (!termine.termine.find((termin: TerminDto) => termin.id === terminId)) {
+      return;
+    }
     removeTerminLocalStorage(terminId);
     dispatch(removeTermin(terminId));
     try {
@@ -117,6 +180,7 @@ export async function loadTermine(dispatch: any): Promise<void> {
   }
 }
 
+// TODO muss ins Backend Service ausgelagert werden
 export async function loadMieter(dispatch: any): Promise<void> {
   const response = await fetch(API_URL + "mieter");
   const mieters: MieterDto[] = await response.json();

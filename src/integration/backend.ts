@@ -1,7 +1,7 @@
 import { MieterDto, ReplacedIdDto, TerminDto } from "../model/model";
 import axios from "axios";
+import { API_URL } from "../const/constants";
 
-export const API_URL = "https://waschplan.bubelu.ch/api/";
 const TIMEOUT_MILLIS = 5000;
 
 export async function available(): Promise<boolean> {

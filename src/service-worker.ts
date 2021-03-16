@@ -15,8 +15,7 @@ import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
-import { API_URL } from "./integration/backend";
-import axios from "axios";
+import {API_URL} from "./const/constants";
 
 declare const self: ServiceWorkerGlobalScope;
 

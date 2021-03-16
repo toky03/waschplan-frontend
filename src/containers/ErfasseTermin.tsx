@@ -30,7 +30,7 @@ const ErfasseTermin = () => {
           return {
             title: eventEl.innerText,
             duration: { hours: 9 },
-            create: false
+            create: false,
           };
         },
       });
@@ -74,7 +74,7 @@ const ErfasseTermin = () => {
               label={mieter.name}
               variant={"outlined"}
               avatar={<Avatar src={selectAvatar(mieter.name)} />}
-              itemProp={mieter.id}  
+              itemProp={mieter.id}
             />
             <div className="spaceBetweenIcons" />
           </div>

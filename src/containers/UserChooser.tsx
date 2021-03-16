@@ -15,7 +15,9 @@ export default function UserChooser(props: UserChooserProps) {
 
   return (
     <Dialog open={props.open}>
-      <DialogTitle>Für welchen Mieter soll der Termin gebucht werden?</DialogTitle>
+      <DialogTitle>
+        Für welchen Mieter soll der Termin gebucht werden?
+      </DialogTitle>
       <List>
         {mieter?.mieter.map((mieter: MieterDto) => (
           <ListItem key={mieter.id}>
