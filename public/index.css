@@ -1,13 +1,13 @@
 .headerWrapper {
-  height: 50px;
-  padding-left: 5%;
-  background-color: burlywood;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    height: 50px;
+    padding-left: 5%;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .message {
-  color: brown;
-  margin-top: 15px;
+    color: brown;
+    margin-top: 15px;
 }

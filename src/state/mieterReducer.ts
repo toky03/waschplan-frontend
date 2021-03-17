@@ -1,21 +1,21 @@
-import { LOAD_MIETER, LoadMieterAction } from "./actions";
-import { MieterDto } from "../model/model";
+import { LOAD_MIETER, LoadMieterAction } from './actions'
+import { MieterDto } from '../model/model'
 
 export interface MieterState {
-  mieter: MieterDto[];
+    mieter: MieterDto[]
 }
 
 export const mieterReducer: (
-  state: MieterState,
-  action: LoadMieterAction
+    state: MieterState,
+    action: LoadMieterAction
 ) => MieterState | null = (
-  state: MieterState = { mieter: [] },
-  action: LoadMieterAction
+    state: MieterState = { mieter: [] },
+    action: LoadMieterAction
 ) => {
-  switch (action.type) {
-    case LOAD_MIETER:
-      return { ...state, mieter: action.mieter };
-    default:
-      return state;
-  }
-};
+    switch (action.type) {
+        case LOAD_MIETER:
+            return { ...state, mieter: action.mieter }
+        default:
+            return state
+    }
+}

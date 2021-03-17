@@ -1,68 +1,63 @@
-import { v4 as uuidV4 } from "uuid";
-import { NotificationType, TerminDto, WebsocketMessage } from "../model/model";
-import { WS_URL } from "../const/constants";
+import { v4 as uuidV4 } from 'uuid'
+import {FuncWrapper, FuncWrapperTwoArgs, NotificationType, TerminDto, WebsocketMessage} from '../model/model'
+import { WS_URL } from '../const/constants'
 
 // initialize Default Functions
 let terminAddFn = (notification: TerminDto) => {
-  console.log("fn ", notification);
-};
+    console.log('fn ', notification)
+}
 let terminUpdateFn = (notification: TerminDto) => {
-  console.log("fn ", notification);
-};
+    console.log('fn ', notification)
+}
 let terminDeleteFn = (notification: TerminDto) => {
-  console.log("fn ", notification);
-};
-
-function onConnectionEstablished(): void {
-  console.log("Websocket Connection established");
+    console.log('fn ', notification)
 }
 
-function onConnectionError(error: any): void {
-  console.warn("Websocket Connection error", error);
+// Error muss any bleiben, da es von Websocket so vorgegeben ist
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onConnectionError: FuncWrapper<any, void> = (error: string) => {
+    console.warn('Websocket Connection error', error)
 }
 
-function onMessageReceived(message: MessageEvent<string>): void {
-  const msg: WebsocketMessage = JSON.parse(message.data);
-  switch (msg.notificationType) {
-    case "CREATE_BUCHUNG":
-      terminAddFn(msg.termin);
-      break;
-    case "DELETE_BUCHUNG":
-      terminDeleteFn(msg.termin);
-      break;
-    case "UPDATE_BUCHUNG":
-      terminUpdateFn(msg.termin);
-      break;
-    default:
-      console.warn("unknown notification type on msg: ", message);
-  }
+const onMessageReceived: FuncWrapper<MessageEvent<string>, void> = (message: MessageEvent<string>) => {
+    const msg: WebsocketMessage = JSON.parse(message.data)
+    switch (msg.notificationType) {
+        case 'CREATE_BUCHUNG':
+            terminAddFn(msg.termin)
+            break
+        case 'DELETE_BUCHUNG':
+            terminDeleteFn(msg.termin)
+            break
+        case 'UPDATE_BUCHUNG':
+            terminUpdateFn(msg.termin)
+            break
+        default:
+            console.warn('unknown notification type on msg: ', message)
+    }
 }
 
-export function registerFunction(
-  eventType: NotificationType,
-  fn: (notification: TerminDto) => void
-): void {
-  switch (eventType) {
-    case "CREATE_BUCHUNG":
-      terminAddFn = fn;
-      break;
-    case "UPDATE_BUCHUNG":
-      terminUpdateFn = fn;
-      break;
-    case "DELETE_BUCHUNG":
-      terminDeleteFn = fn;
-      break;
-    default:
-      console.warn("notification Type is not supported", eventType);
-  }
+export const registerFunction: FuncWrapperTwoArgs<NotificationType, (notification: TerminDto) => void, void> = (
+    eventType: NotificationType,
+    fn: (notification: TerminDto) => void
+) => {
+    switch (eventType) {
+        case 'CREATE_BUCHUNG':
+            terminAddFn = fn
+            break
+        case 'UPDATE_BUCHUNG':
+            terminUpdateFn = fn
+            break
+        case 'DELETE_BUCHUNG':
+            terminDeleteFn = fn
+            break
+        default:
+            console.warn('notification Type is not supported', eventType)
+    }
 }
 
-export async function registerSubscription(): Promise<string> {
-  const uuid: string = uuidV4();
-  const ws = new WebSocket(WS_URL + uuid);
-  ws.onmessage = onMessageReceived;
-  ws.onerror = onConnectionError;
-  ws.onopen = onConnectionEstablished;
-
-  return uuid;
+export async function registerSubscription(): Promise<void> {
+    const uuid: string = uuidV4()
+    const ws = new WebSocket(WS_URL + uuid)
+    ws.onmessage = onMessageReceived
+    ws.onerror = onConnectionError
 }
