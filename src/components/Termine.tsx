@@ -17,7 +17,6 @@ import {Termin} from "../model/model";
 import {useSelector} from "react-redux";
 import {selectTermineEnriched} from "../state/selectors";
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import {TableHead} from "@material-ui/core";
 import {format, parseISO} from "date-fns";
 import store from "../index";
@@ -125,7 +124,7 @@ const Termine = () => {
     const classes = useStyles();
 
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
-    const columnHeader = ["Mietername", "Beginn", "Ende", "Editieren"]
+    const columnHeader = ["Mietername", "Beginn", "Ende", "Löschen / Editieren"]
 
     const terminRows = termine!.map((termin: Termin) => createData(termin));
 
@@ -172,9 +171,10 @@ const Termine = () => {
                                 <IconButton onClick={() => removeTermin(row.id)} aria-label="delete" color="secondary">
                                     <DeleteIcon/>
                                 </IconButton>
-                                <IconButton aria-label="edit">
+                                {/*                                <IconButton aria-label="edit">
                                     <EditIcon/>
-                                </IconButton>
+                                </IconButton>*/}
+                                {/*TODO: edit funktion kann hier hinzugefügt werden!*/}
                             </TableCell>
                         </TableRow>
                     ))}
