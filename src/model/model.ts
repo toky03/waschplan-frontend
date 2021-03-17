@@ -47,10 +47,10 @@ interface HtmlDraggedElement extends HTMLDivElement {
     attributes: NamedNodeMap & { itemprop: { value: string } }
 }
 
-export type FuncWrapperOptionalArg<T, K> = (arg?: T) => K;
+export type FuncWrapperOptionalArg<T, K> = (arg?: T) => K
 export type FuncWrapper<T, K> = (arg: T) => K
-export type FuncWrapperTwoArgs<T1, T2, K> = (arg1: T1, arg2: T2) => K;
-export type FuncWrapperOptionalSecondArg<T1, T2, K> = (arg1: T1, arg2?: T2) => K;
+export type FuncWrapperTwoArgs<T1, T2, K> = (arg1: T1, arg2: T2) => K
+export type FuncWrapperOptionalSecondArg<T1, T2, K> = (arg1: T1, arg2?: T2) => K
 
 export type NotificationType =
     | 'CREATE_BUCHUNG'

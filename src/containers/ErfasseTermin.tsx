@@ -7,7 +7,7 @@ import Kalender from './Kalender'
 import { Draggable } from '@fullcalendar/interaction'
 import './ErfasseTermin.css'
 import { selectBackendSynced, selectMieter } from '../state/selectors'
-import { MieterDto } from '../model/model'
+import { FuncWrapper, MieterDto } from '../model/model'
 import SyncIcon from '@material-ui/icons/Sync'
 import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
 
@@ -26,7 +26,7 @@ const ErfasseTermin: React.FC = () => {
         if (containerElRef.current) {
             new Draggable(containerElRef.current, {
                 itemSelector: '.draggable',
-                eventData: function (eventEl: HTMLElement) {
+                eventData: (eventEl: HTMLElement) => {
                     return {
                         title: eventEl.innerText,
                         duration: { hours: 9 },
@@ -38,7 +38,9 @@ const ErfasseTermin: React.FC = () => {
     }, [])
     // TODO: Frage Jonas: Geht das so?
     // säuuberer wäre im Backend
-    function selectAvatar(mieterName: string) {
+    const selectAvatar: FuncWrapper<string, string | undefined> = (
+        mieterName: string
+    ) => {
         switch (mieterName) {
             case 'Hugo':
                 return avatar1

@@ -14,7 +14,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 
 import localeDe from '@fullcalendar/core/locales/de'
 import { useSelector } from 'react-redux'
-import { AvatarDropArg, Termin } from '../model/model'
+import { AvatarDropArg, FuncWrapper, Termin } from '../model/model'
 import { selectTermineEnriched } from '../state/selectors'
 
 import store from '../index'
@@ -94,7 +94,9 @@ const Kalender: React.FC = () => {
         }
     }
 
-    function checkIfDayIsBooked(newTerminStart: Date): boolean {
+    const checkIfDayIsBooked: FuncWrapper<Date, boolean> = (
+        newTerminStart: Date
+    ) => {
         let overlaps = false
         termineOverlapCheck?.forEach((termin: Termin) => {
             const currentTerminStart = new Date(termin.terminBeginn)

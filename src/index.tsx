@@ -9,7 +9,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { CombinedState } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 
-
 // Das any hier zu ersetzten wäre mir relativ viel Aufwand verbunden und deshalb reicht hier CombinedState
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let store: CombinedState<any>
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export default store
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch
 
 ReactDOM.render(
     <React.StrictMode>

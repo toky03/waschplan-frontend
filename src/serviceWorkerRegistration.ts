@@ -1,4 +1,8 @@
-import {FuncWrapper, FuncWrapperOptionalArg, FuncWrapperOptionalSecondArg} from "./model/model";
+import {
+    FuncWrapper,
+    FuncWrapperOptionalArg,
+    FuncWrapperOptionalSecondArg,
+} from './model/model'
 
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
@@ -13,7 +17,9 @@ type Config = {
     onUpdate?: (registration: ServiceWorkerRegistration) => void
 }
 
-export const register: FuncWrapperOptionalArg<Config, void> = (config?: Config) => {
+export const register: FuncWrapperOptionalArg<Config, void> = (
+    config?: Config
+) => {
     if ('serviceWorker' in navigator) {
         const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href)
         if (publicUrl.origin !== window.location.origin) {
@@ -32,7 +38,10 @@ export const register: FuncWrapperOptionalArg<Config, void> = (config?: Config) 
     }
 }
 
-const registerValidSW: FuncWrapperOptionalSecondArg<string, Config, void> = (swUrl: string, config?: Config) => {
+const registerValidSW: FuncWrapperOptionalSecondArg<string, Config, void> = (
+    swUrl: string,
+    config?: Config
+) => {
     navigator.serviceWorker
         .register(swUrl)
         .then((registration) => {
@@ -61,7 +70,11 @@ const registerValidSW: FuncWrapperOptionalSecondArg<string, Config, void> = (swU
         })
 }
 
-const checkValidServiceWorker: FuncWrapperOptionalSecondArg<string, Config, void> = (swUrl: string, config?: Config) => {
+const checkValidServiceWorker: FuncWrapperOptionalSecondArg<
+    string,
+    Config,
+    void
+> = (swUrl: string, config?: Config) => {
     fetch(swUrl, {
         headers: { 'Service-Worker': 'script' },
     })

@@ -1,9 +1,16 @@
-import { MieterDto, TerminDto } from '../model/model'
+import {
+    FuncWrapper,
+    FuncWrapperTwoArgs,
+    MieterDto,
+    TerminDto,
+} from '../model/model'
 const TERMINE_KEY = 'waschplan-termine'
 const MIETER_KEY = 'waschplan-mieter'
 const PENDING_DELETION = 'pending-deletion'
 
-export function addPendingDeletion(terminId: string): void {
+export const addPendingDeletion: FuncWrapper<string, void> = (
+    terminId: string
+) => {
     const pendingDeletion = loadPendingDeletion()
     localStorage.setItem(
         PENDING_DELETION,
@@ -11,7 +18,9 @@ export function addPendingDeletion(terminId: string): void {
     )
 }
 
-export function removeFromPendingDeletion(terminId: string): void {
+export const removeFromPendingDeletion: FuncWrapper<string, void> = (
+    terminId: string
+) => {
     const pendingDeletion = loadPendingDeletion()
     localStorage.setItem(
         PENDING_DELETION,
@@ -23,36 +32,41 @@ export function removeFromPendingDeletion(terminId: string): void {
     )
 }
 
-export function loadPendingDeletion(): string[] {
+export const loadPendingDeletion: FuncWrapper<void, string[]> = () => {
     const pendingDeletionLocalStorage = localStorage.getItem(PENDING_DELETION)
     return pendingDeletionLocalStorage
         ? JSON.parse(pendingDeletionLocalStorage)
         : []
 }
 
-export function loadTermineLocalStorage(): TerminDto[] {
+export const loadTermineLocalStorage: FuncWrapper<void, TerminDto[]> = () => {
     const termineLocalStorage = localStorage.getItem(TERMINE_KEY)
     return termineLocalStorage ? JSON.parse(termineLocalStorage) : []
 }
 
-export function loadMieterLocalStorage(): MieterDto[] {
+export const loadMieterLocalStorage: FuncWrapper<void, MieterDto[]> = () => {
     const mieterLocalStorage = localStorage.getItem(MIETER_KEY)
     return mieterLocalStorage ? JSON.parse(mieterLocalStorage) : []
 }
 
-export function saveTermineLocalStorage(termine: TerminDto[]): void {
+export const saveTermineLocalStorage: FuncWrapper<TerminDto[], void> = (
+    termine: TerminDto[]
+) => {
     localStorage.setItem(TERMINE_KEY, JSON.stringify(termine))
 }
 
-export function addTerminLocalStorage(termin: TerminDto): void {
+export const addTerminLocalStorage: FuncWrapper<TerminDto, void> = (
+    termin: TerminDto
+) => {
     const currentTermine = loadTermineLocalStorage()
     saveTermineLocalStorage([...currentTermine, termin])
 }
 
-export function updateTerminLocalStorage(
-    terminid: string,
-    termin: TerminDto
-): void {
+export const updateTerminLocalStorage: FuncWrapperTwoArgs<
+    string,
+    TerminDto,
+    void
+> = (terminid: string, termin: TerminDto) => {
     const currentTermine = loadTermineLocalStorage()
     saveTermineLocalStorage([
         ...currentTermine.filter((termin: TerminDto) => terminid !== termin.id),
@@ -60,13 +74,17 @@ export function updateTerminLocalStorage(
     ])
 }
 
-export function removeTerminLocalStorage(terminId: string): void {
+export const removeTerminLocalStorage: FuncWrapper<string, void> = (
+    terminId: string
+) => {
     const filteredTermine = loadTermineLocalStorage().filter(
         (termin: TerminDto) => termin.id !== terminId
     )
     saveTermineLocalStorage(filteredTermine)
 }
 
-export function saveMieterLocalStorage(mieter: MieterDto[]): void {
+export const saveMieterLocalStorage: FuncWrapper<MieterDto[], void> = (
+    mieter: MieterDto[]
+) => {
     localStorage.setItem(MIETER_KEY, JSON.stringify(mieter))
 }

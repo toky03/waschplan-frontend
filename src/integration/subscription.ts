@@ -1,5 +1,11 @@
 import { v4 as uuidV4 } from 'uuid'
-import {FuncWrapper, FuncWrapperTwoArgs, NotificationType, TerminDto, WebsocketMessage} from '../model/model'
+import {
+    FuncWrapper,
+    FuncWrapperTwoArgs,
+    NotificationType,
+    TerminDto,
+    WebsocketMessage,
+} from '../model/model'
 import { WS_URL } from '../const/constants'
 
 // initialize Default Functions
@@ -19,7 +25,9 @@ const onConnectionError: FuncWrapper<any, void> = (error: string) => {
     console.warn('Websocket Connection error', error)
 }
 
-const onMessageReceived: FuncWrapper<MessageEvent<string>, void> = (message: MessageEvent<string>) => {
+const onMessageReceived: FuncWrapper<MessageEvent<string>, void> = (
+    message: MessageEvent<string>
+) => {
     const msg: WebsocketMessage = JSON.parse(message.data)
     switch (msg.notificationType) {
         case 'CREATE_BUCHUNG':
@@ -36,10 +44,11 @@ const onMessageReceived: FuncWrapper<MessageEvent<string>, void> = (message: Mes
     }
 }
 
-export const registerFunction: FuncWrapperTwoArgs<NotificationType, (notification: TerminDto) => void, void> = (
-    eventType: NotificationType,
-    fn: (notification: TerminDto) => void
-) => {
+export const registerFunction: FuncWrapperTwoArgs<
+    NotificationType,
+    (notification: TerminDto) => void,
+    void
+> = (eventType: NotificationType, fn: (notification: TerminDto) => void) => {
     switch (eventType) {
         case 'CREATE_BUCHUNG':
             terminAddFn = fn
@@ -55,7 +64,10 @@ export const registerFunction: FuncWrapperTwoArgs<NotificationType, (notificatio
     }
 }
 
-export async function registerSubscription(): Promise<void> {
+export const registerSubscription: FuncWrapper<
+    void,
+    Promise<void>
+> = async () => {
     const uuid: string = uuidV4()
     const ws = new WebSocket(WS_URL + uuid)
     ws.onmessage = onMessageReceived

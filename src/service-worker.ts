@@ -16,6 +16,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
 import { API_URL } from './const/constants'
+import { FuncWrapper } from './model/model'
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -114,7 +115,9 @@ messaging
         console.error('could not register ', error)
     })
 
-async function registerToken(token: string): Promise<void> {
+const registerToken: FuncWrapper<string, Promise<void>> = async (
+    token: string
+) => {
     await fetch(`${API_URL}register/${token}`, {
         method: 'POST',
     })

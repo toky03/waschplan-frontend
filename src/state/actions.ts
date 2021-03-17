@@ -1,4 +1,4 @@
-import {FuncWrapper, MieterDto, TerminDto} from '../model/model'
+import { FuncWrapper, MieterDto, TerminDto } from '../model/model'
 
 export const ADD_TERMIN = 'CREATE_TERMIN'
 export const MARK_TERMIN = 'MARK_TERMIN'
@@ -93,7 +93,10 @@ export const removeTermin: FuncWrapper<string, LoescheTerminAction> = (
     }
 }
 
-export const loadTermineSucessful: FuncWrapper<TerminDto[], LoadTermineAction> = (termine: TerminDto[]) => {
+export const loadTermineSucessful: FuncWrapper<
+    TerminDto[],
+    LoadTermineAction
+> = (termine: TerminDto[]) => {
     return {
         type: LOAD_TERMINE,
         termine: termine,
@@ -104,14 +107,19 @@ export const clearStore: FuncWrapper<void, { type: string }> = () => ({
     type: CLEAR_STORE,
 })
 
-export const loadMieterSuccessfull: FuncWrapper<MieterDto[], LoadMieterAction> = (mieters: MieterDto[]) => {
+export const loadMieterSuccessfull: FuncWrapper<
+    MieterDto[],
+    LoadMieterAction
+> = (mieters: MieterDto[]) => {
     return {
         type: LOAD_MIETER,
         mieter: mieters,
     }
 }
 
-export const setBackendSync: FuncWrapper<boolean, SetBackendSyncAction> = (backendSynced: boolean) => {
+export const setBackendSync: FuncWrapper<boolean, SetBackendSyncAction> = (
+    backendSynced: boolean
+) => {
     return {
         type: SET_BACKEND_SYNC,
         backendSync: backendSynced,

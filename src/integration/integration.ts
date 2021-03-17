@@ -6,9 +6,16 @@ import {
     updateTermin,
     removeTermin,
 } from '../state/actions'
-import {FuncWrapper, FuncWrapperTwoArgs, MieterDto, ReferenceableEntity, TerminDto} from '../model/model'
 import {
-    available, loadMieterBackend,
+    FuncWrapper,
+    FuncWrapperTwoArgs,
+    MieterDto,
+    ReferenceableEntity,
+    TerminDto,
+} from '../model/model'
+import {
+    available,
+    loadMieterBackend,
     loadTermineBackend,
     removeTerminBackend,
     saveTerminBackend,
@@ -25,7 +32,7 @@ import {
 } from './local-store'
 import { generatePseudoTerminId, isPseudoRegex } from '../state/id-utils'
 import { formatISO, setHours, setMinutes } from 'date-fns'
-import store, {AppDispatch} from '../index'
+import store, { AppDispatch } from '../index'
 import { TermineState } from '../state/termineReducer'
 import { MetaState } from '../state/metaReducer'
 import { registerFunction, registerSubscription } from './subscription'
@@ -58,7 +65,10 @@ export const initConnectionCheck: FuncWrapper<void, void> = () => {
     }
 }
 
-const onCreateTermin: FuncWrapper<AppDispatch, (terminMesssage: TerminDto) => void> = (dispatch: AppDispatch) => {
+const onCreateTermin: FuncWrapper<
+    AppDispatch,
+    (terminMesssage: TerminDto) => void
+> = (dispatch: AppDispatch) => {
     return (terminMessage: TerminDto) => {
         const termine: TerminDto[] = store.getState().termine?.termine
         if (
@@ -73,7 +83,10 @@ const onCreateTermin: FuncWrapper<AppDispatch, (terminMesssage: TerminDto) => vo
     }
 }
 
-const onUpdateTermin: FuncWrapper<AppDispatch, (terminMesssage: TerminDto) => void> = (dispatch: AppDispatch) => {
+const onUpdateTermin: FuncWrapper<
+    AppDispatch,
+    (terminMesssage: TerminDto) => void
+> = (dispatch: AppDispatch) => {
     return (terminMessage: TerminDto) => {
         const termine: TerminDto[] = store.getState().termine?.termine
         if (!terminMessage.id) {
@@ -96,7 +109,10 @@ const onUpdateTermin: FuncWrapper<AppDispatch, (terminMesssage: TerminDto) => vo
     }
 }
 
-const onDeleteTermin: FuncWrapper<AppDispatch, (terminMesssage: TerminDto) => void> = (dispatch: AppDispatch) => {
+const onDeleteTermin: FuncWrapper<
+    AppDispatch,
+    (terminMesssage: TerminDto) => void
+> = (dispatch: AppDispatch) => {
     return (terminMessage: TerminDto) => {
         const termine: TerminDto[] = store.getState().termine?.termine
         if (
@@ -115,11 +131,15 @@ export const initWsConnection: FuncWrapper<void, void> = () => {
         registerFunction('CREATE_BUCHUNG', dispatch(onCreateTermin))
         registerFunction('UPDATE_BUCHUNG', dispatch(onUpdateTermin))
         registerFunction('DELETE_BUCHUNG', dispatch(onDeleteTermin))
-        await registerSubscription();
+        await registerSubscription()
     }
 }
 
-export const createNewTermin: FuncWrapperTwoArgs<string, Date, (dispatch: AppDispatch) => void> = (parteiId: string, pendingDate: Date) => {
+export const createNewTermin: FuncWrapperTwoArgs<
+    string,
+    Date,
+    (dispatch: AppDispatch) => void
+> = (parteiId: string, pendingDate: Date) => {
     return async (dispatch: AppDispatch) => {
         const termine: TermineState = store.getState().termine
         const beginn = formatISO(setMinutes(setHours(pendingDate, 7), 0))
@@ -144,7 +164,10 @@ export const createNewTermin: FuncWrapperTwoArgs<string, Date, (dispatch: AppDis
     }
 }
 
-export const deleteTermin: FuncWrapper<string, (dispatch: AppDispatch) => void> = (terminId: string) => {
+export const deleteTermin: FuncWrapper<
+    string,
+    (dispatch: AppDispatch) => void
+> = (terminId: string) => {
     return async (dispatch: AppDispatch) => {
         const termine: TermineState = store.getState().termine
         if (
@@ -165,7 +188,9 @@ export const deleteTermin: FuncWrapper<string, (dispatch: AppDispatch) => void> 
     }
 }
 
-export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (dispatch: AppDispatch) => {
+export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
+    dispatch: AppDispatch
+) => {
     const terminLocalStorage = loadTermineLocalStorage()
     dispatch(loadTermineSucessful(terminLocalStorage))
     try {
@@ -183,12 +208,16 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (dispa
     }
 }
 
-export const loadMieter: FuncWrapper<AppDispatch, Promise<void>> = async (dispatch: AppDispatch) => {
-    const mieters: MieterDto[] = await loadMieterBackend();
+export const loadMieter: FuncWrapper<AppDispatch, Promise<void>> = async (
+    dispatch: AppDispatch
+) => {
+    const mieters: MieterDto[] = await loadMieterBackend()
     dispatch(loadMieterSuccessfull(mieters))
 }
 
-const updatePendingTermine: FuncWrapper<AppDispatch, Promise<void>> = async (dispatch: AppDispatch) => {
+const updatePendingTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
+    dispatch: AppDispatch
+) => {
     const pendingTermine = loadTermineLocalStorage().filter(
         (entity: TerminDto) => isPseudoRegex(entity.id)
     )
@@ -203,7 +232,9 @@ const updatePendingTermine: FuncWrapper<AppDispatch, Promise<void>> = async (dis
     }
 }
 
-const deletePending: FuncWrapper<AppDispatch, Promise<void>> = async (dispatch: AppDispatch) => {
+const deletePending: FuncWrapper<AppDispatch, Promise<void>> = async (
+    dispatch: AppDispatch
+) => {
     const pendingTermine = loadPendingDeletion()
     for (const terminId of pendingTermine) {
         try {
@@ -217,10 +248,10 @@ const deletePending: FuncWrapper<AppDispatch, Promise<void>> = async (dispatch: 
     }
 }
 
-function mergeEntities<T extends ReferenceableEntity>(
+const mergeEntities = <T extends ReferenceableEntity>(
     entitiesLocalStorage: T[],
     entitiesBackend: T[]
-): T[] {
+) => {
     return [
         ...entitiesBackend,
         ...entitiesLocalStorage.filter((entity: T) => isPseudoRegex(entity.id)),
