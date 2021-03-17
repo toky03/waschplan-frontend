@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles, useTheme, Theme, createStyles} from '@material-ui/core/styles';
+import React, {useState} from "react";
+import {createStyles, makeStyles, Theme, useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,13 +13,15 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import {Termin, TerminDto} from "../model/model";
+import {Termin} from "../model/model";
 import {useSelector} from "react-redux";
 import {selectTermineEnriched} from "../state/selectors";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import {TableHead} from "@material-ui/core";
 import {format, parseISO} from "date-fns";
+import store from "../index";
+import {deleteTermin} from "../integration/integration";
 
 const useStyles1 = makeStyles((theme: Theme) =>
     createStyles({
@@ -95,6 +97,10 @@ interface TerminRow {
     ende: string;
 }
 
+const removeTermin = (id: string) => {
+    store.dispatch(deleteTermin(id));
+};
+
 function createData(termin: Termin): TerminRow {
     return {
         id: termin.id,
@@ -107,19 +113,12 @@ function createData(termin: Termin): TerminRow {
 function prettyPrintDate(date: string): string {
     return format(parseISO(date), "dd.MM.yyyy HH:mm")
 }
-import React from "react";
-import { Button } from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { selectTermineEnriched } from "../state/selectors";
-import { Termin } from "../model/model";
-import store from "../index";
-import { deleteTermin } from "../integration/integration";
 
 const Termine = () => {
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
     const columnHeader = ["Mietername", "Beginn", "Ende", "Editieren"]
 
-    const terminRows = termine.map((termin: Termin) => createData(termin));
+    const terminRows = termine!.map((termin: Termin) => createData(termin));
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -161,7 +160,7 @@ const Termine = () => {
                                 {row.ende}
                             </TableCell>
                             <TableCell style={{width: 160}} align="center">
-                                <IconButton aria-label="delete" color="secondary">
+                                <IconButton onClick={() => removeTermin(row.id)} aria-label="delete" color="secondary">
                                     <DeleteIcon/>
                                 </IconButton>
                                 <IconButton aria-label="edit">
@@ -197,24 +196,6 @@ const Termine = () => {
             </Table>
         </TableContainer>
     );
-
-  const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
-
-  const removeTermin = (id: string) => {
-    store.dispatch(deleteTermin(id));
-  };
-
-  return (
-    <ul>
-      {termine?.map((termin: Termin) => (
-        <li key={termin.id}>
-          TerminId: {termin.id} Mieterpartei: {termin.mieterName} Beginn:{" "}
-          {termin.terminBeginn} Ende: {termin.terminEnde}
-          <Button onClick={() => removeTermin(termin.id)}>Löschen</Button>
-        </li>
-      ))}
-    </ul>
-  );
 };
 
 export default Termine;
