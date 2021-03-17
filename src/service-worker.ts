@@ -7,13 +7,15 @@
 // code you'd like.
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
+import firebase from "firebase/app";
+import "firebase/messaging";
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
-import firebase from "firebase";
+import {API_URL} from "./const/constants";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -83,18 +85,37 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: "AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM",
+    authDomain: "waschplan-d17fc.firebaseapp.com",
+    projectId: "waschplan-d17fc",
+    storageBucket: "waschplan-d17fc.appspot.com",
+    messagingSenderId: "837328286802",
+    appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
+    measurementId: "G-T6TJ20Q94B",
+  });
+} else {
+  firebase.app();
+}
+const messaging = firebase.messaging();
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-var firebaseConfig = {
-  apiKey: "AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM",
-  authDomain: "waschplan-d17fc.firebaseapp.com",
-  projectId: "waschplan-d17fc",
-  storageBucket: "waschplan-d17fc.appspot.com",
-  messagingSenderId: "837328286802",
-  appId: "1:837328286802:web:d721b17f7280ce4decdb8b",
-  measurementId: "G-T6TJ20Q94B",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+messaging
+  .getToken({
+    vapidKey:
+      "BA_w2LVGWbNWrU4POFGueoDmBNyyTZQKFCk7ZyKuRO7wQNgMX7_PINbtyRMwcuB40NqRoRCC3JKbNgi-fV84Myc",
+  })
+  .then((token: string) => {
+    console.log("user token", token);
+    return registerToken(token);
+  })
+  .then(() => console.log("registered"))
+  .catch((error) => {
+    console.error("could not register ", error);
+  });
+
+async function registerToken(token: string): Promise<void> {
+  await fetch(`${API_URL}register/${token}`, {
+    method: "POST",
+  });
+}
