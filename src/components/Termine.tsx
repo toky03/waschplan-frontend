@@ -23,11 +23,18 @@ import {format, parseISO} from "date-fns";
 import store from "../index";
 import {deleteTermin} from "../integration/integration";
 
-const useStyles1 = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexShrink: 0,
             marginLeft: theme.spacing(2.5),
+        },
+        table: {
+            marginTop: '50px',
+            marginBottom: 'auto',
+            marginInline: 'auto',
+            width: "80%",
+            backgroundColor: 'transparent'
         },
     }),
 );
@@ -40,7 +47,7 @@ interface TablePaginationActionsProps {
 }
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
-    const classes = useStyles1();
+    const classes = useStyles();
     const theme = useTheme();
     const {count, page, rowsPerPage, onChangePage} = props;
 
@@ -115,6 +122,8 @@ function prettyPrintDate(date: string): string {
 }
 
 const Termine = () => {
+    const classes = useStyles();
+
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched);
     const columnHeader = ["Mietername", "Beginn", "Ende", "Editieren"]
 
@@ -137,7 +146,7 @@ const Termine = () => {
     };
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className={classes.table} component={Paper}>
             <Table aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
