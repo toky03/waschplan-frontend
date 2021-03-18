@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: 'auto',
             marginInline: 'auto',
             width: "80%",
-            backgroundColor: 'transparent'
+            backgroundColor: '#edcfb7'
         },
     }),
 );
@@ -98,7 +98,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 interface TerminRow {
     id: string,
-    name: string,
+    name: any,
     start: string;
     ende: string;
 }
@@ -145,7 +145,7 @@ const Termine = () => {
     };
 
     return (
-        <TableContainer className={classes.table} component={Paper}>
+        <TableContainer className={classes.table} component={Paper} elevation={6}>
             <Table aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
@@ -187,7 +187,7 @@ const Termine = () => {
                 <TableFooter>
                     <TableRow>
                         <TablePagination
-                            rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                            rowsPerPageOptions={[5, 10]}
                             colSpan={3}
                             count={terminRows.length}
                             rowsPerPage={rowsPerPage}
