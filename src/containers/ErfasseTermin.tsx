@@ -57,7 +57,7 @@ const ErfasseTermin: React.FC = () => {
                 <Card>
                     <CardHeader
                               style={{ backgroundColor: '#edcfb7' }}
-                              title="ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM
+                              title="ANLEITUNG: DU KANNST DEN AVATAR DES MIETERS IN DEN KALENDER SCHIEBEN UM
                               EINEN WASCHTAG ZU BUCHEN!"
                               avatar={<Avatar src="" />}
                     />

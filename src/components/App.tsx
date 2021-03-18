@@ -46,13 +46,13 @@ const App: React.FC = () => {
             <Router>
                 <AppBar position='static'>
                     <Toolbar className={'Toolbar'}>
-                        <Button className={classes.root} component={Link} to="/">Waschplan</Button>
+                        <Button className={classes.root} component={Link} to="/" size="large">Waschplan</Button>
                         {isSynced ? (
                             <SyncIcon style={{ color: green[500] }} />
                         ) : (
                             <SyncDisabledIcon style={{ color: red[500] }} />
                         )}
-                        <Button className={classes.root} component={Link} to="/verwalten">Verwalten</Button>
+                        <Button className={classes.root} component={Link} to="/verwalten" size="large">Verwalten</Button>
                     </Toolbar>
                     </AppBar>              
                 <div>
