@@ -13,6 +13,7 @@ import {
     loadTermine,
 } from '../integration/integration'
 import Button from '@material-ui/core/Button'
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core'
 
 const App: React.FC = () => {
     useEffect(() => {
@@ -28,12 +29,13 @@ const App: React.FC = () => {
         <div>
             <Router>
                 <div className={'navigation'}>
-                    <Button>
-                        <NavLink to="/">Waschplan</NavLink>
-                    </Button>
-                    <Button>
-                        <NavLink to="/verwalten">Verwalten</NavLink>
-                    </Button>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <Typography>Willkommen beim Waschplan</Typography>
+                            <Button><NavLink to="/">Waschplan</NavLink></Button>
+                            <Button><NavLink to="/verwalten">Verwalten</NavLink></Button>
+                        </Toolbar>
+                    </AppBar>              
                 </div>
                 <div>
                     <Route path="/" exact component={ErfasseTermin} />
