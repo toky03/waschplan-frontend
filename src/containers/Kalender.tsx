@@ -127,7 +127,7 @@ const Kalender: React.FC = () => {
                 slotMaxTime={'22:00:00'}
                 events={termine}
                 eventOverlap={false}
-                editable={true}
+                editable={false}
                 dateClick={handleDateClick}
                 eventClick={handleClick}
                 drop={(dropArg: DropArg) =>
