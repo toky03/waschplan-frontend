@@ -12,6 +12,7 @@ import {
     MieterDto,
     ReferenceableEntity,
     TerminDto,
+    UserError,
 } from '../model/model'
 import {
     available,
@@ -160,7 +161,8 @@ export const createNewTermin: FuncWrapperTwoArgs<
                 console.error('Backend ')
             }
         } catch (e) {
-            if (e === 'TypeError: Failed to fetch') {
+            if (e instanceof UserError) {
+                alert(e)
                 dispatch(deleteTermin(newTermin.id))
                 removeTerminLocalStorage(newTermin.id)
             }
@@ -186,6 +188,9 @@ export const deleteTermin: FuncWrapper<
                 await removeTerminBackend(terminId)
             }
         } catch (e) {
+            if (e instanceof UserError) {
+                alert(e)
+            }
             console.warn(e)
             addPendingDeletion(terminId)
         }
@@ -207,6 +212,9 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
         dispatch(loadTermineSucessful(mergedTermine))
         dispatch(setBackendSync(true))
     } catch (e) {
+        if (e instanceof UserError) {
+            alert(e)
+        }
         console.warn(e)
         dispatch(setBackendSync(false))
     }
@@ -234,7 +242,9 @@ const deletePendingTermine: FuncWrapper<
                     removeTerminLocalStorage(terminId)
                 })
                 .catch((e) => {
-                    alert('Entity konnte nicht gelöscht werden ' + e)
+                    if (e instanceof UserError) {
+                        alert('Entity konnte nicht gelöscht werden ' + e)
+                    }
                 })
         )
     })
@@ -263,7 +273,9 @@ const createPendingTermine: FuncWrapper<
                     dispatch(updateTermin(termin.id, { ...termin, id: newId }))
                 })
                 .catch((e) => {
-                    alert(e)
+                    if (e instanceof UserError) {
+                        alert(e)
+                    }
                     dispatch(deleteTermin(termin.id))
                     removeTerminLocalStorage(termin.id)
                 })
