@@ -5,6 +5,7 @@ import {
     addTermin,
     updateTermin,
     removeTermin,
+    addError,
 } from '../state/actions'
 import {
     FuncWrapper,
@@ -31,7 +32,7 @@ import {
     saveTermineLocalStorage,
     updateTerminLocalStorage,
 } from './local-store'
-import { generatePseudoTerminId, isPseudoRegex } from '../state/id-utils'
+import { generatePseudoTerminId, isPseudoRegex } from '../utils/id-utils'
 import { formatISO, setHours, setMinutes } from 'date-fns'
 import store, { AppDispatch } from '../index'
 import { TermineState } from '../state/termineReducer'
@@ -154,15 +155,23 @@ export const createNewTermin: FuncWrapperTwoArgs<
         addTerminLocalStorage(newTermin)
         try {
             const newId = await saveTerminBackend(newTermin)
-            if(newId){
-                dispatch(updateTermin(newTermin.id, { ...newTermin, id: newId }))
-                updateTerminLocalStorage(newTermin.id, { ...newTermin, id: newId })
+            if (newId) {
+                dispatch(
+                    updateTermin(newTermin.id, { ...newTermin, id: newId })
+                )
+                updateTerminLocalStorage(newTermin.id, {
+                    ...newTermin,
+                    id: newId,
+                })
             } else {
-                console.error('Backend ')
+                console.error(
+                    'Backend did noreturn a new id for ',
+                    newTermin.id
+                )
             }
         } catch (e) {
             if (e instanceof UserError) {
-                alert(e)
+                dispatch(addError(e.message))
                 dispatch(deleteTermin(newTermin.id))
                 removeTerminLocalStorage(newTermin.id)
             }
@@ -189,7 +198,7 @@ export const deleteTermin: FuncWrapper<
             }
         } catch (e) {
             if (e instanceof UserError) {
-                alert(e)
+                dispatch(addError(e.message))
             }
             console.warn(e)
             addPendingDeletion(terminId)
@@ -213,7 +222,7 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
         dispatch(setBackendSync(true))
     } catch (e) {
         if (e instanceof UserError) {
-            alert(e)
+            dispatch(addError(e.message))
         }
         console.warn(e)
         dispatch(setBackendSync(false))
@@ -243,7 +252,12 @@ const deletePendingTermine: FuncWrapper<
                 })
                 .catch((e) => {
                     if (e instanceof UserError) {
-                        alert('Entity konnte nicht gelöscht werden ' + e)
+                        dispatch(
+                            addError(
+                                'Entity konnte nicht gelöscht werden' +
+                                    e.message
+                            )
+                        )
                     }
                 })
         )
@@ -274,7 +288,7 @@ const createPendingTermine: FuncWrapper<
                 })
                 .catch((e) => {
                     if (e instanceof UserError) {
-                        alert(e)
+                        dispatch(addError(e.message))
                     }
                     dispatch(deleteTermin(termin.id))
                     removeTerminLocalStorage(termin.id)

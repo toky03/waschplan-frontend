@@ -13,6 +13,7 @@ import {
     loadTermine,
 } from '../integration/integration'
 import Button from '@material-ui/core/Button'
+import { ErrorAlert } from '../containers/ErrorStore'
 
 const App: React.FC = () => {
     useEffect(() => {
@@ -44,6 +45,7 @@ const App: React.FC = () => {
                     />
                 </div>
             </Router>
+            <ErrorAlert />
         </div>
     )
 }

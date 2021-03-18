@@ -3,14 +3,21 @@ import { State } from './reducer'
 import { TermineState } from './termineReducer'
 import { MieterState } from './mieterReducer'
 import { FuncWrapper, MieterDto, Termin, TerminDto } from '../model/model'
+import { WaschplanError } from './metaReducer'
 
 export const selectBackendSynced: FuncWrapper<State, boolean | undefined> = (
     state: State
 ) => state.metaData?.backendSync
 
-export const selectTermineRaw = (state: State) => state.termine
-export const selectMieter = (state: State) => state.mieter
-export const selectErrors = (state: State) => state.metaData?.errors
+export const selectTermineRaw: FuncWrapper<State, TermineState | null> = (
+    state: State
+) => state.termine
+export const selectMieter: FuncWrapper<State, MieterState | null> = (
+    state: State
+) => state.mieter
+export const selectErrors: FuncWrapper<State, WaschplanError[] | undefined> = (
+    state: State
+) => state.metaData?.errors
 
 export const selectTermineEnriched = createSelector<
     State,
