@@ -13,9 +13,18 @@ import {
     loadTermine,
 } from '../integration/integration'
 import Button from '@material-ui/core/Button'
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles({
+    root: {
+        "&:hover": {
+            border: "transparent"
+        }
+    }
+})
 
 const App: React.FC = () => {
+    const classes = useStyles();
     useEffect(() => {
         store.dispatch(loadTermine)
         store.dispatch(loadMieter)
@@ -31,8 +40,8 @@ const App: React.FC = () => {
                 <AppBar position='static'>
                     <Toolbar className={'Toolbar'}>
                         <Typography className={'Typography'}>Willkommen beim Waschplan / CAS Abschlussarbeit von Marco Jakob, Remzi Atesci und Michael Egli</Typography>
-                        <Button><NavLink style={{ textDecoration: 'none' }} to="/">Waschplan</NavLink></Button>
-                        <Button><NavLink style={{ textDecoration: 'none' }} to="/verwalten">Verwalten</NavLink></Button>
+                        <Button className={classes.root}><NavLink style={{ textDecoration: 'none'}} to="/">Waschplan</NavLink></Button>
+                        <Button className={classes.root}><NavLink style={{ textDecoration: 'none' }} to="/verwalten">Verwalten</NavLink></Button>
                     </Toolbar>
                     </AppBar>              
                 <div>

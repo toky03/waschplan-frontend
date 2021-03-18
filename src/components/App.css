@@ -5,7 +5,10 @@
     align-items: center;
     justify-content: space-around;
 }
-
+.Toolbar > Button {
+    background-color: rgb(194, 150, 100);
+    
+}
 .Typography {
     font-family: Verdana;
 }
