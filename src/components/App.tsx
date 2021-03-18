@@ -14,7 +14,7 @@ import {
     loadTermine,
 } from '../integration/integration'
 import Button from '@material-ui/core/Button'
-import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core'
+import { AppBar, Toolbar, makeStyles } from '@material-ui/core'
 import SyncIcon from '@material-ui/icons/Sync'
 import { selectBackendSynced } from '../state/selectors'
 import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
