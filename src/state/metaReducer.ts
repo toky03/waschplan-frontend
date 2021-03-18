@@ -11,20 +11,20 @@ export interface MetaState {
 }
 
 export const metaReducer: (
-  state: MetaState,
-  action: SetBackendSyncAction | AddErrorAction
+    state: MetaState,
+    action: SetBackendSyncAction | AddErrorAction
 ) => MetaState | null = (
-  state: MetaState = { backendSync: false, errors: [] },
-  action: SetBackendSyncAction | AddErrorAction
+    state: MetaState = { backendSync: false, errors: [] },
+    action: SetBackendSyncAction | AddErrorAction
 ) => {
-  switch (action.type) {
-    case SET_BACKEND_SYNC:
-      return { ...state, backendSync: action.backendSync };
-    case ADD_ERROR:
+    switch (action.type) {
+        case SET_BACKEND_SYNC:
+            return { ...state, backendSync: action.backendSync }
+        case ADD_ERROR:
       return {...state, errors: [...state.errors, action.errorMessage]}
     default:
-      return state;
-  }
-};
+      return state
+    }
+}
 
 const createNewError
