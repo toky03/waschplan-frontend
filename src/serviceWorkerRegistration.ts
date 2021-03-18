@@ -25,10 +25,8 @@ export const register: FuncWrapperOptionalArg<Config, void> = (
         if (publicUrl.origin !== window.location.origin) {
             return
         }
-
         window.addEventListener('load', () => {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
-
             if (isLocalhost) {
                 checkValidServiceWorker(swUrl, config)
             } else {

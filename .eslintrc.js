@@ -19,5 +19,6 @@ module.exports = {
     plugins: ['react', '@typescript-eslint'],
     rules: {
         'prefer-arrow-callback': ['error', { allowUnboundThis: false }],
+        'no-await-in-loop': ['error'],
     },
 }

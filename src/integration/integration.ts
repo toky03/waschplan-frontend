@@ -12,6 +12,7 @@ import {
     MieterDto,
     ReferenceableEntity,
     TerminDto,
+    UserError,
 } from '../model/model'
 import {
     available,
@@ -47,8 +48,7 @@ export const initConnectionCheck: FuncWrapper<void, void> = () => {
                 const isBackendAvailable = await available()
                 if (isBackendAvailable) {
                     if (!metaState?.backendSync) {
-                        dispatch(updatePendingTermine)
-                        dispatch(deletePending)
+                        dispatch(resolvePendingUpdates)
                         dispatch(loadTermine)
                         dispatch(setBackendSync(true))
                     }
@@ -156,7 +156,8 @@ export const createNewTermin: FuncWrapperTwoArgs<
             const newId = await saveTerminBackend(newTermin)
             dispatch(updateTermin(newTermin.id, { ...newTermin, id: newId }))
         } catch (e) {
-            if (e === 'TypeError: Failed to fetch') {
+            if (e instanceof UserError) {
+                alert(e)
                 dispatch(deleteTermin(newTermin.id))
                 removeTerminLocalStorage(newTermin.id)
             }
@@ -182,6 +183,9 @@ export const deleteTermin: FuncWrapper<
                 await removeTerminBackend(terminId)
             }
         } catch (e) {
+            if (e instanceof UserError) {
+                alert(e)
+            }
             console.warn(e)
             addPendingDeletion(terminId)
         }
@@ -203,6 +207,9 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
         dispatch(loadTermineSucessful(mergedTermine))
         dispatch(setBackendSync(true))
     } catch (e) {
+        if (e instanceof UserError) {
+            alert(e)
+        }
         console.warn(e)
         dispatch(setBackendSync(false))
     }
@@ -215,37 +222,70 @@ export const loadMieter: FuncWrapper<AppDispatch, Promise<void>> = async (
     dispatch(loadMieterSuccessfull(mieters))
 }
 
-const updatePendingTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
-    dispatch: AppDispatch
-) => {
-    const pendingTermine = loadTermineLocalStorage().filter(
-        (entity: TerminDto) => isPseudoRegex(entity.id)
-    )
-    for (const termin of pendingTermine) {
-        try {
-            const newId = await saveTerminBackend(termin)
-            updateTerminLocalStorage(termin.id, { ...termin, id: newId })
-            dispatch(updateTermin(termin.id, { ...termin, id: newId }))
-        } catch (e) {
-            alert('Entity konnte nicht gespeichert werden ' + e)
-        }
-    }
+const deletePendingTermine: FuncWrapper<
+    AppDispatch,
+    Promise<string | void>[]
+> = (dispatch: AppDispatch) => {
+    const pendingDeletionTermine = loadPendingDeletion()
+    const deletionPromises: Promise<string | void>[] = []
+    pendingDeletionTermine.map((terminId: string) => {
+        deletionPromises.push(
+            removeTerminBackend(terminId)
+                .then(() => {
+                    removeFromPendingDeletion(terminId)
+                    dispatch(removeTermin(terminId))
+                    removeTerminLocalStorage(terminId)
+                })
+                .catch((e) => {
+                    if (e instanceof UserError) {
+                        alert('Entity konnte nicht gelöscht werden ' + e)
+                    }
+                })
+        )
+    })
+    return deletionPromises
 }
 
-const deletePending: FuncWrapper<AppDispatch, Promise<void>> = async (
+const createPendingTermine: FuncWrapper<
+    AppDispatch,
+    Promise<string | void>[]
+> = (dispatch: AppDispatch) => {
+    const pendingCreations = loadTermineLocalStorage().filter(
+        (entity: TerminDto) => isPseudoRegex(entity.id)
+    )
+    const creationPromises: Promise<string | void>[] = []
+    pendingCreations.map((termin: TerminDto) => {
+        creationPromises.push(
+            saveTerminBackend(termin)
+                .then((newId: string | undefined) => {
+                    if (!newId) {
+                        return
+                    }
+                    updateTerminLocalStorage(termin.id, {
+                        ...termin,
+                        id: newId,
+                    })
+                    dispatch(updateTermin(termin.id, { ...termin, id: newId }))
+                })
+                .catch((e) => {
+                    if (e instanceof UserError) {
+                        alert(e)
+                    }
+                    dispatch(deleteTermin(termin.id))
+                    removeTerminLocalStorage(termin.id)
+                })
+        )
+    })
+    return creationPromises
+}
+
+const resolvePendingUpdates: FuncWrapper<AppDispatch, Promise<void>> = async (
     dispatch: AppDispatch
 ) => {
-    const pendingTermine = loadPendingDeletion()
-    for (const terminId of pendingTermine) {
-        try {
-            await removeTerminBackend(terminId)
-            removeFromPendingDeletion(terminId)
-            dispatch(removeTermin(terminId))
-            removeTerminLocalStorage(terminId)
-        } catch (e) {
-            alert('Entity konnte nicht gelöscht werden ' + e)
-        }
-    }
+    const deletionPromises = deletePendingTermine(dispatch)
+    await Promise.all(deletionPromises)
+    const creationPromises = createPendingTermine(dispatch)
+    await Promise.all(creationPromises)
 }
 
 const mergeEntities = <T extends ReferenceableEntity>(
