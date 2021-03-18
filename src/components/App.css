@@ -1,14 +1,13 @@
-.navigation {
-    height: 50px;
-    background-color: #edcfb7;
+.Toolbar {
+    background-color: burlywood;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
 }
 
-.navigation > Button {
-    background-color: burlywood;
+.Typography {
+    font-family: Verdana;
 }
 
 .App {

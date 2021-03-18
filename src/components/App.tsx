@@ -28,15 +28,13 @@ const App: React.FC = () => {
     return (
         <div>
             <Router>
-                <div className={'navigation'}>
-                    <AppBar position="static">
-                        <Toolbar>
-                            <Typography>Willkommen beim Waschplan</Typography>
-                            <Button><NavLink to="/">Waschplan</NavLink></Button>
-                            <Button><NavLink to="/verwalten">Verwalten</NavLink></Button>
-                        </Toolbar>
+                <AppBar position='static'>
+                    <Toolbar className={'Toolbar'}>
+                        <Typography className={'Typography'}>Willkommen beim Waschplan / CAS Abschlussarbeit von Marco Jakob, Remzi Atesci und Michael Egli</Typography>
+                        <Button><NavLink style={{ textDecoration: 'none' }} to="/">Waschplan</NavLink></Button>
+                        <Button><NavLink style={{ textDecoration: 'none' }} to="/verwalten">Verwalten</NavLink></Button>
+                    </Toolbar>
                     </AppBar>              
-                </div>
                 <div>
                     <Route path="/" exact component={ErfasseTermin} />
                     <Route
