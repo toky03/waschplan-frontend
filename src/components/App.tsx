@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, NavLink, Link } from 'react-router-dom'
 import { Route } from 'react-router'
 import './App.css'
 
@@ -39,9 +39,9 @@ const App: React.FC = () => {
             <Router>
                 <AppBar position='static'>
                     <Toolbar className={'Toolbar'}>
-                        <Typography className={'Typography'}>Willkommen beim Waschplan / CAS Abschlussarbeit von Marco Jakob, Remzi Atesci und Michael Egli</Typography>
-                        <Button className={classes.root}><NavLink style={{ textDecoration: 'none'}} to="/">Waschplan</NavLink></Button>
-                        <Button className={classes.root}><NavLink style={{ textDecoration: 'none' }} to="/verwalten">Verwalten</NavLink></Button>
+                        <Typography className={'Typography'}>Herzlich Willkommen beim Waschplan</Typography>
+                        <Button className={classes.root} component={Link} to="/">Waschplan</Button>
+                        <Button className={classes.root} component={Link} to="/verwalten">Verwalten</Button>
                     </Toolbar>
                     </AppBar>              
                 <div>
