@@ -3,6 +3,7 @@ import {
     MieterDto,
     ReplacedIdDto,
     TerminDto,
+    UserError,
 } from '../model/model'
 import axios from 'axios'
 import { API_URL } from '../const/constants'
@@ -76,7 +77,7 @@ async function errorWrapper<T>(fn: () => Promise<T>): Promise<T | undefined> {
         return await fn()
     } catch (e) {
         if (e.response.status === 400) {
-            throw new Error(e.response.data)
+            throw new UserError(e.response.data)
         } else {
             console.error('Failed Backend call ', e)
         }
