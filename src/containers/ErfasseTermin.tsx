@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Chip, Avatar } from '@material-ui/core'
+import { Chip, Avatar, Card, CardHeader } from '@material-ui/core'
 import Kalender from './Kalender'
 
 import { Draggable } from '@fullcalendar/interaction'
@@ -58,10 +58,15 @@ const ErfasseTermin: React.FC = () => {
     return (
         <div className={'termin-erfassung'}>
             <div className={'anleitungContainer'}>
-                <div className={'anleitung'}>
-                    ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM
-                    EINEN WASCHTAG ZU BUCHEN!
-                </div>
+                <Card>
+                    <CardHeader
+                              style={{ backgroundColor: '#edcfb7' }}
+                              title="ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM
+                              EINEN WASCHTAG ZU BUCHEN!"
+                              avatar={
+                                <Avatar src="http://www.girardatlarge.com/wp-content/uploads/2013/05/gravatar-60-grey.jpg" />
+                              }/>
+                </Card>
                 {isSynced ? (
                     <SyncIcon style={{ color: green[500] }} />
                 ) : (

@@ -39,7 +39,6 @@ const App: React.FC = () => {
             <Router>
                 <AppBar position='static'>
                     <Toolbar className={'Toolbar'}>
-                        <Typography className={'Typography'}>Herzlich Willkommen beim Waschplan</Typography>
                         <Button className={classes.root} component={Link} to="/">Waschplan</Button>
                         <Button className={classes.root} component={Link} to="/verwalten">Verwalten</Button>
                     </Toolbar>
