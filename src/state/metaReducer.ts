@@ -1,13 +1,20 @@
-import {ADD_ERROR, AddErrorAction, SET_BACKEND_SYNC, SetBackendSyncAction} from "./actions";
+import {
+    ADD_ERROR,
+    AddErrorAction,
+    SET_BACKEND_SYNC,
+    SetBackendSyncAction,
+} from './actions'
+import { FuncWrapper } from '../model/model'
+import { v4 as uuidV4 } from 'uuid'
 
 interface WaschplanError {
-  errorId: string;
-  errorMessage: string;
+    errorId: string
+    errorMessage: string
 }
 
 export interface MetaState {
-  backendSync: boolean;
-  errors: WaschplanError[];
+    backendSync: boolean
+    errors: WaschplanError[]
 }
 
 export const metaReducer: (
@@ -21,10 +28,23 @@ export const metaReducer: (
         case SET_BACKEND_SYNC:
             return { ...state, backendSync: action.backendSync }
         case ADD_ERROR:
-      return {...state, errors: [...state.errors, action.errorMessage]}
-    default:
-      return state
+            return {
+                ...state,
+                errors: [
+                    ...state.errors,
+                    createWaschplanError(action.errorMessage),
+                ],
+            }
+        default:
+            return state
     }
 }
 
-const createNewError
+const createWaschplanError: FuncWrapper<string, WaschplanError> = (
+    message: string
+) => {
+    return {
+        errorId: uuidV4(),
+        errorMessage: message,
+    }
+}

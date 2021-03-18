@@ -153,7 +153,12 @@ export const createNewTermin: FuncWrapperTwoArgs<
         addTerminLocalStorage(newTermin)
         try {
             const newId = await saveTerminBackend(newTermin)
-            dispatch(updateTermin(newTermin.id, { ...newTermin, id: newId }))
+            if(newId){
+                dispatch(updateTermin(newTermin.id, { ...newTermin, id: newId }))
+                updateTerminLocalStorage(newTermin.id, { ...newTermin, id: newId })
+            } else {
+                console.error('Backend ')
+            }
         } catch (e) {
             if (e === 'TypeError: Failed to fetch') {
                 dispatch(deleteTermin(newTermin.id))

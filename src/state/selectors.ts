@@ -8,10 +8,9 @@ export const selectBackendSynced: FuncWrapper<State, boolean | undefined> = (
     state: State
 ) => state.metaData?.backendSync
 
-export const selectTermineRaw = (state: State) => state.termine;
-export const selectMieter = (state: State) => state.mieter;
-export const selectErrors = (state: State) => state.metaData?.error;
-
+export const selectTermineRaw = (state: State) => state.termine
+export const selectMieter = (state: State) => state.mieter
+export const selectErrors = (state: State) => state.metaData?.errors
 
 export const selectTermineEnriched = createSelector<
     State,
