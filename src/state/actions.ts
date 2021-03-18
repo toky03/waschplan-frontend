@@ -7,10 +7,11 @@ export const DELETE_TERMIN = "DELETE_TERMIN";
 export const LOAD_TERMINE = "LOAD_TERMINE";
 export const CLEAR_STORE = "CLEAR_STORE";
 export const LOAD_MIETER = "LOAD_MIETER";
+export const ADD_ERROR = "ADD_ERROR";
 export const SET_BACKEND_SYNC = "SET_BACKEND_SYNC";
 
 export interface MetaAction {
-  type: "SET_BACKEND_SYNC";
+  type: "SET_BACKEND_SYNC" | "ADD_ERROR";
 }
 
 export interface TerminAction {
@@ -52,6 +53,11 @@ export type SetBackendSyncAction = {
   type: "SET_BACKEND_SYNC";
   backendSync: boolean;
 };
+
+export type AddErrorAction = {
+  type: "ADD_ERROR",
+  errorMessage: string;
+}
 
 export type LoadMieterAction = { type: "LOAD_MIETER"; mieter: MieterDto[] };
 
@@ -110,6 +116,13 @@ export const loadMieterSuccessfull = (mieters: MieterDto[]) => {
     mieter: mieters,
   };
 };
+
+export const addError = (errorMessage: string) => {
+  return {
+    type: ADD_ERROR,
+    errorMessage
+  }
+}
 
 export const setBackendSync: (
   backendSynced: boolean

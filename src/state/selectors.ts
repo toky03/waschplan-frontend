@@ -9,6 +9,7 @@ export const selectBackendSynced = (state: State) =>
 
 export const selectTermineRaw = (state: State) => state.termine;
 export const selectMieter = (state: State) => state.mieter;
+export const selectErrors = (state: State) => state.metaData?.error;
 
 export const selectTermineEnriched = createSelector<
   State,
