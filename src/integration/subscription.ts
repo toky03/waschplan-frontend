@@ -21,7 +21,7 @@ let terminDeleteFn = (notification: TerminDto) => {
 
 // Error muss any bleiben, da es von Websocket so vorgegeben ist
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onConnectionError: FuncWrapper<any, void> = (error: string) => {
+const onConnectionError: FuncWrapper<any, void> = (error: any) => {
     console.warn('Websocket Connection error', error)
 }
 

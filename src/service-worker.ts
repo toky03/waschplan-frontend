@@ -86,6 +86,13 @@ self.addEventListener('message', (event) => {
     }
 })
 
+if (Notification.permission !== 'granted') {
+    Notification.requestPermission().then(
+        (permission: NotificationPermission) =>
+            console.log('permission granted: ', permission === 'granted')
+    )
+}
+
 if (!firebase.apps.length) {
     firebase.initializeApp({
         apiKey: 'AIzaSyDl1csmPgD6V1KlncMpr5yzClkUwbwbysM',
