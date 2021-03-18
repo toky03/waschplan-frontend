@@ -8,19 +8,15 @@ import { Draggable } from '@fullcalendar/interaction'
 import './ErfasseTermin.css'
 import { selectBackendSynced, selectMieter } from '../state/selectors'
 import { FuncWrapper, MieterDto } from '../model/model'
-import SyncIcon from '@material-ui/icons/Sync'
-import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
 
 import avatar1 from './avatars/Hugo.jpg'
 import avatar2 from './avatars/FamRamseier.jpg'
 import avatar3 from './avatars/FrauBrönnimann.png'
 import avatar4 from './avatars/BeatLisa.jpg'
-import { green, red } from '@material-ui/core/colors'
 
 const ErfasseTermin: React.FC = () => {
     const containerElRef = useRef<HTMLDivElement>(null)
     const mieter = useSelector(selectMieter)
-    const isSynced: boolean | undefined = useSelector(selectBackendSynced)
 
     useEffect(() => {
         if (containerElRef.current) {
@@ -67,11 +63,6 @@ const ErfasseTermin: React.FC = () => {
                                 <Avatar src="http://www.girardatlarge.com/wp-content/uploads/2013/05/gravatar-60-grey.jpg" />
                               }/>
                 </Card>
-                {isSynced ? (
-                    <SyncIcon style={{ color: green[500] }} />
-                ) : (
-                    <SyncDisabledIcon style={{ color: red[500] }} />
-                )}
             </div>
             <div className={'mieterContainer'} ref={containerElRef}>
                 {mieter?.mieter.map((mieter: MieterDto) => (

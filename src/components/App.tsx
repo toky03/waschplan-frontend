@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, NavLink, Link } from 'react-router-dom'
 import { Route } from 'react-router'
 import './App.css'
@@ -14,6 +15,10 @@ import {
 } from '../integration/integration'
 import Button from '@material-ui/core/Button'
 import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core'
+import SyncIcon from '@material-ui/icons/Sync'
+import { selectBackendSynced } from '../state/selectors'
+import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
+import { green, red } from '@material-ui/core/colors'
 
 const useStyles = makeStyles({
     root: {
@@ -25,6 +30,8 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
     const classes = useStyles();
+    const isSynced: boolean | undefined = useSelector(selectBackendSynced)
+
     useEffect(() => {
         store.dispatch(loadTermine)
         store.dispatch(loadMieter)
@@ -40,6 +47,11 @@ const App: React.FC = () => {
                 <AppBar position='static'>
                     <Toolbar className={'Toolbar'}>
                         <Button className={classes.root} component={Link} to="/">Waschplan</Button>
+                        {isSynced ? (
+                            <SyncIcon style={{ color: green[500] }} />
+                        ) : (
+                            <SyncDisabledIcon style={{ color: red[500] }} />
+                        )}
                         <Button className={classes.root} component={Link} to="/verwalten">Verwalten</Button>
                     </Toolbar>
                     </AppBar>              
