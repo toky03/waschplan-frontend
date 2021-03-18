@@ -7,10 +7,12 @@ export const DELETE_TERMIN = 'DELETE_TERMIN'
 export const LOAD_TERMINE = 'LOAD_TERMINE'
 export const CLEAR_STORE = 'CLEAR_STORE'
 export const LOAD_MIETER = 'LOAD_MIETER'
+export const ADD_ERROR = 'ADD_ERROR'
+export const REMOVE_ERROR = 'REMOVE_ERROR'
 export const SET_BACKEND_SYNC = 'SET_BACKEND_SYNC'
 
 export interface MetaAction {
-    type: 'SET_BACKEND_SYNC'
+    type: 'SET_BACKEND_SYNC' | 'ADD_ERROR' | 'REMOVE_ERROR'
 }
 
 export interface TerminAction {
@@ -51,6 +53,16 @@ export interface LoescheTerminAction extends TerminAction {
 export type SetBackendSyncAction = {
     type: 'SET_BACKEND_SYNC'
     backendSync: boolean
+}
+
+export type AddErrorAction = {
+    type: 'ADD_ERROR'
+    errorMessage: string
+}
+
+export type RemoveErrorAction = {
+    type: 'REMOVE_ERROR'
+    errorId: string
 }
 
 export type LoadMieterAction = { type: 'LOAD_MIETER'; mieter: MieterDto[] }
@@ -114,6 +126,24 @@ export const loadMieterSuccessfull: FuncWrapper<
     return {
         type: LOAD_MIETER,
         mieter: mieters,
+    }
+}
+
+export const addError: FuncWrapper<string, AddErrorAction> = (
+    errorMessage: string
+) => {
+    return {
+        type: ADD_ERROR,
+        errorMessage,
+    }
+}
+
+export const removeError: FuncWrapper<string, RemoveErrorAction> = (
+    errorId: string
+) => {
+    return {
+        type: REMOVE_ERROR,
+        errorId,
     }
 }
 

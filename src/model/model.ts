@@ -1,6 +1,4 @@
 import { DropArg } from '@fullcalendar/interaction'
-import { AvatarProps, Chip } from '@material-ui/core'
-import { ChipTypeMap } from '@material-ui/core/Chip/Chip'
 
 export interface Termin {
     id: string

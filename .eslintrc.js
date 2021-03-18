@@ -20,5 +20,15 @@ module.exports = {
     rules: {
         'prefer-arrow-callback': ['error', { allowUnboundThis: false }],
         'no-await-in-loop': ['error'],
+        'no-alert': 'error',
+        'no-restricted-imports': [
+            'error',
+            {
+                patterns: [
+                    '@material-ui/*/*/*',
+                    '!@material-ui/core/test-utils/*',
+                ],
+            },
+        ],
     },
 }
