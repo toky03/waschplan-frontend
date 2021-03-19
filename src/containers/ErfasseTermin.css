@@ -3,6 +3,10 @@
     height: 0;
 }
 
+.draggable {
+    background-color: burlywood;
+}
+
 .termin-erfassung {
     height: 100%;
     display: flex;

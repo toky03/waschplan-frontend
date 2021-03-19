@@ -1,23 +1,17 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Chip, Avatar } from '@material-ui/core'
+import { Avatar, Card, CardHeader } from '@material-ui/core'
 import Kalender from './Kalender'
-
 import { Draggable } from '@fullcalendar/interaction'
 import './ErfasseTermin.css'
-import { selectBackendSynced, selectMieter } from '../state/selectors'
-import { MieterDto } from '../model/model'
-import SyncIcon from '@material-ui/icons/Sync'
-import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
-
-import { green, red } from '@material-ui/core/colors'
 import { selectAvatar } from '../utils/date-utils'
+import { selectMieter } from '../state/selectors'
+import { MieterDto } from '../model/model'
 
 const ErfasseTermin: React.FC = () => {
     const containerElRef = useRef<HTMLDivElement>(null)
     const mieter = useSelector(selectMieter)
-    const isSynced: boolean | undefined = useSelector(selectBackendSynced)
 
     useEffect(() => {
         if (containerElRef.current) {
@@ -37,27 +31,30 @@ const ErfasseTermin: React.FC = () => {
     return (
         <div className={'termin-erfassung'}>
             <div className={'anleitungContainer'}>
-                <div className={'anleitung'}>
-                    ANLEITUNG: DU KANNST DEN NAMEN IN DEN KALENDER SCHIEBEN UM
-                    EINEN WASCHTAG ZU BUCHEN!
-                </div>
-                {isSynced ? (
-                    <SyncIcon style={{ color: green[500] }} />
-                ) : (
-                    <SyncDisabledIcon style={{ color: red[500] }} />
-                )}
+                <Card>
+                    <CardHeader
+                        style={{ backgroundColor: '#edcfb7' }}
+                        title="ANLEITUNG: DU KANNST DEN AVATAR DES MIETERS IN DEN KALENDER SCHIEBEN UM
+                              EINEN WASCHTAG ZU BUCHEN!"
+                        avatar={<Avatar src="" />}
+                    />
+                </Card>
             </div>
             <div className={'mieterContainer'} ref={containerElRef}>
                 {mieter?.mieter.map((mieter: MieterDto) => (
                     <div key={mieter.id} className={'mieter'}>
-                        <Chip
-                            className={'draggable'}
-                            draggable={'true'}
-                            label={mieter.name}
-                            variant={'outlined'}
-                            avatar={<Avatar src={selectAvatar(mieter.name)} />}
-                            itemProp={mieter.id}
-                        />
+                        <Card>
+                            <CardHeader
+                                className={'draggable'}
+                                draggable={'true'}
+                                title={mieter.name}
+                                variant={'outlined'}
+                                avatar={
+                                    <Avatar src={selectAvatar(mieter.name)} />
+                                }
+                                itemProp={mieter.id}
+                            />
+                        </Card>
                         <div className="spaceBetweenIcons" />
                     </div>
                 ))}
