@@ -1,4 +1,4 @@
-import { TermineState } from './termineReducer'
+import { TermineState } from '../state/termineReducer'
 import { FuncWrapper, TerminDto } from '../model/model'
 
 const PSEUDO_ID_REGEX = /^<(\d+)>$/

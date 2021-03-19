@@ -27,6 +27,7 @@ const useStyles = makeStyles({
         }
     }
 })
+import { ErrorAlert } from '../containers/ErrorStore'
 
 const App: React.FC = () => {
     const classes = useStyles();
@@ -54,7 +55,7 @@ const App: React.FC = () => {
                         )}
                         <Button className={classes.root} component={Link} to="/verwalten" size="large">Verwalten</Button>
                     </Toolbar>
-                    </AppBar>              
+                    </AppBar>
                 <div>
                     <Route path="/" exact component={ErfasseTermin} />
                     <Route
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                     />
                 </div>
             </Router>
+            <ErrorAlert />
         </div>
     )
 }
