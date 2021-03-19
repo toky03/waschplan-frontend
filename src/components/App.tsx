@@ -19,18 +19,18 @@ import SyncIcon from '@material-ui/icons/Sync'
 import { selectBackendSynced } from '../state/selectors'
 import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
 import { green, red } from '@material-ui/core/colors'
+import { ErrorAlert } from '../containers/ErrorStore'
 
 const useStyles = makeStyles({
     root: {
-        "&:hover": {
-            border: "transparent"
-        }
-    }
+        '&:hover': {
+            border: 'transparent',
+        },
+    },
 })
-import { ErrorAlert } from '../containers/ErrorStore'
 
 const App: React.FC = () => {
-    const classes = useStyles();
+    const classes = useStyles()
     const isSynced: boolean | undefined = useSelector(selectBackendSynced)
 
     useEffect(() => {
@@ -38,24 +38,37 @@ const App: React.FC = () => {
         store.dispatch(loadMieter)
         store.dispatch(initConnectionCheck())
         store.dispatch(initWsConnection())
-        // TODO entweder muss diese Datei oder die App.tsx im Root verzeichnis umbenennt werden
 
         // TODO aufraeumen mit callback function;
     }, [])
     return (
         <div>
             <Router>
-                <AppBar position='static'>
+                <AppBar position="static">
                     <Toolbar className={'Toolbar'}>
-                        <Button className={classes.root} component={Link} to="/" size="large">Waschplan</Button>
+                        <Button
+                            className={classes.root}
+                            component={Link}
+                            to="/"
+                            size="large"
+                        >
+                            Waschplan
+                        </Button>
                         {isSynced ? (
                             <SyncIcon style={{ color: green[500] }} />
                         ) : (
                             <SyncDisabledIcon style={{ color: red[500] }} />
                         )}
-                        <Button className={classes.root} component={Link} to="/verwalten" size="large">Verwalten</Button>
+                        <Button
+                            className={classes.root}
+                            component={Link}
+                            to="/verwalten"
+                            size="large"
+                        >
+                            Verwalten
+                        </Button>
                     </Toolbar>
-                    </AppBar>
+                </AppBar>
                 <div>
                     <Route path="/" exact component={ErfasseTermin} />
                     <Route

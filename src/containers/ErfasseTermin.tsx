@@ -3,22 +3,11 @@ import { useSelector } from 'react-redux'
 
 import { Avatar, Card, CardHeader } from '@material-ui/core'
 import Kalender from './Kalender'
-
 import { Draggable } from '@fullcalendar/interaction'
 import './ErfasseTermin.css'
-import { selectMieter } from '../state/selectors'
-import { FuncWrapper, MieterDto } from '../model/model'
-import { selectBackendSynced, selectMieter } from '../state/selectors'
-import { MieterDto } from '../model/model'
-import SyncIcon from '@material-ui/icons/Sync'
-import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
-
-import avatar1 from './avatars/Hugo.jpg'
-import avatar2 from './avatars/FamRamseier.jpg'
-import avatar3 from './avatars/FrauBrönnimann.png'
-import avatar4 from './avatars/BeatLisa.jpg'
-import { green, red } from '@material-ui/core/colors'
 import { selectAvatar } from '../utils/date-utils'
+import { selectMieter } from '../state/selectors'
+import { MieterDto } from '../model/model'
 
 const ErfasseTermin: React.FC = () => {
     const containerElRef = useRef<HTMLDivElement>(null)
@@ -44,10 +33,10 @@ const ErfasseTermin: React.FC = () => {
             <div className={'anleitungContainer'}>
                 <Card>
                     <CardHeader
-                              style={{ backgroundColor: '#edcfb7' }}
-                              title="ANLEITUNG: DU KANNST DEN AVATAR DES MIETERS IN DEN KALENDER SCHIEBEN UM
+                        style={{ backgroundColor: '#edcfb7' }}
+                        title="ANLEITUNG: DU KANNST DEN AVATAR DES MIETERS IN DEN KALENDER SCHIEBEN UM
                               EINEN WASCHTAG ZU BUCHEN!"
-                              avatar={<Avatar src="" />}
+                        avatar={<Avatar src="" />}
                     />
                 </Card>
             </div>
@@ -60,7 +49,9 @@ const ErfasseTermin: React.FC = () => {
                                 draggable={'true'}
                                 title={mieter.name}
                                 variant={'outlined'}
-                                avatar={<Avatar src={selectAvatar(mieter.name)} />}
+                                avatar={
+                                    <Avatar src={selectAvatar(mieter.name)} />
+                                }
                                 itemProp={mieter.id}
                             />
                         </Card>
