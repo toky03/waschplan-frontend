@@ -28,10 +28,10 @@ const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
 
     return (
         <Dialog open={props.open}>
-            <DialogTitle className={'Style'}>
+            <DialogTitle className={'Chooser'}>
                 Für welchen Mieter soll der Termin gebucht werden?
             </DialogTitle>
-            <DialogContent className={'Style'}>
+            <DialogContent className={'Chooser'}>
                 <List>
                     {mieter?.mieter.map((mieter: MieterDto) => (
                         <ListItem
@@ -47,7 +47,7 @@ const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
                     ))}
                 </List>
             </DialogContent>
-            <DialogActions className={'Style'}>
+            <DialogActions className={'Chooser'}>
                 <Button onClick={() => props.userChanged(null)}>
                     Abbrechen
                 </Button>
