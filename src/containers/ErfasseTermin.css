@@ -51,7 +51,9 @@
 
 .fc {
     width: 90%;
+    height: 800px;
     background-color: burlywood;
     margin-top: 15px;
+    margin-bottom: 15px;
     font-family: Verdana;
 }
