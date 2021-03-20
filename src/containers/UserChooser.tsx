@@ -1,4 +1,5 @@
 import React from 'react'
+import './UserChooser.css'
 import {
     Avatar,
     Button,
@@ -27,10 +28,10 @@ const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
 
     return (
         <Dialog open={props.open}>
-            <DialogTitle>
+            <DialogTitle className={'Style'}>
                 Für welchen Mieter soll der Termin gebucht werden?
             </DialogTitle>
-            <DialogContent>
+            <DialogContent className={'Style'}>
                 <List>
                     {mieter?.mieter.map((mieter: MieterDto) => (
                         <ListItem
@@ -46,7 +47,7 @@ const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
                     ))}
                 </List>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={'Style'}>
                 <Button onClick={() => props.userChanged(null)}>
                     Abbrechen
                 </Button>
