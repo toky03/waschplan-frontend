@@ -53,6 +53,7 @@ export const initConnectionCheck: FuncWrapper<void, void> = () => {
                     if (!metaState?.backendSync) {
                         dispatch(resolvePendingUpdates)
                         dispatch(loadTermine)
+                        dispatch(loadMieter)
                         dispatch(setBackendSync(true))
                     }
                 } else {
