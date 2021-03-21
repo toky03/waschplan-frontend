@@ -23,6 +23,9 @@ import { ErrorAlert } from '../containers/ErrorStore'
 
 const useStyles = makeStyles({
     root: {
+        boxShadow: 'none',
+        border: '1px solid',
+        borderColor: '#846750',
         '&:hover': {
             border: 'transparent',
         },

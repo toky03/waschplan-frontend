@@ -16,13 +16,14 @@
 
 .anleitungContainer {
     width: 100%;
-    height: 75px;
+    height: 120px;
     padding-left: 5%;
-    background-color: burlywood;
+    padding-right: 5%;
+    background-color:#846750;
     display: flex;
     flex-flow: wrap;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .anleitung {
@@ -33,7 +34,7 @@
 
 .mieterContainer {
     width: 100%;
-    height: 85px;
+    height: 170px;
     background-color: #edcfb7;
     display: flex;
     flex-flow: wrap;
@@ -51,7 +52,9 @@
 
 .fc {
     width: 90%;
+    height: 800px;
     background-color: burlywood;
     margin-top: 15px;
+    margin-bottom: 15px;
     font-family: Verdana;
 }

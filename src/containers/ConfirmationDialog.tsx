@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import './ConfirmationDialog.css'
 import {
     Button,
     Dialog,
@@ -45,11 +46,11 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = (
 
     return (
         <Dialog open={open}>
-            <DialogTitle>{'Termin Löschen'}</DialogTitle>
-            <DialogContent>
+            <DialogTitle className={'Confirmation'}>{'Termin Löschen'}</DialogTitle>
+            <DialogContent className={'Confirmation'}>
                 <DialogContentText>{dialogMessage}</DialogContentText>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={'Confirmation'}>
                 <Button onClick={() => handleClose(false)} color="primary">
                     Nein
                 </Button>
