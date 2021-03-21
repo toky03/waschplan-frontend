@@ -25,10 +25,12 @@ import {
 import {
     addPendingDeletion,
     addTerminLocalStorage,
+    loadMieterLocalStorage,
     loadPendingDeletion,
     loadTermineLocalStorage,
     removeFromPendingDeletion,
     removeTerminLocalStorage,
+    saveMieterLocalStorage,
     saveTermineLocalStorage,
     updateTerminLocalStorage,
 } from './local-store'
@@ -232,8 +234,22 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
 export const loadMieter: FuncWrapper<AppDispatch, Promise<void>> = async (
     dispatch: AppDispatch
 ) => {
-    const mieters: MieterDto[] = await loadMieterBackend()
-    dispatch(loadMieterSuccessfull(mieters))
+    try {
+        const mieter: MieterDto[] = await loadMieterBackend()
+        saveMieterLocalStorage(mieter)
+        dispatch(loadMieterSuccessfull(mieter))
+    } catch (e) {
+        if (e instanceof UserError) {
+            dispatch(addError(e.message))
+            return
+        }
+        const mieter: MieterDto[] = loadMieterLocalStorage()
+        if (mieter.length === 0) {
+            dispatch(addError('Es konnten noch keine Mieter für den Offline Modus gespeichert werden'))
+        } else {
+            dispatch(loadMieterSuccessfull(mieter))
+        }
+    }
 }
 
 const deletePendingTermine: FuncWrapper<

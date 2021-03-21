@@ -17,6 +17,7 @@ export const ErrorAlert: React.FC = () => {
         <div>
             {errors?.map((error: WaschplanError) => (
                 <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                     open={true}
                     key={error.errorId}
                     message={error.errorMessage}
