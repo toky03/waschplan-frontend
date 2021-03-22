@@ -90,7 +90,6 @@ interface EnhancedTableProps {
     classes: ReturnType<typeof useStyles>;
     numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TerminRow) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
     rowCount: number;
@@ -167,7 +166,7 @@ export default function EnhancedTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof TerminRow>('name');
-    const [selected, setSelected] = React.useState<string[]>([]);
+    const [selected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -180,16 +179,6 @@ export default function EnhancedTable() {
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            const newSelecteds = terminRows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -198,8 +187,6 @@ export default function EnhancedTable() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
-    const isSelected = (name: number | string) => selected.indexOf(name as string) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, terminRows.length - page * rowsPerPage);
 
@@ -221,7 +208,6 @@ export default function EnhancedTable() {
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={terminRows.length}
                         />
@@ -229,17 +215,13 @@ export default function EnhancedTable() {
                             {stableSort(terminRows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
-                                            hover
                                             role="checkbox"
-                                            aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                            key={row.id}
                                         >
                                             <TableCell padding="checkbox">
 
