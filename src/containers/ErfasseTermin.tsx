@@ -31,7 +31,7 @@ const ErfasseTermin: React.FC = () => {
     return (
         <div className={'termin-erfassung'}>
             <div className={'anleitungContainer'}>
-                <Card style={{ backgroundColor: '#846750', border: 'none', boxShadow: 'none' }}>
+                <Card style={{ backgroundColor: '#846750', boxShadow: 'none' }}>
                     <CardHeader
                         titleTypographyProps={{variant:'h6' }}
                         title="Anleitung: Du kannst den Avatar des Mieters in den Kalender schieben um einen Waschtag zu buchen!"
