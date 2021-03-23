@@ -99,6 +99,7 @@ if (!firebase.apps.length) {
 } else {
     firebase.app()
 }
+
 const messaging = firebase.messaging()
 
 messaging
