@@ -46,7 +46,9 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = (
 
     return (
         <Dialog open={open}>
-            <DialogTitle className={'Confirmation'}>{'Termin Löschen'}</DialogTitle>
+            <DialogTitle className={'Confirmation'}>
+                {'Termin Löschen'}
+            </DialogTitle>
             <DialogContent className={'Confirmation'}>
                 <DialogContentText>{dialogMessage}</DialogContentText>
             </DialogContent>
