@@ -187,6 +187,8 @@ export default function EnhancedTable() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+const Termine: React.FC = () => {
+    const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, terminRows.length - page * rowsPerPage);
 
