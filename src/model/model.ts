@@ -37,6 +37,14 @@ export type ReferenceableEntity = {
     id: string
 }
 
+export interface TerminRow {
+    id: string
+    name: string
+    start: string
+    ende: string
+    deleteUserId: string
+}
+
 export interface AvatarDropArg extends DropArg {
     draggedEl: HtmlDraggedElement
 }
