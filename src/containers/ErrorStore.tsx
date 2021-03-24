@@ -8,17 +8,22 @@ import { FuncWrapper } from '../model/model'
 import store from '../index'
 import { removeError } from '../state/actions'
 
+const DEFAULT_ERROR_DISSAPEAR_TIMEOUT_MS = 10000
+
 export const ErrorAlert: React.FC = () => {
     const errors: WaschplanError[] | undefined = useSelector(selectErrors)
     const closeError: FuncWrapper<string, void> = (errorId: string) => {
         store.dispatch(removeError(errorId))
     }
+
     return (
         <div>
             {errors?.map((error: WaschplanError) => (
                 <Snackbar
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    autoHideDuration={DEFAULT_ERROR_DISSAPEAR_TIMEOUT_MS}
                     open={true}
+                    onClose={() => closeError(error.errorId)}
                     key={error.errorId}
                     message={error.errorMessage}
                 >

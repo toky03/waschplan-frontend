@@ -41,7 +41,7 @@ import { TermineState } from '../state/termineReducer'
 import { MetaState } from '../state/metaReducer'
 import { registerFunction, registerSubscription } from './subscription'
 
-const HEALTH_POLLING_INTERVALL_MS = 5000
+const HEALTH_POLLING_INTERVALL_MS = 3000
 
 export const initConnectionCheck: FuncWrapper<void, void> = () => {
     return async (dispatch: AppDispatch) => {
@@ -55,6 +55,9 @@ export const initConnectionCheck: FuncWrapper<void, void> = () => {
                         dispatch(loadTermine)
                         dispatch(loadMieter)
                         dispatch(setBackendSync(true))
+                    } else {
+                        dispatch(loadTermine)
+                        dispatch(loadMieter)
                     }
                 } else {
                     if (metaState?.backendSync) {
@@ -246,7 +249,11 @@ export const loadMieter: FuncWrapper<AppDispatch, Promise<void>> = async (
         }
         const mieter: MieterDto[] = loadMieterLocalStorage()
         if (mieter.length === 0) {
-            dispatch(addError('Es konnten noch keine Mieter für den Offline Modus gespeichert werden'))
+            dispatch(
+                addError(
+                    'Es konnten noch keine Mieter für den Offline Modus gespeichert werden'
+                )
+            )
         } else {
             dispatch(loadMieterSuccessfull(mieter))
         }

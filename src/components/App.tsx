@@ -21,7 +21,7 @@ import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
 import { green, red } from '@material-ui/core/colors'
 import { ErrorAlert } from '../containers/ErrorStore'
 
-const useStyles = makeStyles({
+export const buttonStyles = makeStyles({
     root: {
         boxShadow: 'none',
         border: '1px solid',
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 })
 
 const App: React.FC = () => {
-    const classes = useStyles()
+    const classes = buttonStyles()
     const isSynced: boolean | undefined = useSelector(selectBackendSynced)
 
     useEffect(() => {
