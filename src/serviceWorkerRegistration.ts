@@ -40,8 +40,16 @@ const registerValidSW: FuncWrapperOptionalSecondArg<string, Config, void> = (
     swUrl: string,
     config?: Config
 ) => {
-    navigator.serviceWorker
-        .register(swUrl)
+    let permissionPromise: Promise<void | NotificationPermission>
+    if (Notification.permission !== 'granted') {
+        permissionPromise = Notification.requestPermission()
+    } else {
+        permissionPromise = Promise.resolve()
+    }
+    permissionPromise
+        .then(() => {
+            return navigator.serviceWorker.register(swUrl)
+        })
         .then((registration) => {
             registration.onupdatefound = () => {
                 const installingWorker = registration.installing

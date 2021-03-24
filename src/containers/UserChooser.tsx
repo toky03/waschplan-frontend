@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux'
 import { selectMieter } from '../state/selectors'
 import { MieterDto } from '../model/model'
 import { selectAvatar } from '../utils/date-utils'
+import { buttonStyles } from '../components/App'
 
 export type UserChooserProps = {
     open: boolean
@@ -24,6 +25,7 @@ export type UserChooserProps = {
 }
 
 const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
+    const classes = buttonStyles()
     const mieter = useSelector(selectMieter)
 
     return (
@@ -48,7 +50,10 @@ const UserChooser: React.FC<UserChooserProps> = (props: UserChooserProps) => {
                 </List>
             </DialogContent>
             <DialogActions className={'Chooser'}>
-                <Button onClick={() => props.userChanged(null)}>
+                <Button
+                    className={classes.root}
+                    onClick={() => props.userChanged(null)}
+                >
                     Abbrechen
                 </Button>
             </DialogActions>

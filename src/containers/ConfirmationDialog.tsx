@@ -11,6 +11,7 @@ import {
 import { FuncWrapper, Termin } from '../model/model'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
+import { buttonStyles } from '../components/App'
 
 type ConfirmationProps = {
     terminId: string | null
@@ -23,6 +24,7 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = (
     const [open, setOpen] = React.useState(false)
     const [dialogMessage, setDialogMessage] = useState<string | null>(null)
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
+    const classes = buttonStyles()
 
     useEffect(() => {
         if (props.terminId) {
@@ -53,10 +55,15 @@ const ConfirmationDialog: React.FC<ConfirmationProps> = (
                 <DialogContentText>{dialogMessage}</DialogContentText>
             </DialogContent>
             <DialogActions className={'Confirmation'}>
-                <Button onClick={() => handleClose(false)} color="primary">
+                <Button
+                    className={classes.root}
+                    onClick={() => handleClose(false)}
+                    color="primary"
+                >
                     Nein
                 </Button>
                 <Button
+                    className={classes.root}
                     onClick={() => handleClose(true)}
                     color="primary"
                     autoFocus
