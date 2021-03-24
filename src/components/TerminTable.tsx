@@ -121,7 +121,7 @@ const TerminTable: React.FC = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
-    const terminRows = termine!.map((termin: Termin) => createData(termin))
+    const terminRows = termine? termine.map((termin: Termin) => createData(termin)): []
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
