@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import { Termin } from '../model/model'
 import store from '../index'
-import { deleteTermin } from '../integration/integration'
+import { deleteTermin } from '../state/effects'
 
 const Termine: React.FC = () => {
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)

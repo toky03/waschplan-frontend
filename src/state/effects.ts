@@ -4,9 +4,10 @@ import {
     setBackendSync,
     addTermin,
     updateTermin,
-    removeTermin,
+    removeTerminSuccessful,
     addError,
-} from '../state/actions'
+    markTerminSuccessful,
+} from './actions'
 import {
     FuncWrapper,
     FuncWrapperTwoArgs,
@@ -21,7 +22,7 @@ import {
     loadTermineBackend,
     removeTerminBackend,
     saveTerminBackend,
-} from './backend'
+} from '../integration/backend'
 import {
     addPendingDeletion,
     addTerminLocalStorage,
@@ -33,13 +34,16 @@ import {
     saveMieterLocalStorage,
     saveTermineLocalStorage,
     updateTerminLocalStorage,
-} from './local-store'
+} from '../integration/local-store'
 import { generatePseudoTerminId, isPseudoRegex } from '../utils/id-utils'
 import { formatISO, setHours, setMinutes } from 'date-fns'
 import store, { AppDispatch } from '../index'
-import { TermineState } from '../state/termineReducer'
-import { MetaState } from '../state/metaReducer'
-import { registerFunction, registerSubscription } from './subscription'
+import { TermineState } from './termineReducer'
+import { MetaState } from './metaReducer'
+import {
+    registerFunction,
+    registerSubscription,
+} from '../integration/subscription'
 
 const HEALTH_POLLING_INTERVALL_MS = 3000
 
@@ -128,7 +132,7 @@ const onDeleteTermin: FuncWrapper<
             termine.find((termin: TerminDto) => termin.id === terminMessage.id)
         ) {
             removeTerminLocalStorage(terminMessage.id)
-            dispatch(removeTermin(terminMessage.id))
+            dispatch(removeTerminSuccessful(terminMessage.id))
         }
     }
 }
@@ -197,7 +201,7 @@ export const deleteTermin: FuncWrapper<
             return
         }
         removeTerminLocalStorage(terminId)
-        dispatch(removeTermin(terminId))
+        dispatch(removeTerminSuccessful(terminId))
         try {
             if (!isPseudoRegex(terminId)) {
                 await removeTerminBackend(terminId)
@@ -232,6 +236,26 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
         }
         console.warn(e)
         dispatch(setBackendSync(false))
+    }
+}
+
+export const markTermin: FuncWrapper<
+    string,
+    (dispatch: AppDispatch) => void
+> = (terminId: string) => {
+    return async (dispatch: AppDispatch) => {
+        const termine: TermineState = store.getState().termine
+        const termin = termine.termine.find(
+            (termin: TerminDto) => termin.id === terminId
+        )
+        if (!termin) {
+            return
+        }
+        updateTerminLocalStorage(terminId, {
+            ...termin,
+            marked: !termin.marked,
+        })
+        dispatch(markTerminSuccessful(terminId))
     }
 }
 
@@ -271,7 +295,7 @@ const deletePendingTermine: FuncWrapper<
             removeTerminBackend(terminId)
                 .then(() => {
                     removeFromPendingDeletion(terminId)
-                    dispatch(removeTermin(terminId))
+                    dispatch(removeTerminSuccessful(terminId))
                     removeTerminLocalStorage(terminId)
                 })
                 .catch((e) => {
@@ -335,8 +359,22 @@ const mergeEntities = <T extends ReferenceableEntity>(
     entitiesLocalStorage: T[],
     entitiesBackend: T[]
 ) => {
+    const enrichedBackendEntities = entitiesBackend.map((backendEntity: T) => {
+        const correspondingLocalStorageEntity = entitiesLocalStorage.find(
+            (entityLocalStorage: T) =>
+                backendEntity.id === entityLocalStorage.id
+        )
+        if (correspondingLocalStorageEntity) {
+            return {
+                ...correspondingLocalStorageEntity,
+                ...backendEntity,
+            }
+        } else {
+            return backendEntity
+        }
+    })
     return [
-        ...entitiesBackend,
+        ...enrichedBackendEntities,
         ...entitiesLocalStorage.filter((entity: T) => isPseudoRegex(entity.id)),
     ]
 }

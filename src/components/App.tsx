@@ -12,7 +12,7 @@ import {
     initWsConnection,
     loadMieter,
     loadTermine,
-} from '../integration/integration'
+} from '../state/effects'
 import Button from '@material-ui/core/Button'
 import { AppBar, Toolbar, makeStyles } from '@material-ui/core'
 import SyncIcon from '@material-ui/icons/Sync'

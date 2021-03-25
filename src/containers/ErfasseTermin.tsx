@@ -31,29 +31,33 @@ const ErfasseTermin: React.FC = () => {
     return (
         <div className={'termin-erfassung'}>
             <div className={'anleitungContainer'}>
-                <Card style={{backgroundColor: '#846750', boxShadow: 'none'}}>
+                <Card style={{ backgroundColor: '#846750', boxShadow: 'none' }}>
                     <CardHeader
-                        titleTypographyProps={{variant:'h6'}}
+                        titleTypographyProps={{ variant: 'h6' }}
                         title="Anleitung: Du kannst den Avatar des Mieters in den Kalender schieben um einen Waschtag zu buchen!"
                     />
                     <CardContent>
                         <div className={'mieterContainer'} ref={containerElRef}>
                             {mieter?.mieter.map((mieter: MieterDto) => (
-                            <div key={mieter.id} className={'mieter'}>
-                                <Card>
-                                    <CardHeader
-                                        className={'draggable'}
-                                        draggable={'true'}
-                                        title={mieter.name}
-                                        variant={'outlined'}
-                                        avatar={
-                                            <Avatar src={selectAvatar(mieter.name)} />
-                                        }
-                                        itemProp={mieter.id}
+                                <div key={mieter.id} className={'mieter'}>
+                                    <Card>
+                                        <CardHeader
+                                            className={'draggable'}
+                                            draggable={'true'}
+                                            title={mieter.name}
+                                            variant={'outlined'}
+                                            avatar={
+                                                <Avatar
+                                                    src={selectAvatar(
+                                                        mieter.name
+                                                    )}
+                                                />
+                                            }
+                                            itemProp={mieter.id}
                                         />
-                                </Card>
-                                <div className='spaceBetweenIcons' />
-                            </div>
+                                    </Card>
+                                    <div className="spaceBetweenIcons" />
+                                </div>
                             ))}
                         </div>
                     </CardContent>
