@@ -1,6 +1,4 @@
-// TODO: Frage Jonas: Geht das so?
-// säuuberer wäre im Backend
-import { FuncWrapper, FuncWrapperTwoArgs } from '../model/model'
+import { FuncWrapper, FuncWrapperTwoArgs, Termin } from '../model/model'
 import avatar1 from '../containers/avatars/Hugo.jpg'
 import avatar2 from '../containers/avatars/FamRamseier.jpg'
 import avatar3 from '../containers/avatars/FrauBrönnimann.png'
@@ -25,9 +23,29 @@ export const selectAvatar: FuncWrapper<string, string | undefined> = (
             avatar1
     }
 }
+export const checkIfDayIsBooked: FuncWrapperTwoArgs<
+    Date,
+    Termin[] | undefined,
+    boolean
+> = (newTerminStart: Date, existingTermine: Termin[] | undefined) => {
+    if (!existingTermine) {
+        return false
+    }
+    existingTermine.forEach((termin: Termin) => {
+        const currentTerminStart = parseISO(termin.terminBeginn)
+        const currentTerminEnde = parseISO(termin.terminEnde)
+        if (
+            newTerminStart >= currentTerminStart &&
+            newTerminStart <= currentTerminEnde
+        ) {
+            return true
+        }
+    })
+    return false
+}
 
 export const terminDefaultColor = '#846750'
-0
+
 export const calculateBackgroundColor: FuncWrapperTwoArgs<
     boolean | undefined,
     string,
