@@ -6,6 +6,8 @@ import avatar2 from '../containers/avatars/FamRamseier.jpg'
 import avatar3 from '../containers/avatars/FrauBrönnimann.png'
 import avatar4 from '../containers/avatars/BeatLisa.jpg'
 import { isPseudoRegex } from './id-utils'
+import { format, formatISO, parse, parseISO } from 'date-fns'
+import { DATEFORMAT_PRETTY } from '../const/constants'
 
 export const selectAvatar: FuncWrapper<string, string | undefined> = (
     mieterName: string
@@ -32,4 +34,12 @@ export const calculateBackgroundColor: FuncWrapperTwoArgs<
     'red' | '#c27233c9' | typeof terminDefaultColor
 > = (marked: boolean | undefined, id: string) => {
     return marked ? 'red' : isPseudoRegex(id) ? '#c27233c9' : terminDefaultColor
+}
+
+export const prettyPrintDate = (date: string): string => {
+    return format(parseISO(date), DATEFORMAT_PRETTY)
+}
+
+export const unPrettifyDate = (date: string): string => {
+    return formatISO(parse(date, DATEFORMAT_PRETTY, new Date()))
 }
