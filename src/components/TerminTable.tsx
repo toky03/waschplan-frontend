@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import store from '../index'
-import { deleteTermin } from '../integration/integration'
 
 import Paper from '@material-ui/core/Paper'
 import {
@@ -19,6 +18,7 @@ import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { deleteTermin } from '../state/effects'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -84,7 +84,7 @@ export const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '100%',
-            backgroundColor: '#edcfb7'
+            backgroundColor: '#edcfb7',
         },
         paper: {
             marginTop: '50px',
@@ -119,7 +119,9 @@ const TerminTable: React.FC = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
-    const terminRows = termine? termine.map((termin: Termin) => createData(termin)): []
+    const terminRows = termine
+        ? termine.map((termin: Termin) => createData(termin))
+        : []
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -223,7 +225,7 @@ const TerminTable: React.FC = () => {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    labelRowsPerPage={"Einträge"}
+                    labelRowsPerPage={'Einträge'}
                     rowsPerPageOptions={[5, 10]}
                     component="div"
                     count={terminRows.length}
