@@ -14,12 +14,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 
 import localeDe from '@fullcalendar/core/locales/de'
 import { useSelector } from 'react-redux'
-import {
-    AvatarDropArg,
-    FuncWrapper,
-    FuncWrapperTwoArgs,
-    Termin,
-} from '../model/model'
+import { AvatarDropArg, FuncWrapperTwoArgs, Termin } from '../model/model'
 import { selectTermineEnriched } from '../state/selectors'
 
 import store from '../index'

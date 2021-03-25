@@ -45,9 +45,10 @@ import {
     registerSubscription,
 } from '../integration/subscription'
 import {
-    HEALTH_POLLING_INTERVALL_MS,
     TERMIN_DURATION_HOURS,
 } from '../const/constants'
+
+const HEALTH_POLLING_INTERVALL_MS = 5000
 
 export const initConnectionCheck: FuncWrapper<void, void> = () => {
     return async (dispatch: AppDispatch) => {
