@@ -36,7 +36,7 @@ import {
     updateTerminLocalStorage,
 } from '../integration/local-store'
 import { generatePseudoTerminId, isPseudoRegex } from '../utils/id-utils'
-import { formatISO, setHours, setMinutes } from 'date-fns'
+import { formatISO, addHours } from 'date-fns'
 import store, { AppDispatch } from '../index'
 import { TermineState } from './termineReducer'
 import { MetaState } from './metaReducer'
@@ -44,6 +44,7 @@ import {
     registerFunction,
     registerSubscription,
 } from '../integration/subscription'
+import { TERMIN_DURATION_HOURS } from '../const/constants'
 
 const HEALTH_POLLING_INTERVALL_MS = 3000
 
@@ -153,8 +154,8 @@ export const createNewTermin: FuncWrapperTwoArgs<
 > = (parteiId: string, pendingDate: Date) => {
     return async (dispatch: AppDispatch) => {
         const termine: TermineState = store.getState().termine
-        const beginn = formatISO(setMinutes(setHours(pendingDate, 7), 0))
-        const ende = formatISO(setMinutes(setHours(pendingDate, 22), 0))
+        const beginn = formatISO(pendingDate)
+        const ende = formatISO(addHours(pendingDate, TERMIN_DURATION_HOURS))
         const newTermin = {
             id: generatePseudoTerminId(termine),
             parteiId: parteiId,

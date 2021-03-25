@@ -8,6 +8,7 @@ import './ErfasseTermin.css'
 import { selectAvatar } from '../utils/date-utils'
 import { selectMieter } from '../state/selectors'
 import { MieterDto } from '../model/model'
+import { TERMIN_DURATION_HOURS } from '../const/constants'
 
 const ErfasseTermin: React.FC = () => {
     const containerElRef = useRef<HTMLDivElement>(null)
@@ -20,7 +21,7 @@ const ErfasseTermin: React.FC = () => {
                 eventData: (eventEl: HTMLElement) => {
                     return {
                         title: eventEl.innerText,
-                        duration: { hours: 9 },
+                        duration: { hours: TERMIN_DURATION_HOURS },
                         create: false,
                     }
                 },
