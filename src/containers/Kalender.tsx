@@ -23,11 +23,15 @@ import {
 import { selectTermineEnriched } from '../state/selectors'
 
 import store from '../index'
-import { addError, markiereTermin } from '../state/actions'
+import { addError } from '../state/actions'
 import UserChooser from './UserChooser'
-import { createNewTermin, deleteTermin } from '../integration/integration'
+import { createNewTermin, deleteTermin, markTermin } from '../state/effects'
 import ConfirmationDialog from './ConfirmationDialog'
-import { calculateBackgroundColor } from '../utils/date-utils'
+import {
+    calculateBackgroundColor,
+    terminDefaultColor,
+} from '../utils/date-utils'
+import { isPseudoRegex } from '../utils/id-utils'
 
 const Kalender: React.FC = () => {
     const [pendingDate, setDate] = useState<Date | null>(null)
@@ -39,13 +43,26 @@ const Kalender: React.FC = () => {
 
     const termine: EventSourceInput | undefined = useSelector(
         selectTermineEnriched
-    )?.map((termin: Termin) => ({
-        title: termin.mieterName + (termin.marked ? ' löschen' : ''),
-        start: termin.terminBeginn,
-        end: termin.terminEnde,
-        extendedProps: { id: termin.id, marked: termin.marked },
-        backgroundColor: calculateBackgroundColor(termin.marked, termin.id),
-    }))
+    )?.map((termin: Termin) => {
+        const color: string | undefined = calculateBackgroundColor(
+            termin.marked,
+            termin.id
+        )
+        const titleExtension = termin.marked
+            ? '\nlöschen'
+            : isPseudoRegex(termin.id)
+            ? '\nprovisorisch\nerfasst'
+            : ''
+        const title: string = termin.mieterName + titleExtension
+        return {
+            title,
+            start: termin.terminBeginn,
+            end: termin.terminEnde,
+            extendedProps: { id: termin.id, marked: termin.marked },
+            backgroundColor: color,
+            borderColor: color,
+        }
+    })
 
     const handleDateClick = (dateClickArg: DateClickArg) => {
         const newTerminStart = new Date(dateClickArg.date)
@@ -71,7 +88,7 @@ const Kalender: React.FC = () => {
         if (marked) {
             setTerminToDelete(terminId)
         } else {
-            store.dispatch(markiereTermin(terminId))
+            store.dispatch(markTermin(terminId))
         }
     }
     const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
@@ -81,7 +98,7 @@ const Kalender: React.FC = () => {
         if (agree) {
             store.dispatch(deleteTermin(terminId))
         } else {
-            store.dispatch(markiereTermin(terminId))
+            store.dispatch(markTermin(terminId))
         }
         setTerminToDelete(null)
     }
@@ -124,6 +141,8 @@ const Kalender: React.FC = () => {
     return (
         <div className={'calendarWrapper'}>
             <FullCalendar
+                eventBackgroundColor={terminDefaultColor}
+                eventBorderColor={terminDefaultColor}
                 plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
                 initialView="timeGridWeek"
                 hiddenDays={[0]}

@@ -14,7 +14,6 @@ export interface CalendarEvent {
     end: string
 }
 
-// TODO sollte noch in ein internes DTO verwandelt werden (separieren)
 export interface TerminDto {
     id: string
     parteiId: string

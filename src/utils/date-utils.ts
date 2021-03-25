@@ -26,12 +26,14 @@ export const selectAvatar: FuncWrapper<string, string | undefined> = (
     }
 }
 
+export const terminDefaultColor = '#846750'
+0
 export const calculateBackgroundColor: FuncWrapperTwoArgs<
     boolean | undefined,
     string,
-    'red' | 'lightblue' | undefined
+    'red' | '#c27233c9' | typeof terminDefaultColor
 > = (marked: boolean | undefined, id: string) => {
-    return marked ? 'red' : isPseudoRegex(id) ? 'lightblue' : undefined
+    return marked ? 'red' : isPseudoRegex(id) ? '#c27233c9' : terminDefaultColor
 }
 
 export const prettyPrintDate = (date: string): string => {
