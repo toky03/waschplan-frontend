@@ -87,7 +87,7 @@ export const updateTermin: (
     }
 }
 
-export const markiereTermin: FuncWrapper<string, MarkiereTerminAction> = (
+export const markTerminSuccessful: FuncWrapper<string, MarkiereTerminAction> = (
     terminId: string
 ) => {
     return {
@@ -96,9 +96,10 @@ export const markiereTermin: FuncWrapper<string, MarkiereTerminAction> = (
     }
 }
 
-export const removeTermin: FuncWrapper<string, LoescheTerminAction> = (
-    terminId: string
-) => {
+export const removeTerminSuccessful: FuncWrapper<
+    string,
+    LoescheTerminAction
+> = (terminId: string) => {
     return {
         type: DELETE_TERMIN,
         terminId,
