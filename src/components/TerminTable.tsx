@@ -84,16 +84,14 @@ export const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '100%',
+            backgroundColor: '#edcfb7'
         },
         paper: {
             marginTop: '50px',
             marginBottom: 'auto',
             marginInline: 'auto',
-            width: '80%',
-            backgroundColor: '#edcfb7',
-        },
-        table: {
-            minWidth: 750,
+            width: '95%',
+            backgroundColor: 'burlywood',
         },
         visuallyHidden: {
             border: 0,
@@ -156,7 +154,6 @@ const TerminTable: React.FC = () => {
             <Paper className={classes.paper} elevation={6}>
                 <TableContainer>
                     <Table
-                        className={classes.table}
                         aria-labelledby="tableTitle"
                         aria-label="enhanced table"
                     >
@@ -226,6 +223,7 @@ const TerminTable: React.FC = () => {
                     </Table>
                 </TableContainer>
                 <TablePagination
+                    labelRowsPerPage={"Einträge"}
                     rowsPerPageOptions={[5, 10]}
                     component="div"
                     count={terminRows.length}

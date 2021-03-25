@@ -65,7 +65,7 @@ const TerminTableHead: React.FC<TerminTableHeadProps> = (
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
                         >
-                            {headCell.label}
+                            {headCell.label === 'Löschen' ? headCell.label = '' : headCell.label}
                             {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
                                     {order === 'desc'
