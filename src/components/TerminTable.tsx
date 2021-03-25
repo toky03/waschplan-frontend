@@ -105,7 +105,7 @@ export const useStyles = makeStyles(() =>
             width: 1,
         },
         tablecell: {
-            padding: 10,
+            padding: 2,
         },
     })
 )
