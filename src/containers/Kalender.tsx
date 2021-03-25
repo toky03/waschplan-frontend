@@ -14,12 +14,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 
 import localeDe from '@fullcalendar/core/locales/de'
 import { useSelector } from 'react-redux'
-import {
-    AvatarDropArg,
-    FuncWrapper,
-    FuncWrapperTwoArgs,
-    Termin,
-} from '../model/model'
+import { AvatarDropArg, FuncWrapperTwoArgs, Termin } from '../model/model'
 import { selectTermineEnriched } from '../state/selectors'
 
 import store from '../index'
@@ -29,13 +24,14 @@ import { createNewTermin, deleteTermin, markTermin } from '../state/effects'
 import ConfirmationDialog from './ConfirmationDialog'
 import {
     calculateBackgroundColor,
+    checkIfDayIsBooked,
     terminDefaultColor,
 } from '../utils/date-utils'
 import { isPseudoRegex } from '../utils/id-utils'
 
 const Kalender: React.FC = () => {
     const [pendingDate, setDate] = useState<Date | null>(null)
-    const termineOverlapCheck: Termin[] | undefined = useSelector(
+    const existingTermine: Termin[] | undefined = useSelector(
         selectTermineEnriched
     )
 
@@ -65,14 +61,7 @@ const Kalender: React.FC = () => {
     })
 
     const handleDateClick = (dateClickArg: DateClickArg) => {
-        const newTerminStart = new Date(dateClickArg.date)
-        const isBooked = checkIfDayIsBooked(newTerminStart)
-
-        if (isBooked) {
-            store.dispatch(addError('Dieser Waschtag ist bereits gebucht'))
-        } else {
-            setDate(() => dateClickArg.date)
-        }
+        setDate(() => dateClickArg.date)
     }
 
     const createTermin = (parteiId: string | null) => {
@@ -107,7 +96,7 @@ const Kalender: React.FC = () => {
         dropArg.jsEvent.preventDefault()
 
         const newTerminStart = new Date(dropArg.date)
-        const isBooked = checkIfDayIsBooked(newTerminStart)
+        const isBooked = checkIfDayIsBooked(newTerminStart, existingTermine)
 
         if (isBooked) {
             store.dispatch(
@@ -119,23 +108,6 @@ const Kalender: React.FC = () => {
             const mieterId = dropArg.draggedEl.attributes.itemprop.value
             store.dispatch(createNewTermin(mieterId, dropArg.date))
         }
-    }
-
-    const checkIfDayIsBooked: FuncWrapper<Date, boolean> = (
-        newTerminStart: Date
-    ) => {
-        let overlaps = false
-        termineOverlapCheck?.forEach((termin: Termin) => {
-            const currentTerminStart = new Date(termin.terminBeginn)
-            const currentTerminEnde = new Date(termin.terminEnde)
-            if (
-                newTerminStart >= currentTerminStart &&
-                newTerminStart <= currentTerminEnde
-            ) {
-                overlaps = true
-            }
-        })
-        return overlaps
     }
 
     return (

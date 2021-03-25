@@ -77,7 +77,8 @@ async function errorWrapper<T>(fn: () => Promise<T>): Promise<T | undefined> {
         return await fn()
     } catch (e) {
         if (e.response.status === 400) {
-            throw new UserError(e.response.data)
+            const backenErrorWrapper = e.response.data
+            throw new UserError(backenErrorWrapper.message)
         } else {
             console.error('Failed Backend call ', e)
         }
