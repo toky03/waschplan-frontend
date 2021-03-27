@@ -19,7 +19,8 @@ import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { markTermin, deleteTermin } from '../state/effects'
-import ConfirmationDialog from '../containers/ConfirmationDialog'
+import LoescheTermin from '../containers/LoescheTermin'
+import { confirmDeletion } from '../containers/LoescheTermin'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -153,18 +154,6 @@ const TerminTable: React.FC = () => {
         setTerminToDelete(id)
     }
 
-    const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
-        agree: boolean,
-        terminId: string
-    ) => {
-        if (agree) {
-            store.dispatch(deleteTermin(terminId))
-        } else {
-            store.dispatch(markTermin(terminId))
-        }
-        setTerminToDelete(null)
-    }
-
     return (
         <div className={classes.root}>
             <Paper className={classes.paper} elevation={6}>
@@ -249,7 +238,7 @@ const TerminTable: React.FC = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <ConfirmationDialog
+            <LoescheTermin
                 terminId={terminToDelete}
                 confirm={confirmDeletion}
             />
