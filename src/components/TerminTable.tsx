@@ -18,7 +18,6 @@ import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
 import LoescheTermin from '../containers/LoescheTermin'
-import { confirmDeletion } from '../containers/LoescheTermin'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -238,7 +237,6 @@ const TerminTable: React.FC = () => {
             </Paper>
             <LoescheTermin
                 terminId={terminToDelete}
-                confirm={confirmDeletion}
             />
         </div>
     )

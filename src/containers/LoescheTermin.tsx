@@ -17,7 +17,6 @@ import { deleteTermin, markTermin } from '../state/effects'
 
 type LoeschenProps = {
     terminId: string | null
-    confirm: (agree: boolean, mieterId: string) => void
 }
 
 const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
@@ -55,10 +54,14 @@ const LoescheTermin: React.FC<LoeschenProps> = (
         }
     }, [props.terminId])
 
-    const handleClose: FuncWrapper<boolean, void> = (agree: boolean) => {
+    const abort = () => {
+        setOpen(() => false)
+    }
+
+    const executeDeletion = () => {
         if (props.terminId) {
+            store.dispatch(deleteTermin(props.terminId))
             setOpen(() => false)
-            props.confirm(agree, props.terminId)
         }
     }
 
@@ -73,14 +76,14 @@ const LoescheTermin: React.FC<LoeschenProps> = (
             <DialogActions className={'LoeschenDialog'}>
                 <Button
                     className={classes.root}
-                    onClick={() => handleClose(false)}
+                    onClick={() => abort}
                     color="primary"
                 >
                     Nein
                 </Button>
                 <Button
                     className={classes.root}
-                    onClick={() => handleClose(true)}
+                    onClick={() => executeDeletion}
                     color="primary"
                     autoFocus
                 >

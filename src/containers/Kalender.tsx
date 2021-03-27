@@ -21,7 +21,6 @@ import store from '../index'
 import { addError } from '../state/actions'
 import UserChooser from './UserChooser'
 import { createNewTermin, markTermin } from '../state/effects'
-import { confirmDeletion } from '../containers/LoescheTermin'
 import LoescheTermin from './LoescheTermin'
 import {
     calculateBackgroundColor,
@@ -133,7 +132,6 @@ const Kalender: React.FC = () => {
             />
             <LoescheTermin
                 terminId={terminToDelete}
-                confirm={confirmDeletion}
             />
         </div>
     )
