@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
-import store from '../index'
 
 import Paper from '@material-ui/core/Paper'
 import {
@@ -18,7 +17,6 @@ import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { markTermin, deleteTermin } from '../state/effects'
 import LoescheTermin from '../containers/LoescheTermin'
 import { confirmDeletion } from '../containers/LoescheTermin'
 
