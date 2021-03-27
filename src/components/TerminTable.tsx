@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import store from '../index'
@@ -18,7 +18,8 @@ import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { deleteTermin } from '../state/effects'
+import { markTermin, deleteTermin } from '../state/effects'
+import ConfirmationDialog from '../containers/ConfirmationDialog'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -117,6 +118,7 @@ const TerminTable: React.FC = () => {
     const [selected] = React.useState<string[]>([])
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
 
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
     const terminRows = termine
@@ -147,8 +149,20 @@ const TerminTable: React.FC = () => {
         rowsPerPage -
         Math.min(rowsPerPage, terminRows.length - page * rowsPerPage)
 
-    const removeTermin = (id: number | string) => {
-        store.dispatch(deleteTermin(id as string))
+    const removeTermin = (id: string) => {
+        setTerminToDelete(id)
+    }
+
+    const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
+        agree: boolean,
+        terminId: string
+    ) => {
+        if (agree) {
+            store.dispatch(deleteTermin(terminId))
+        } else {
+            store.dispatch(markTermin(terminId))
+        }
+        setTerminToDelete(null)
     }
 
     return (
@@ -235,6 +249,10 @@ const TerminTable: React.FC = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
+            <ConfirmationDialog
+                terminId={terminToDelete}
+                confirm={confirmDeletion}
+            />
         </div>
     )
 }
