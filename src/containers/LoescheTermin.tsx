@@ -19,12 +19,12 @@ type LoeschenProps = {
     terminId: string | null
 }
 
-const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
-
 export const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
     agree: boolean,
     terminId: string
 ) => {
+    const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
+
     if (agree) {
         store.dispatch(deleteTermin(terminId))
     } else {
