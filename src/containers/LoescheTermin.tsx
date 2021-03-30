@@ -8,7 +8,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from '@material-ui/core'
-import { FuncWrapperTwoArgs, Termin } from '../model/model'
+import { Termin } from '../model/model'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import { buttonStyles } from '../components/App'
@@ -17,20 +17,6 @@ import { deleteTermin, markTermin } from '../state/effects'
 
 type LoeschenProps = {
     terminId: string | null
-}
-
-export const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
-    agree: boolean,
-    terminId: string
-) => {
-    const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
-
-    if (agree) {
-        store.dispatch(deleteTermin(terminId))
-    } else {
-        store.dispatch(markTermin(terminId))
-    }
-    setTerminToDelete(null)
 }
 
 const LoescheTermin: React.FC<LoeschenProps> = (
@@ -55,7 +41,12 @@ const LoescheTermin: React.FC<LoeschenProps> = (
     }, [props.terminId])
 
     const abort = () => {
-        setOpen(() => false)
+        if (props.terminId) {
+            console.log('Termin-Löschung durch Benutzer abgebrochen')
+            // Does unmark     
+            store.dispatch(markTermin(props.terminId))
+            setOpen(() => false)
+        }
     }
 
     const executeDeletion = () => {
