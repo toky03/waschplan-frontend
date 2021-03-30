@@ -40,7 +40,6 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
 
     const abort = () => {
         if (props.terminId) {
-            console.log('Termin-Löschung durch Benutzer abgebrochen')
             // Does unmark
             store.dispatch(markTermin(props.terminId))
             setOpen(() => false)

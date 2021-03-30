@@ -78,6 +78,7 @@ const Kalender: React.FC = () => {
             setTerminToDelete(terminId)
         } else {
             store.dispatch(markTermin(terminId))
+            setTerminToDelete(null);
         }
     }
 

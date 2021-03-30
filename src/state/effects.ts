@@ -46,7 +46,7 @@ import {
 } from '../integration/subscription'
 import { TERMIN_DURATION_HOURS } from '../const/constants'
 
-const HEALTH_POLLING_INTERVALL_MS = 5000
+const HEALTH_POLLING_INTERVALL_MS = 6000
 
 export const initConnectionCheck: FuncWrapper<void, void> = () => {
     return async (dispatch: AppDispatch) => {
@@ -247,7 +247,7 @@ export const markTermin: FuncWrapper<
     (dispatch: AppDispatch) => void
 > = (terminId: string) => {
     return async (dispatch: AppDispatch) => {
-        const termine: TerminDto[] = store.getState().termine.termine
+        const termine: TerminDto[] = store.getState().termine.termineState
         const termin = termine?.find(
             (termin: TerminDto) => termin.id === terminId
         )
@@ -264,7 +264,6 @@ export const markTermin: FuncWrapper<
                     marked: false,
                 })
             })
-
         updateTerminLocalStorage(terminId, {
             ...termin,
             marked: !termin.marked,
