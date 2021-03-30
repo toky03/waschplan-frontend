@@ -8,7 +8,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from '@material-ui/core'
-import { FuncWrapper, FuncWrapperTwoArgs, Termin } from '../model/model'
+import { FuncWrapperTwoArgs, Termin } from '../model/model'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import { buttonStyles } from '../components/App'
@@ -76,14 +76,14 @@ const LoescheTermin: React.FC<LoeschenProps> = (
             <DialogActions className={'LoeschenDialog'}>
                 <Button
                     className={classes.root}
-                    onClick={() => abort}
+                    onClick={abort}
                     color="primary"
                 >
                     Nein
                 </Button>
                 <Button
                     className={classes.root}
-                    onClick={() => executeDeletion}
+                    onClick={executeDeletion}
                     color="primary"
                     autoFocus
                 >
