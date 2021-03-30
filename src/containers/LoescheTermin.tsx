@@ -19,9 +19,7 @@ type LoeschenProps = {
     terminId: string | null
 }
 
-const LoescheTermin: React.FC<LoeschenProps> = (
-    props: LoeschenProps
-) => {
+const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
     const [open, setOpen] = React.useState(false)
     const [dialogMessage, setDialogMessage] = useState<string | null>(null)
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
@@ -43,7 +41,7 @@ const LoescheTermin: React.FC<LoeschenProps> = (
     const abort = () => {
         if (props.terminId) {
             console.log('Termin-Löschung durch Benutzer abgebrochen')
-            // Does unmark     
+            // Does unmark
             store.dispatch(markTermin(props.terminId))
             setOpen(() => false)
         }

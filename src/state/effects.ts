@@ -44,9 +44,7 @@ import {
     registerFunction,
     registerSubscription,
 } from '../integration/subscription'
-import {
-    TERMIN_DURATION_HOURS,
-} from '../const/constants'
+import { TERMIN_DURATION_HOURS } from '../const/constants'
 
 const HEALTH_POLLING_INTERVALL_MS = 5000
 
@@ -199,7 +197,9 @@ export const deleteTermin: FuncWrapper<
     return async (dispatch: AppDispatch) => {
         const termine: TermineState = store.getState().termine
         if (
-            !termine.termine.find((termin: TerminDto) => termin.id === terminId)
+            !termine.termineState.find(
+                (termin: TerminDto) => termin.id === terminId
+            )
         ) {
             return
         }
@@ -247,13 +247,24 @@ export const markTermin: FuncWrapper<
     (dispatch: AppDispatch) => void
 > = (terminId: string) => {
     return async (dispatch: AppDispatch) => {
-        const termine: TermineState = store.getState().termine
-        const termin = termine.termine.find(
+        const termine: TerminDto[] = store.getState().termine.termine
+        const termin = termine?.find(
             (termin: TerminDto) => termin.id === terminId
         )
         if (!termin) {
             return
         }
+        termine
+            .filter(
+                (termin: TerminDto) => termin.marked && termin.id !== terminId
+            )
+            .forEach((termin: TerminDto) => {
+                updateTerminLocalStorage(termin.id, {
+                    ...termin,
+                    marked: false,
+                })
+            })
+
         updateTerminLocalStorage(terminId, {
             ...termin,
             marked: !termin.marked,

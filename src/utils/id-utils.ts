@@ -10,7 +10,7 @@ export const isPseudoRegex: FuncWrapper<string, boolean> = (id: string) => {
 export const generatePseudoTerminId: FuncWrapper<TermineState, string> = (
     termineState: TermineState
 ) => {
-    const terminIds = termineState?.termine.map(
+    const terminIds = termineState?.termineState.map(
         (termin: TerminDto) => termin.id
     )
     if (!terminIds) {
