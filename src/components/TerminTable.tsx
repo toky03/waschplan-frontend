@@ -17,7 +17,7 @@ import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
-import LoescheTermin from '../containers/LoescheTermin'
+import LoescheTermin from '../containers/DeleteTerminConfirmation'
 
 export const createData = (termin: Termin): TerminRow => {
     return {

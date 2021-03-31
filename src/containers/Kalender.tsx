@@ -21,7 +21,7 @@ import store from '../index'
 import { addError } from '../state/actions'
 import UserChooser from './UserChooser'
 import { createNewTermin, markTermin } from '../state/effects'
-import LoescheTermin from './LoescheTermin'
+import LoescheTermin from './DeleteTerminConfirmation'
 import {
     calculateBackgroundColor,
     checkIfDayIsBooked,

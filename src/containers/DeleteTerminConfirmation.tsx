@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './LoescheTermin.css'
+import './DeleteTerminConfirmation.css'
 import {
     Button,
     Dialog,
@@ -54,13 +54,13 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
 
     return (
         <Dialog open={open}>
-            <DialogTitle className={'LoeschenDialog'}>
+            <DialogTitle className={'DeleteTerminConfirmation'}>
                 {'Termin Löschen'}
             </DialogTitle>
-            <DialogContent className={'LoeschenDialog'}>
+            <DialogContent className={'DeleteTerminConfirmation'}>
                 <DialogContentText>{dialogMessage}</DialogContentText>
             </DialogContent>
-            <DialogActions className={'LoeschenDialog'}>
+            <DialogActions className={'DeleteTerminConfirmation'}>
                 <Button
                     className={classes.root}
                     onClick={abort}
