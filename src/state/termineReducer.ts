@@ -78,7 +78,7 @@ export const terminReducer: (
                     .map((termin: TerminDto) => ({ ...termin, marked: false }))
                 const editedTermin: TerminDto = {
                     ...terminToMarked,
-                    marked: !terminToMarked.marked,
+                    marked: true,
                 }
                 return {
                     ...state,
