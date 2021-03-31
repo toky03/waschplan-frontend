@@ -255,15 +255,6 @@ export const unmarkTermin: FuncWrapper<
         if (!termin) {
             return
         }
-/*         termine
-            .filter(
-                (termin: TerminDto) => termin.marked && termin.id !== terminId
-            )
-            .forEach((termin: TerminDto) => {
-                updateTerminLocalStorage(termin.id, {
-                    ...termin,
-                })
-            }) */
         updateTerminLocalStorage(terminId, {
             ...termin,
             marked: false,
