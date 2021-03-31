@@ -7,6 +7,7 @@ import {
     removeTerminSuccessful,
     addError,
     markTerminSuccessful,
+    unmarkTerminSuccessful
 } from './actions'
 import {
     FuncWrapper,
@@ -239,6 +240,35 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
         }
         console.warn(e)
         dispatch(setBackendSync(false))
+    }
+}
+
+export const unmarkTermin: FuncWrapper<
+    string,
+    (dispatch: AppDispatch) => void
+> = (terminId: string) => {
+    return async (dispatch: AppDispatch) => {
+        const termine: TerminDto[] = store.getState().termine.termineState
+        const termin = termine?.find(
+            (termin: TerminDto) => termin.id === terminId
+        )
+        if (!termin) {
+            return
+        }
+/*         termine
+            .filter(
+                (termin: TerminDto) => termin.marked && termin.id !== terminId
+            )
+            .forEach((termin: TerminDto) => {
+                updateTerminLocalStorage(termin.id, {
+                    ...termin,
+                })
+            }) */
+        updateTerminLocalStorage(terminId, {
+            ...termin,
+            marked: false,
+        })
+        dispatch(unmarkTerminSuccessful(terminId))
     }
 }
 

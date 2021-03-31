@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import { buttonStyles } from '../components/App'
 import store from '../index'
-import { deleteTermin, markTermin } from '../state/effects'
+import { deleteTermin, unmarkTermin } from '../state/effects'
 
 type LoeschenProps = {
     terminId: string | null
@@ -40,8 +40,7 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
 
     const abort = () => {
         if (props.terminId) {
-            // Does unmark
-            store.dispatch(markTermin(props.terminId))
+            store.dispatch(unmarkTermin(props.terminId))
             setOpen(() => false)
         }
     }

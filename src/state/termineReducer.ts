@@ -3,7 +3,9 @@ import {
     CreateTerminAction,
     LoadTermineAction,
     MARK_TERMIN,
+    UNMARK_TERMIN,
     MarkiereTerminAction,
+    DemarkiereTerminAction,
     LoescheTerminAction,
     DELETE_TERMIN,
     LOAD_TERMINE,
@@ -22,6 +24,7 @@ export const terminReducer: (
         | LoadTermineAction
         | CreateTerminAction
         | MarkiereTerminAction
+        | DemarkiereTerminAction
         | LoescheTerminAction
         | UpdateTerminAction
 ) => TermineState | null = (
@@ -30,6 +33,7 @@ export const terminReducer: (
         | LoadTermineAction
         | CreateTerminAction
         | MarkiereTerminAction
+        | DemarkiereTerminAction
         | LoescheTerminAction
         | UpdateTerminAction
 ) => {
@@ -79,6 +83,26 @@ export const terminReducer: (
                 return {
                     ...state,
                     termineState: [...filteredTermine, editedTermin],
+                }
+            }
+        }
+        case UNMARK_TERMIN: {
+            const terminToUnmark:
+                | TerminDto
+                | undefined = state.termineState.find(
+                (termin: TerminDto) => termin.id === action.id
+            )
+            if (!terminToUnmark) {
+                return state
+            } else {
+                const filteredTermine: TerminDto[] = state.termineState
+                    .filter((termin: TerminDto) => termin.id !== action.id)
+                const unmarkedTermin: TerminDto = {
+                    ...terminToUnmark,
+                }
+                return {
+                    ...state,
+                    termineState: [...filteredTermine, unmarkedTermin],
                 }
             }
         }
