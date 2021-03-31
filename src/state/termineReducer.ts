@@ -95,11 +95,14 @@ export const terminReducer: (
             if (!terminToUnmark) {
                 return state
             } else {
+                console.log('tmp1', terminToUnmark)
                 const filteredTermine: TerminDto[] = state.termineState
                     .filter((termin: TerminDto) => termin.id !== action.id)
                 const unmarkedTermin: TerminDto = {
                     ...terminToUnmark,
+                    marked: false
                 }
+                console.log('tmp2', unmarkedTermin)
                 return {
                     ...state,
                     termineState: [...filteredTermine, unmarkedTermin],
