@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../../state/selectors'
-import './TerminTable.css';
 
 import Paper from '@material-ui/core/Paper'
 import {
