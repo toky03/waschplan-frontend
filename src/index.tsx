@@ -27,11 +27,9 @@ export default store
 export type AppDispatch = typeof store.dispatch
 
 ReactDOM.render(
-    <React.StrictMode>
         <Provider store={store}>
             <App />
-        </Provider>
-    </React.StrictMode>,
+        </Provider>,
     document.getElementById('root')
 )
 

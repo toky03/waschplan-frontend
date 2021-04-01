@@ -83,7 +83,7 @@ const onCreateTermin: FuncWrapper<
     (terminMesssage: TerminDto) => void
 > = (dispatch: AppDispatch) => {
     return (terminMessage: TerminDto) => {
-        const termine: TerminDto[] = store.getState().termine?.termine
+        const termine: TerminDto[] = store.getState().termine?.termineState
         if (
             terminMessage.id &&
             !termine?.find(
