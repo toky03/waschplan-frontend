@@ -47,7 +47,7 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
         }
     }
 
-    const executeDeletion: FuncWrapper<void, void>  = () => {
+    const executeDeletion: FuncWrapper<void, void> = () => {
         if (props.terminId) {
             store.dispatch(deleteTermin(props.terminId))
             setOpen(() => false)

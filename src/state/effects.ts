@@ -7,7 +7,7 @@ import {
     removeTerminSuccessful,
     addError,
     markTerminSuccessful,
-    unmarkTerminSuccessful
+    unmarkTerminSuccessful,
 } from './actions'
 import {
     FuncWrapper,

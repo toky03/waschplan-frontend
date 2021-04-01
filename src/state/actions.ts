@@ -103,9 +103,10 @@ export const markTerminSuccessful: FuncWrapper<string, MarkiereTerminAction> = (
     }
 }
 
-export const unmarkTerminSuccessful: FuncWrapper<string, DemarkiereTerminAction> = (
-    terminId: string
-) => {
+export const unmarkTerminSuccessful: FuncWrapper<
+    string,
+    DemarkiereTerminAction
+> = (terminId: string) => {
     return {
         type: UNMARK_TERMIN,
         id: terminId,

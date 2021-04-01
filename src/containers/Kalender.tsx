@@ -130,7 +130,10 @@ const Kalender: React.FC = () => {
                 open={pendingDate !== null}
                 userChanged={createTermin}
             />
-            <LoescheTermin terminId={terminToDelete} abortDelete={() => setTerminToDelete(null)} />
+            <LoescheTermin
+                terminId={terminToDelete}
+                abortDelete={() => setTerminToDelete(null)}
+            />
         </div>
     )
 }
