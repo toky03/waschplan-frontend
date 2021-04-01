@@ -5,10 +5,10 @@ import { Avatar, Card, CardHeader, CardContent } from '@material-ui/core'
 import Kalender from './Kalender'
 import { Draggable } from '@fullcalendar/interaction'
 import './ErfasseTermin.css'
-import { selectAvatar } from '../utils/date-utils'
-import { selectMieter } from '../state/selectors'
-import { MieterDto } from '../model/model'
-import { TERMIN_DURATION_HOURS } from '../const/constants'
+import { selectAvatar } from '../../utils/date-utils'
+import { selectMieter } from '../../state/selectors'
+import { MieterDto } from '../../model/model'
+import { TERMIN_DURATION_HOURS } from '../../const/constants'
 
 const ErfasseTermin: React.FC = () => {
     const containerElRef = useRef<HTMLDivElement>(null)

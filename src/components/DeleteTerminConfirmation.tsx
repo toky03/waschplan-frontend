@@ -11,7 +11,7 @@ import {
 import { FuncWrapper, Termin } from '../model/model'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
-import { buttonStyles } from '../components/App'
+import { buttonStyles } from './App'
 import store from '../index'
 import { deleteTermin, unmarkTermin } from '../state/effects'
 

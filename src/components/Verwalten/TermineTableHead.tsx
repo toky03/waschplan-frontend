@@ -1,5 +1,5 @@
 import React from 'react'
-import { TerminRow } from '../model/model'
+import { TerminRow } from '../../model/model'
 import { Order, useStyles } from './TerminTable'
 import {
     TableCell,

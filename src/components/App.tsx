@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Link } from 'react-router-dom'
 import { Route } from 'react-router'
 import './App.css'
 
-import ErfasseTermin from '../containers/ErfasseTermin'
-import TermineVerwalten from '../containers/VerwalteTermine'
+import ErfasseTermin from './Waschplan/ErfasseTermin'
+import TermineVerwalten from './Verwalten/VerwalteTermine'
 import store from '../index'
 import {
     initConnectionCheck,
@@ -19,7 +19,7 @@ import SyncIcon from '@material-ui/icons/Sync'
 import { selectBackendSynced } from '../state/selectors'
 import SyncDisabledIcon from '@material-ui/icons/SyncDisabled'
 import { green, red } from '@material-ui/core/colors'
-import { ErrorAlert } from '../containers/ErrorStore'
+import { ErrorAlert } from './ErrorStore'
 
 export const buttonStyles = makeStyles({
     root: {
@@ -41,8 +41,6 @@ const App: React.FC = () => {
         store.dispatch(loadMieter)
         store.dispatch(initConnectionCheck())
         store.dispatch(initWsConnection())
-
-        // TODO aufraeumen mit callback function;
     }, [])
     return (
         <div>

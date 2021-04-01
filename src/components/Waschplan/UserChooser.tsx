@@ -14,10 +14,10 @@ import {
 } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 
-import { selectMieter } from '../state/selectors'
-import { MieterDto } from '../model/model'
-import { selectAvatar } from '../utils/date-utils'
-import { buttonStyles } from '../components/App'
+import { selectMieter } from '../../state/selectors'
+import { MieterDto } from '../../model/model'
+import { selectAvatar } from '../../utils/date-utils'
+import { buttonStyles } from '../App'
 
 export type UserChooserProps = {
     open: boolean

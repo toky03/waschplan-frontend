@@ -27,9 +27,9 @@ export default store
 export type AppDispatch = typeof store.dispatch
 
 ReactDOM.render(
-        <Provider store={store}>
-            <App />
-        </Provider>,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 )
 

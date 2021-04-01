@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectTermineEnriched } from '../state/selectors'
+import { selectTermineEnriched } from '../../state/selectors'
 
 import Paper from '@material-ui/core/Paper'
 import {
@@ -12,12 +12,12 @@ import {
     TableRow,
     TableBody,
 } from '@material-ui/core'
-import { prettyPrintDate, unPrettifyDate } from '../utils/date-utils'
-import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
+import { prettyPrintDate, unPrettifyDate } from '../../utils/date-utils'
+import { FuncWrapperTwoArgs, Termin, TerminRow } from '../../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
-import LoescheTermin from '../containers/DeleteTerminConfirmation'
+import LoescheTermin from '../DeleteTerminConfirmation'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -86,6 +86,8 @@ export const useStyles = makeStyles(() =>
             backgroundColor: '#edcfb7',
         },
         paper: {
+            marginLeft: 'auto',
+            marginRight: 'auto',
             marginTop: '50px',
             marginBottom: 'auto',
             marginInline: 'auto',
