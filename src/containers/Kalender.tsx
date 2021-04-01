@@ -78,7 +78,6 @@ const Kalender: React.FC = () => {
             setTerminToDelete(terminId)
         } else {
             store.dispatch(markTermin(terminId))
-            setTerminToDelete(null);
         }
     }
 
@@ -131,7 +130,7 @@ const Kalender: React.FC = () => {
                 open={pendingDate !== null}
                 userChanged={createTermin}
             />
-            <LoescheTermin terminId={terminToDelete} />
+            <LoescheTermin terminId={terminToDelete} abortDelete={() => setTerminToDelete(null)} />
         </div>
     )
 }

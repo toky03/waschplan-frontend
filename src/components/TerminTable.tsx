@@ -235,7 +235,7 @@ const TerminTable: React.FC = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <LoescheTermin terminId={terminToDelete} />
+            <LoescheTermin terminId={terminToDelete} abortDelete={() => setTerminToDelete(null)}/>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from '@material-ui/core'
-import { Termin } from '../model/model'
+import { FuncWrapper, Termin } from '../model/model'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
 import { buttonStyles } from '../components/App'
@@ -17,6 +17,7 @@ import { deleteTermin, unmarkTermin } from '../state/effects'
 
 type LoeschenProps = {
     terminId: string | null
+    abortDelete: () => void
 }
 
 const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
@@ -38,14 +39,15 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
         }
     }, [props.terminId])
 
-    const abort = () => {
+    const abort: FuncWrapper<void, void> = () => {
         if (props.terminId) {
             store.dispatch(unmarkTermin(props.terminId))
+            props.abortDelete()
             setOpen(() => false)
         }
     }
 
-    const executeDeletion = () => {
+    const executeDeletion: FuncWrapper<void, void>  = () => {
         if (props.terminId) {
             store.dispatch(deleteTermin(props.terminId))
             setOpen(() => false)
@@ -63,14 +65,14 @@ const LoescheTermin: React.FC<LoeschenProps> = (props: LoeschenProps) => {
             <DialogActions className={'DeleteTerminConfirmation'}>
                 <Button
                     className={classes.root}
-                    onClick={abort}
+                    onClick={() => abort()}
                     color="primary"
                 >
                     Nein
                 </Button>
                 <Button
                     className={classes.root}
-                    onClick={executeDeletion}
+                    onClick={() => executeDeletion()}
                     color="primary"
                     autoFocus
                 >
