@@ -14,20 +14,20 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 
 import localeDe from '@fullcalendar/core/locales/de'
 import { useSelector } from 'react-redux'
-import { AvatarDropArg, Termin } from '../model/model'
-import { selectTermineEnriched } from '../state/selectors'
+import { AvatarDropArg, Termin } from '../../model/model'
+import { selectTermineEnriched } from '../../state/selectors'
 
-import store from '../index'
-import { addError } from '../state/actions'
+import store from '../../index'
+import { addError } from '../../state/actions'
 import UserChooser from './UserChooser'
-import { createNewTermin, markTermin } from '../state/effects'
-import LoescheTermin from './DeleteTerminConfirmation'
+import { createNewTermin, markTermin } from '../../state/effects'
+import LoescheTermin from '../DeleteTerminConfirmation'
 import {
     calculateBackgroundColor,
     checkIfDayIsBooked,
     terminDefaultColor,
-} from '../utils/date-utils'
-import { isPseudoRegex } from '../utils/id-utils'
+} from '../../utils/date-utils'
+import { isPseudoRegex } from '../../utils/id-utils'
 
 const Kalender: React.FC = () => {
     const [pendingDate, setDate] = useState<Date | null>(null)

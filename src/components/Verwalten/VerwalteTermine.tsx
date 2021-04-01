@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import TerminTable from '../components/TerminTable'
+import TerminTable from './TerminTable'
 import './VerwalteTermine.css'
 
 const VerwalteTermine: React.FC = () => {
