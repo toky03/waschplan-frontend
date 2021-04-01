@@ -41,8 +41,6 @@ const App: React.FC = () => {
         store.dispatch(loadMieter)
         store.dispatch(initConnectionCheck())
         store.dispatch(initWsConnection())
-
-        // TODO aufraeumen mit callback function;
     }, [])
     return (
         <div>

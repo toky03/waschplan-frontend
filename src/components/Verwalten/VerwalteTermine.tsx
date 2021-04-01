@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
-import TerminTable from './TerminTable'
 import './VerwalteTermine.css'
+
+const TerminTable = lazy(() => import('./TerminTable'))
 
 const VerwalteTermine: React.FC = () => {
     return (
         <div className={'termin-verwaltung'}>
-            <TerminTable />
+            <Suspense fallback={<div>...lädt Terminverwaltung</div>}>
+                <TerminTable />
+            </Suspense>
         </div>
     )
 }
