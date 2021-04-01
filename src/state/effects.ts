@@ -7,6 +7,7 @@ import {
     removeTerminSuccessful,
     addError,
     markTerminSuccessful,
+    unmarkTerminSuccessful,
 } from './actions'
 import {
     FuncWrapper,
@@ -44,11 +45,9 @@ import {
     registerFunction,
     registerSubscription,
 } from '../integration/subscription'
-import {
-    TERMIN_DURATION_HOURS,
-} from '../const/constants'
+import { TERMIN_DURATION_HOURS } from '../const/constants'
 
-const HEALTH_POLLING_INTERVALL_MS = 5000
+const HEALTH_POLLING_INTERVALL_MS = 6000
 
 export const initConnectionCheck: FuncWrapper<void, void> = () => {
     return async (dispatch: AppDispatch) => {
@@ -199,7 +198,9 @@ export const deleteTermin: FuncWrapper<
     return async (dispatch: AppDispatch) => {
         const termine: TermineState = store.getState().termine
         if (
-            !termine.termine.find((termin: TerminDto) => termin.id === terminId)
+            !termine.termineState.find(
+                (termin: TerminDto) => termin.id === terminId
+            )
         ) {
             return
         }
@@ -242,18 +243,48 @@ export const loadTermine: FuncWrapper<AppDispatch, Promise<void>> = async (
     }
 }
 
-export const markTermin: FuncWrapper<
+export const unmarkTermin: FuncWrapper<
     string,
     (dispatch: AppDispatch) => void
 > = (terminId: string) => {
     return async (dispatch: AppDispatch) => {
-        const termine: TermineState = store.getState().termine
-        const termin = termine.termine.find(
+        const termine: TerminDto[] = store.getState().termine.termineState
+        const termin = termine?.find(
             (termin: TerminDto) => termin.id === terminId
         )
         if (!termin) {
             return
         }
+        updateTerminLocalStorage(terminId, {
+            ...termin,
+            marked: false,
+        })
+        dispatch(unmarkTerminSuccessful(terminId))
+    }
+}
+
+export const markTermin: FuncWrapper<
+    string,
+    (dispatch: AppDispatch) => void
+> = (terminId: string) => {
+    return async (dispatch: AppDispatch) => {
+        const termine: TerminDto[] = store.getState().termine.termineState
+        const termin = termine?.find(
+            (termin: TerminDto) => termin.id === terminId
+        )
+        if (!termin) {
+            return
+        }
+        termine
+            .filter(
+                (termin: TerminDto) => termin.marked && termin.id !== terminId
+            )
+            .forEach((termin: TerminDto) => {
+                updateTerminLocalStorage(termin.id, {
+                    ...termin,
+                    marked: false,
+                })
+            })
         updateTerminLocalStorage(terminId, {
             ...termin,
             marked: !termin.marked,

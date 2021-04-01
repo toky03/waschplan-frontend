@@ -28,7 +28,7 @@ export const selectTermineEnriched = createSelector<
     selectTermineRaw,
     selectMieter,
     (termineState: TermineState | null, mieterState: MieterState | null) => {
-        return termineState?.termine.map((termin: TerminDto) => ({
+        return termineState?.termineState.map((termin: TerminDto) => ({
             id: termin.id,
             terminBeginn: termin.terminBeginn,
             terminEnde: termin.terminEnde,

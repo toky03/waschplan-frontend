@@ -2,6 +2,7 @@ import { FuncWrapper, MieterDto, TerminDto } from '../model/model'
 
 export const ADD_TERMIN = 'CREATE_TERMIN'
 export const MARK_TERMIN = 'MARK_TERMIN'
+export const UNMARK_TERMIN = 'UNMARK_TERMIN'
 export const UPDATE_TERMIN = 'UPDATE_TERMIN'
 export const DELETE_TERMIN = 'DELETE_TERMIN'
 export const LOAD_TERMINE = 'LOAD_TERMINE'
@@ -20,6 +21,7 @@ export interface TerminAction {
         | 'CREATE_TERMIN'
         | 'LOAD_TERMINE'
         | 'MARK_TERMIN'
+        | 'UNMARK_TERMIN'
         | 'DELETE_TERMIN'
         | 'UPDATE_TERMIN'
 }
@@ -42,6 +44,11 @@ export interface LoadTermineAction extends TerminAction {
 
 export interface MarkiereTerminAction extends TerminAction {
     type: 'MARK_TERMIN'
+    id: string
+}
+
+export interface DemarkiereTerminAction extends TerminAction {
+    type: 'UNMARK_TERMIN'
     id: string
 }
 
@@ -92,6 +99,16 @@ export const markTerminSuccessful: FuncWrapper<string, MarkiereTerminAction> = (
 ) => {
     return {
         type: MARK_TERMIN,
+        id: terminId,
+    }
+}
+
+export const unmarkTerminSuccessful: FuncWrapper<
+    string,
+    DemarkiereTerminAction
+> = (terminId: string) => {
+    return {
+        type: UNMARK_TERMIN,
         id: terminId,
     }
 }

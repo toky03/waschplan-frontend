@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTermineEnriched } from '../state/selectors'
-import store from '../index'
 
 import Paper from '@material-ui/core/Paper'
 import {
@@ -18,7 +17,7 @@ import { FuncWrapperTwoArgs, Termin, TerminRow } from '../model/model'
 import TerminTableHead from './TermineTableHead'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { deleteTermin } from '../state/effects'
+import LoescheTermin from '../containers/DeleteTerminConfirmation'
 
 export const createData = (termin: Termin): TerminRow => {
     return {
@@ -117,6 +116,7 @@ const TerminTable: React.FC = () => {
     const [selected] = React.useState<string[]>([])
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const [terminToDelete, setTerminToDelete] = useState<string | null>(null)
 
     const termine: Termin[] | undefined = useSelector(selectTermineEnriched)
     const terminRows = termine
@@ -147,8 +147,8 @@ const TerminTable: React.FC = () => {
         rowsPerPage -
         Math.min(rowsPerPage, terminRows.length - page * rowsPerPage)
 
-    const removeTermin = (id: number | string) => {
-        store.dispatch(deleteTermin(id as string))
+    const removeTermin = (id: string) => {
+        setTerminToDelete(id)
     }
 
     return (
@@ -235,6 +235,10 @@ const TerminTable: React.FC = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
+            <LoescheTermin
+                terminId={terminToDelete}
+                abortDelete={() => setTerminToDelete(null)}
+            />
         </div>
     )
 }

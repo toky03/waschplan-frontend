@@ -14,14 +14,14 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 
 import localeDe from '@fullcalendar/core/locales/de'
 import { useSelector } from 'react-redux'
-import { AvatarDropArg, FuncWrapperTwoArgs, Termin } from '../model/model'
+import { AvatarDropArg, Termin } from '../model/model'
 import { selectTermineEnriched } from '../state/selectors'
 
 import store from '../index'
 import { addError } from '../state/actions'
 import UserChooser from './UserChooser'
-import { createNewTermin, deleteTermin, markTermin } from '../state/effects'
-import ConfirmationDialog from './ConfirmationDialog'
+import { createNewTermin, markTermin } from '../state/effects'
+import LoescheTermin from './DeleteTerminConfirmation'
 import {
     calculateBackgroundColor,
     checkIfDayIsBooked,
@@ -80,17 +80,6 @@ const Kalender: React.FC = () => {
             store.dispatch(markTermin(terminId))
         }
     }
-    const confirmDeletion: FuncWrapperTwoArgs<boolean, string, void> = (
-        agree: boolean,
-        terminId: string
-    ) => {
-        if (agree) {
-            store.dispatch(deleteTermin(terminId))
-        } else {
-            store.dispatch(markTermin(terminId))
-        }
-        setTerminToDelete(null)
-    }
 
     const handleDrop = (dropArg: AvatarDropArg) => {
         dropArg.jsEvent.preventDefault()
@@ -141,9 +130,9 @@ const Kalender: React.FC = () => {
                 open={pendingDate !== null}
                 userChanged={createTermin}
             />
-            <ConfirmationDialog
+            <LoescheTermin
                 terminId={terminToDelete}
-                confirm={confirmDeletion}
+                abortDelete={() => setTerminToDelete(null)}
             />
         </div>
     )
